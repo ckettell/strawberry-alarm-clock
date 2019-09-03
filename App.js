@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import moment from "moment";
+import SetAlarm from './components/SetAlarm';
 
 const styles = StyleSheet.create({
 	container: {
@@ -32,6 +33,9 @@ export default class App extends Component {
 			date: moment().format("LL")
 		};
 
+	getSetAlarmHandler = () => {
+		console.log('Set Alarm Button Pressed')
+	  }
 
   render() {
     setTimeout(() => {
@@ -40,6 +44,7 @@ export default class App extends Component {
 				date: moment().format("LL"),
 			});
 		}, 1000);
+
 
 		return (
 			<View style={styles.container}>
@@ -50,7 +55,7 @@ export default class App extends Component {
 				<Text style={styles.dateText}>
 					{this.state.date}
 				</Text>
-
+				<SetAlarm onSetAlarm={this.getSetAlarmHandler}/>
 			</View>
 		)
 	}
