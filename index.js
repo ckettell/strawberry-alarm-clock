@@ -11,4 +11,4 @@ class clock extends Component {
     );
   }
 }
-AppRegistry.registerComponent('clock', () => clock);
+AppRegistry.registerComponent('strawberry_alarm_clock_react', () => clock);
