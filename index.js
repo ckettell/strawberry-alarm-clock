@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import App from "./App";
+import App from "./src/App";
 
 class clock extends Component {
   render() {

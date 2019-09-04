@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default class App extends Component {
+export default class Clock extends Component {
 		state = {
 			time: moment().format("LTS"),
 			date: moment().format("LL")
