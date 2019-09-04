@@ -1,7 +1,7 @@
 
 import React, {Component} from "react";
 import {
-	Image,
+	ImageBackground,
 	View,
 	Text,
 	TextInput,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 	},
 	timeText: {
 		color: '#000000',
-		fontSize: 80,
+		fontSize: 100,
 	},
 	dateText: {
 		color: '#000000',
@@ -55,9 +55,6 @@ export default class App extends Component {
 	  }
 
   render() {
-		let pic = {
-      uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5BfYgpnnYejMON6mOje7Wh-OhoMFBNEuDtJt41-wPsvzc6fz8'
-    };
     setTimeout(() => {
 			this.setState({
 				time: moment().format("LTS"),
@@ -67,8 +64,10 @@ export default class App extends Component {
 
 		return (
 			<View style={styles.container}>
+				<ImageBackground source={require('./assets/Strawberry.png')} style={{width: '100%', height: '100%'}}>
 				<StatusBar style={{backgroundColor: 'transparent'}} />
-				<Image source={pic} style={{width: 250, height: 200}}/>
+
+
 				<Text style={styles.timeText}>
 					{this.state.time}
 				</Text>
@@ -76,10 +75,7 @@ export default class App extends Component {
 					{this.state.date}
 				</Text>
 					<FetchLocation onGetLocation={this.getUserLocationHandler} />
-					<TextInput style={styles.input}
-					placeholder = "Enter time"
-					returnKeyType = "next"
-					/>
+					</ImageBackground>
 			</View>
 
 		);
