@@ -29,8 +29,34 @@ const styles = StyleSheet.create({
 export default class Clock extends Component {
 		state = {
 			time: moment().format("LTS"),
-			date: moment().format("LL")
+			date: moment().format("LL"),
+			wakeUpTime: "",
+			alarmGoneOff: "false",
+			currentTime: ""
+
 		};
+
+	setCurrentTime() {
+		this.setState({
+			currentTime: new Date().toLocaleTimeString()
+		})
+	}
+
+	setAlarm() {
+
+	}
+
+	componentDidMount() {
+
+		this.interval = setInterval(() => { this.wakeUp() }, 1000)
+		setInterval(() => { this.setCurrentTime() }, 1000)
+	}
+
+	wakeUp() {
+		if(this.state.currentTime == "11:21:05"){
+			this.setState({ alarmGoneOff: "true" })
+		}
+	};
 
 
   render() {
@@ -39,7 +65,10 @@ export default class Clock extends Component {
 				time: moment().format("LTS"),
 				date: moment().format("LL"),
 			});
+
 		}, 1000);
+
+	// wakeUp();
 
 		return (
 			<View style={styles.container}>
@@ -50,6 +79,13 @@ export default class Clock extends Component {
 				<Text style={styles.dateText}>
 					{this.state.date}
 				</Text>
+				<Text style={styles.dateText}>
+					{this.state.alarmGoneOff}
+				</Text>
+				<Text style={styles.dateText}>
+					{this.state.currentTime}
+				</Text>
+
 
 			</View>
 		)
