@@ -5,6 +5,7 @@ import {
 	Text,
 	StyleSheet,
 	StatusBar,
+	TextInput
 } from "react-native";
 
 import moment from "moment";
@@ -12,17 +13,30 @@ import moment from "moment";
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#000',
+		backgroundColor: '#0000',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	input: {
+		borderColor: '#CCCCCC',
+	  borderTopWidth: 1,
+	  borderBottomWidth: 1,
+	  height: 50,
+	  fontSize: 25,
+	  paddingLeft: 20,
+	  paddingRight: 20
+	},
 	timeText: {
 		color: '#999999',
-		fontSize: 150,
+		fontSize: 90,
 	},
 	dateText: {
 		color: '#999999',
 		fontSize: 40,
+	},
+	helloText: {
+		color: '#999999',
+		fontSize: 20,
 	}
 })
 
@@ -32,7 +46,8 @@ export default class Clock extends Component {
 			date: moment().format("LL"),
 			wakeUpTime: "",
 			alarmGoneOff: "false",
-			currentTime: ""
+			currentTime: "",
+			time: '10:00'
 
 		};
 
@@ -46,14 +61,16 @@ export default class Clock extends Component {
 
 	}
 
+	onChange = time = this.setState({ time })
+
 	componentDidMount() {
 
-		this.interval = setInterval(() => { this.wakeUp() }, 1000)
+		setInterval(() => { this.wakeUp() }, 1000)
 		setInterval(() => { this.setCurrentTime() }, 1000)
 	}
 
 	wakeUp() {
-		if(this.state.currentTime == "11:21:05"){
+		if(this.state.currentTime == "12:52:59"){
 			this.setState({ alarmGoneOff: "true" })
 		}
 	};
@@ -72,7 +89,15 @@ export default class Clock extends Component {
 
 		return (
 			<View style={styles.container}>
+
 				<StatusBar style={{backgroundColor: 'transparent'}} />
+
+				<TimePicker
+					onChange={this.onChange}
+					value={this.state.time}
+				/>
+
+
 				<Text style={styles.timeText}>
 					{this.state.time}
 				</Text>
