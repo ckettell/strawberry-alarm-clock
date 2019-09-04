@@ -5,10 +5,13 @@ import {
 	Text,
 	StyleSheet,
 	StatusBar,
-	TextInput
+	Button
 } from "react-native";
 
 import moment from "moment";
+
+import DateTimePicker from "react-native-modal-datetime-picker";
+
 
 const styles = StyleSheet.create({
 	container: {
@@ -46,10 +49,28 @@ export default class Clock extends Component {
 			date: moment().format("LL"),
 			wakeUpTime: "",
 			alarmGoneOff: "false",
-			currentTime: "",
-			time: '10:00'
+			currentTime: new Date().toLocaleTimeString(),
+			alarm: "",
+			isDateTimePickerVisible: false
+
+
 
 		};
+
+
+  showDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: true });
+  };
+
+  hideDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: false });
+  };
+
+  handleDatePicked = date => {
+		this.setState({
+			alarm: moment(date).format("HH:mm:SS")
+		})
+  };
 
 	setCurrentTime() {
 		this.setState({
@@ -57,11 +78,11 @@ export default class Clock extends Component {
 		})
 	}
 
-	setAlarm() {
-
+	setAlarm(alarmSet) {
+		this.setState({
+			alarm: alarmSet
+		})
 	}
-
-	onChange = time = this.setState({ time })
 
 	componentDidMount() {
 
@@ -70,7 +91,7 @@ export default class Clock extends Component {
 	}
 
 	wakeUp() {
-		if(this.state.currentTime == "12:52:59"){
+		if(this.state.currentTime == this.state.alarm){
 			this.setState({ alarmGoneOff: "true" })
 		}
 	};
@@ -92,11 +113,14 @@ export default class Clock extends Component {
 
 				<StatusBar style={{backgroundColor: 'transparent'}} />
 
-				<TimePicker
-					onChange={this.onChange}
-					value={this.state.time}
-				/>
+				<Button title="When would you like to wakeup?" onPress={this.showDateTimePicker} />
 
+				<DateTimePicker
+					mode={"time"}
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this.handleDatePicked}
+          onCancel={this.hideDateTimePicker}
+        />
 
 				<Text style={styles.timeText}>
 					{this.state.time}
@@ -106,6 +130,9 @@ export default class Clock extends Component {
 				</Text>
 				<Text style={styles.dateText}>
 					{this.state.alarmGoneOff}
+				</Text>
+				<Text style={styles.dateText}>
+					{this.state.alarm}
 				</Text>
 				<Text style={styles.dateText}>
 					{this.state.currentTime}
