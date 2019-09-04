@@ -5,18 +5,18 @@ import {
 	Text,
 	StyleSheet,
 	StatusBar,
-	Button
+	Button,
+	Alert
 } from "react-native";
 
 import moment from "moment";
 
 import DateTimePicker from "react-native-modal-datetime-picker";
 
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#0000',
+		backgroundColor: '#0001',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
@@ -63,7 +63,9 @@ export default class Clock extends Component {
   };
 
   hideDateTimePicker = () => {
-    this.setState({ isDateTimePickerVisible: false });
+    this.setState({
+		isDateTimePickerVisible: false
+	});
   };
 
   handleDatePicked = date => {
@@ -93,6 +95,10 @@ export default class Clock extends Component {
 	wakeUp() {
 		if(this.state.currentTime == this.state.alarm){
 			this.setState({ alarmGoneOff: "true" })
+			Alert.alert(
+				'Title',
+				'Message'
+			);
 		}
 	};
 
