@@ -1,5 +1,7 @@
 import ReactNativeAN from 'react-native-alarm-notification';
 import React, {Component} from "react";
+import BackgroundTimer from 'react-native-background-timer';
+
 import {
 	View,
 	Text,
@@ -55,6 +57,27 @@ export default class Clock extends Component {
 
 		};
 
+		startTimer() {
+
+    let seconds = 60*10
+    
+
+    // https://github.com/ocetnik/react-native-background-timer
+    BackgroundTimer.runBackgroundTimer(() => {
+
+    let secondHand = currSeconds % 60
+    secondHand = (secondHand === 0) ? '00' : secondHand
+    secondHand = (secondHand !== '00' && secondHand < 10) ? `0${secondHand}` : secondHand
+    let displayTimer = `${Math.floor(currSeconds/60)}:${secondHand}`
+
+		if (currSeconds === 0) {
+        this.stopSession()
+        this.playTone()
+      }
+			currSeconds--
+    }, 1000)
+	}
+
 
   showDateTimePicker = () => {
     this.setState({ isDateTimePickerVisible: true });
@@ -83,6 +106,7 @@ export default class Clock extends Component {
 		this.setState({
 			alarm: alarmSet
 		})
+
 	}
 
 	componentDidMount() {
