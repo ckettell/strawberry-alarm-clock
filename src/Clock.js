@@ -38,7 +38,7 @@ const alarmNotifData = {
 	// e.g.
   	data: { foo: "bar" },
 };
-
+ 
 
 export default class Clock extends Component {
 		state = {
