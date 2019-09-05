@@ -1,6 +1,7 @@
 package com.strawberry_alarm_clock_react;
 
 import com.facebook.react.ReactActivity;
+import com.pilloxa.backgroundjob.BackgroundJobPackage;
 
 public class MainActivity extends ReactActivity {
 
