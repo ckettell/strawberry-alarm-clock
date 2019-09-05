@@ -40,35 +40,6 @@ const alarmNotifData = {
   	data: { foo: "bar" },
 };
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#0001',
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	input: {
-		borderColor: '#CCCCCC',
-	  borderTopWidth: 1,
-	  borderBottomWidth: 1,
-	  height: 50,
-	  fontSize: 25,
-	  paddingLeft: 20,
-	  paddingRight: 20
-	},
-	timeText: {
-		color: '#999999',
-		fontSize: 90,
-	},
-	dateText: {
-		color: '#999999',
-		fontSize: 40,
-	},
-	helloText: {
-		color: '#999999',
-		fontSize: 20,
-	}
-})
 
 export default class Clock extends Component {
 		state = {
@@ -173,3 +144,34 @@ export default class Clock extends Component {
 		)
 	}
 }
+
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#0001',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	input: {
+		borderColor: '#CCCCCC',
+	  borderTopWidth: 1,
+	  borderBottomWidth: 1,
+	  height: 50,
+	  fontSize: 25,
+	  paddingLeft: 20,
+	  paddingRight: 20
+	},
+	timeText: {
+		color: '#999999',
+		fontSize: 90,
+	},
+	dateText: {
+		color: '#999999',
+		fontSize: 40,
+	},
+	helloText: {
+		color: '#999999',
+		fontSize: 20,
+	}
+})
