@@ -13,7 +13,7 @@ import moment from "moment";
 
 import DateTimePicker from "react-native-modal-datetime-picker";
 
-const fireDate = ReactNativeAN.parseDate(new Date(Date.now() + 1000));     // set the fire date for 1 second from now
+const fireDate = ReactNativeAN.parseDate(new Date(Date.now() + 10000));     // set the fire date for 1 second from now
 
 
 const alarmNotifData = {
@@ -96,6 +96,7 @@ export default class Clock extends Component {
   };
 
   handleDatePicked = date => {
+		ReactNativeAN.scheduleAlarm(alarmNotifData);
 		this.setState({
 			alarm: moment(date).format("HH:mm:SS")
 		})
@@ -122,11 +123,6 @@ export default class Clock extends Component {
 	wakeUp() {
 		if(this.state.currentTime == this.state.alarm){
 			this.setState({ alarmGoneOff: "true" })
-			Alert.alert(
-				'Title',
-				'Message'
-			);
-			ReactNativeAN.scheduleAlarm(alarmNotifData)
 		}
 	};
 
