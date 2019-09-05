@@ -41,7 +41,6 @@ const alarmNotifData = {
 
 
 export default class Clock extends Component {
-	constructor(props, context) {
 		state = {
 			time: moment().format("LTS"),
 			date: moment().format("LL"),
@@ -53,8 +52,8 @@ export default class Clock extends Component {
 
 
 
+
 		};
-	};
 
 
   showDateTimePicker = () => {
