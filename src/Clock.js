@@ -1,4 +1,4 @@
-
+import ReactNativeAN from 'react-native-alarm-notification';
 import React, {Component} from "react";
 import {
 	View,
@@ -99,6 +99,7 @@ export default class Clock extends Component {
 				'Title',
 				'Message'
 			);
+			ReactNativeAN.scheduleAlarm(alarmNotifData)
 		}
 	};
 
