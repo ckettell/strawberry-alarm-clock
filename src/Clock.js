@@ -43,7 +43,7 @@ export default class Clock extends Component {
 			alarmGoneOff: "false",
 			currentTime: new Date().toLocaleTimeString(),
 			alarm: "",
-			travelTime: "",
+			travelTime: 0,
 			isDateTimePickerVisible: false
 		};
 
@@ -59,8 +59,16 @@ export default class Clock extends Component {
   };
 
   handleDatePicked = date => {
+		//convert date to unix timestamp (milliseconds)
+		const arrivalDate = new Date(date).getTime();
+
+		//calculate new alarm date, given travel time (milliseconds)
+		const unixAlarmDate = arrivalDate - (this.state.travelTime * 1000);
+
+		//new alarm date object
+		const newAlarmDate = new Date(unixAlarmDate);
 		this.setState({
-			alarm: moment(date).format("HH:mm:SS")
+			alarm: moment(newAlarmDate).format("HH:mm:SS")
 		})
   };
 

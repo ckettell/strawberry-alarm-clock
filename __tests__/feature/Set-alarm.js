@@ -18,10 +18,12 @@ import Clock from '../../src/Clock';
 import ReactNativeAN from 'react-native-alarm-notification';
 
 
-// describe('Set Alarm', () => {
-//   it('should schedule an alarm for the correct time', () => {
-//   const wrapper = shallow(<Clock />);
-//   const instance = wrapper.instance();
-//   instance.handleDatePicked('Fri Sep 06 2019 14:25:11 GMT+0100 (British Summer Time)')
-//   });
-// });
+describe('Set Alarm', () => {
+  it('should schedule an alarm for the correct time, accounting for travel time', () => {
+  const wrapper = shallow(<Clock />);
+  const instance = wrapper.instance();
+	instance.updateTravelTime(1800);
+  instance.handleDatePicked('Fri Sep 06 2019 14:25:00 GMT+0100 (British Summer Time)')
+	expect(instance.state.alarm).toEqual('13:55:00')
+  });
+});

@@ -172,7 +172,7 @@ exports[`renders correctly 1`] = `
         >
           <View>
             <RCTDatePicker
-              date={1567785393439}
+              date={1567789610981}
               minuteInterval={1}
               mode="time"
               onChange={[Function]}
@@ -313,7 +313,7 @@ exports[`renders correctly 1`] = `
     }
     testID="clock_time"
   >
-    4:56:33 PM
+    6:06:50 PM
   </Text>
 </View>
 `;
