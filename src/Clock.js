@@ -1,6 +1,7 @@
 import ReactNativeAN from 'react-native-alarm-notification';
 import React, {Component} from "react";
 import {
+	ImageBackground,
 	View,
 	Text,
 	StyleSheet,
@@ -108,7 +109,7 @@ export default class Clock extends Component {
 
 		return (
 			<View style={styles.container}>
-
+			<ImageBackground source={require('../assets/Strawberry.png')} style={{width: '100%', height: '100%'}}>
 				<StatusBar style={{backgroundColor: 'transparent'}} />
 
 				<Button title="When would you like to wakeup?" onPress={this.showDateTimePicker} />
@@ -135,7 +136,7 @@ export default class Clock extends Component {
 				<Text style={styles.dateText}>
 					{this.state.currentTime}
 				</Text>
-
+				</ImageBackground>
 
 			</View>
 		)
@@ -146,25 +147,16 @@ export default class Clock extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#0001',
+		backgroundColor: '#f0f8ff',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-	input: {
-		borderColor: '#CCCCCC',
-	  borderTopWidth: 1,
-	  borderBottomWidth: 1,
-	  height: 50,
-	  fontSize: 25,
-	  paddingLeft: 20,
-	  paddingRight: 20
-	},
 	timeText: {
-		color: '#999999',
-		fontSize: 90,
+		color: '#000000',
+		fontSize: 100,
 	},
 	dateText: {
-		color: '#999999',
+		color: '#000000',
 		fontSize: 40,
 	},
 	helloText: {
