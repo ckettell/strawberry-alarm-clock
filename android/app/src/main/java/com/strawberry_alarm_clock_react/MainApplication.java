@@ -16,7 +16,7 @@ import com.facebook.react.ReactApplication;
 import com.emekalites.react.alarm.notification.ANPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.soloader.SoLoader;  
+import com.facebook.soloader.SoLoader;
 
 import com.emekalites.react.alarm.notification.ANPackage;
 
@@ -55,12 +55,12 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
 
-      String id = "my_channel_id";					// The id of the channel.
+    String id = "my_channel_id";					// The id of the channel.
     CharSequence name = "my_channel_name";			// The user-visible name of the channel.
     String description = "my_channel_description";	// The user-visible description of the channel.
 
     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
+      NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH);
 
       // Configure the notification channel.
       mChannel.setDescription(description);

@@ -37,3 +37,10 @@ describe("Alarm Set Button", () => {
     expect(wrapper.exists()).toBe(true);
   });
 });
+
+// describe("Time Selection", () => {
+//   it("schedules alarm for correct time", () => {
+//     const wrapper = shallow(<Clock/>);
+//     wrapper.handleDatePicked('Fri Sep 06 2019 14:25:00 GMT+0100 (British Summer Time)')
+//   })
+// })
