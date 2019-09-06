@@ -38,7 +38,7 @@ const alarmNotifData = {
 	// e.g.
   	data: { foo: "bar" },
 };
- 
+
 
 export default class Clock extends Component {
 		state = {
@@ -49,10 +49,6 @@ export default class Clock extends Component {
 			currentTime: new Date().toLocaleTimeString(),
 			alarm: "",
 			isDateTimePickerVisible: false
-
-
-
-
 		};
 
 
