@@ -15,11 +15,11 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 
 const alarmNotifData = {
 	id: "12345",                                  // Required
-	title: "My Notification Title",               // Required
-	message: "My Notification Message",           // Required
+	title: "Wake Up!",               // Required
+	message: "Your destiny awaits...",           // Required
 	channel: "my_channel_id",                     // Required. Same id as specified in MainApplication's onCreate method
 	ticker: "My Notification Ticker",
-	auto_cancel: true,                            // default: true
+	auto_cancel: false,                            // default: true
 	vibrate: true,
 	vibration: 100,                               // default: 100, no vibration if vibrate: false
 	small_icon: "ic_launcher",                    // Required
@@ -43,6 +43,7 @@ export default class Clock extends Component {
 			alarmGoneOff: "false",
 			currentTime: new Date().toLocaleTimeString(),
 			alarm: "",
+			travelTime: "",
 			isDateTimePickerVisible: false
 		};
 
@@ -63,15 +64,15 @@ export default class Clock extends Component {
 		})
   };
 
+	updateTravelTime = duration => {
+		this.setState({
+			travelTime: duration
+		})
+	};
+
 	setCurrentTime() {
 		this.setState({
 			currentTime: new Date().toLocaleTimeString()
-		})
-	}
-
-	setAlarm(alarmSet) {
-		this.setState({
-			alarm: alarmSet
 		})
 	}
 
@@ -84,6 +85,7 @@ export default class Clock extends Component {
 	wakeUp() {
 		if(this.state.currentTime == this.state.alarm){
 			this.setState({ alarmGoneOff: "true" })
+			ReactNativeAN.sendNotification(alarmNotifData)
 		}
 	};
 
@@ -119,8 +121,6 @@ export default class Clock extends Component {
 				<Text testID="clock_time" style={styles.dateText}>
 					{this.state.currentTime}
 				</Text>
-
-
 			</View>
 		)
 	}
