@@ -16,7 +16,7 @@ import com.facebook.react.ReactApplication;
 import com.emekalites.react.alarm.notification.ANPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.soloader.SoLoader;  
+import com.facebook.soloader.SoLoader;
 
 import com.emekalites.react.alarm.notification.ANPackage;
 
@@ -60,7 +60,7 @@ public class MainApplication extends Application implements ReactApplication {
     String description = "my_channel_description";	// The user-visible description of the channel.
 
     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
+      NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH);
 
       // Configure the notification channel.
       mChannel.setDescription(description);

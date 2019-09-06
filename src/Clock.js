@@ -13,7 +13,6 @@ import moment from "moment";
 
 import DateTimePicker from "react-native-modal-datetime-picker";
 
-const fireDate = ""
 
 const alarmNotifData = {
 	id: "12345",                                  // Required
@@ -31,14 +30,13 @@ const alarmNotifData = {
 	color: "red",
 	schedule_once: true,                          // Works with ReactNativeAN.scheduleAlarm so alarm fires once
 	tag: 'some_tag',
-	fire_date: fireDate,                          // Date for firing alarm, Required for ReactNativeAN.scheduleAlarm.
 
 	// You can add any additional data that is important for the notification
 	// It will be added to the PendingIntent along with the rest of the bundle.
 	// e.g.
   	data: { foo: "bar" },
 };
- 
+
 
 export default class Clock extends Component {
 		state = {
@@ -48,10 +46,7 @@ export default class Clock extends Component {
 			alarmGoneOff: "false",
 			currentTime: new Date().toLocaleTimeString(),
 			alarm: "",
-			isDateTimePickerVisible: false
-
-
-
+			isDateTimePickerVisible: false,
 
 		};
 
@@ -67,8 +62,8 @@ export default class Clock extends Component {
   };
 
   handleDatePicked = date => {
-		const fireDate = ReactNativeAN.parseDate(new Date(date));
-		ReactNativeAN.scheduleAlarm(alarmNotifData);
+		const fire_date = ReactNativeAN.parseDate(new Date(date));
+		ReactNativeAN.scheduleAlarm(alarmNotifData, fire_date);
 		this.setState({
 			alarm: moment(date).format("HH:mm:SS")
 		})
@@ -94,7 +89,8 @@ export default class Clock extends Component {
 
 	wakeUp() {
 		if(this.state.currentTime == this.state.alarm){
-			this.setState({ alarmGoneOff: "true" })
+			this.setState({ alarmGoneOff: "true" });
+			ReactNativeAN.sendNotification(alarmNotifData)
 		}
 	};
 
