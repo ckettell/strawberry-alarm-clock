@@ -13,15 +13,13 @@ import moment from "moment";
 
 import DateTimePicker from "react-native-modal-datetime-picker";
 
-const fireDate = ""
-
 const alarmNotifData = {
 	id: "12345",                                  // Required
-	title: "My Notification Title",               // Required
-	message: "My Notification Message",           // Required
+	title: "Wake Up!",               // Required
+	message: "Your destiny awaits...",           // Required
 	channel: "my_channel_id",                     // Required. Same id as specified in MainApplication's onCreate method
 	ticker: "My Notification Ticker",
-	auto_cancel: true,                            // default: true
+	auto_cancel: false,                            // default: true
 	vibrate: true,
 	vibration: 100,                               // default: 100, no vibration if vibrate: false
 	small_icon: "ic_launcher",                    // Required
@@ -31,7 +29,6 @@ const alarmNotifData = {
 	color: "red",
 	schedule_once: true,                          // Works with ReactNativeAN.scheduleAlarm so alarm fires once
 	tag: 'some_tag',
-	fire_date: fireDate,                          // Date for firing alarm, Required for ReactNativeAN.scheduleAlarm.
 
 	// You can add any additional data that is important for the notification
 	// It will be added to the PendingIntent along with the rest of the bundle.
@@ -42,12 +39,11 @@ const alarmNotifData = {
 
 export default class Clock extends Component {
 		state = {
-			time: moment().format("LTS"),
 			date: moment().format("LL"),
-			wakeUpTime: "",
 			alarmGoneOff: "false",
 			currentTime: new Date().toLocaleTimeString(),
 			alarm: "",
+			travelTime: 0,
 			isDateTimePickerVisible: false
 		};
 
@@ -63,12 +59,24 @@ export default class Clock extends Component {
   };
 
   handleDatePicked = date => {
-		const fireDate = ReactNativeAN.parseDate(new Date(date));
-		ReactNativeAN.scheduleAlarm(alarmNotifData);
+		//convert date to unix timestamp (milliseconds)
+		const arrivalDate = new Date(date).getTime();
+
+		//calculate new alarm date, given travel time (milliseconds)
+		const unixAlarmDate = arrivalDate - (this.state.travelTime * 1000);
+
+		//new alarm date object
+		const newAlarmDate = new Date(unixAlarmDate);
 		this.setState({
-			alarm: moment(date).format("HH:mm:SS")
+			alarm: moment(newAlarmDate).format("HH:mm:SS")
 		})
   };
+
+	updateTravelTime = duration => {
+		this.setState({
+			travelTime: duration
+		})
+	};
 
 	setCurrentTime() {
 		this.setState({
@@ -76,35 +84,21 @@ export default class Clock extends Component {
 		})
 	}
 
-	setAlarm(alarmSet) {
-		this.setState({
-			alarm: alarmSet
-		})
-	}
-
 	componentDidMount() {
 
-		setInterval(() => { this.wakeUp() }, 1000)
-		setInterval(() => { this.setCurrentTime() }, 1000)
+		setInterval(() => { this.wakeUp() }, 200)
+		setInterval(() => { this.setCurrentTime() }, 200)
 	}
 
 	wakeUp() {
 		if(this.state.currentTime == this.state.alarm){
 			this.setState({ alarmGoneOff: "true" })
+			ReactNativeAN.sendNotification(alarmNotifData)
 		}
 	};
 
 
   render() {
-    setTimeout(() => {
-			this.setState({
-				time: moment().format("LTS"),
-				date: moment().format("LL"),
-			});
-
-		}, 1000);
-
-	// wakeUp();
 
 		return (
 			<View style={styles.container}>
@@ -132,11 +126,9 @@ export default class Clock extends Component {
 				<Text style={styles.dateText}>
 					{this.state.alarm}
 				</Text>
-				<Text style={styles.dateText}>
+				<Text testID="clock_time" style={styles.dateText}>
 					{this.state.currentTime}
 				</Text>
-
-
 			</View>
 		)
 	}
