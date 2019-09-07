@@ -6,10 +6,11 @@ import {
 	StyleSheet,
 	StatusBar,
 	Button,
-	Alert
+	Alert,
 } from "react-native";
 
 import moment from "moment";
+import StopAlarm from './StopAlarm';
 
 import DateTimePicker from "react-native-modal-datetime-picker";
 
@@ -97,6 +98,10 @@ export default class Clock extends Component {
 		}
 	};
 
+	stopAlarmHandler = () => {
+		console.log('Alarm Stopped');
+	}
+
 
   render() {
 
@@ -129,6 +134,7 @@ export default class Clock extends Component {
 				<Text testID="clock_time" style={styles.dateText}>
 					{this.state.currentTime}
 				</Text>
+				<StopAlarm onStopAlarm={this.stopAlarmHandler} />
 			</View>
 		)
 	}

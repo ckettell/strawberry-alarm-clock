@@ -11,11 +11,12 @@ import {
 } from "react-native";
 
 import { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Adapter from 'enzyme-adapter-react-16';
 import { render } from 'react-native-testing-library';
 import renderer from 'react-test-renderer';
 import Clock from '../src/Clock'
 import moment from 'moment';
+import StopAlarm from '../src/StopAlarm';
 
 it('renders correctly', () => {
   const clock = renderer.create(
@@ -36,6 +37,11 @@ describe("Alarm Set Button", () => {
     const wrapper = shallow(<Button title="When would you like to wakeup?" />);
     expect(wrapper.exists()).toBe(true);
   });
+});
+
+it("has stop alarm button", () => {
+  const wrapper = shallow(<StopAlarm />);
+  expect(wrapper.exists()).toBe(true);
 });
 
 // describe("Time Selection", () => {

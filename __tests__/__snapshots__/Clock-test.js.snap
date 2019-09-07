@@ -172,7 +172,7 @@ exports[`renders correctly 1`] = `
         >
           <View>
             <RCTDatePicker
-              date={1567789610981}
+              date={1567864886090}
               minuteInterval={1}
               mode="time"
               onChange={[Function]}
@@ -282,7 +282,7 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    September 6, 2019
+    September 7, 2019
   </Text>
   <Text
     style={
@@ -313,7 +313,49 @@ exports[`renders correctly 1`] = `
     }
     testID="clock_time"
   >
-    6:06:50 PM
+    3:01:26 PM
   </Text>
+  <View
+    accessibilityRole="button"
+    accessibilityStates={Array []}
+    accessible={true}
+    clickable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {},
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#007AFF",
+              "fontSize": 18,
+              "padding": 8,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Stop Alarm
+      </Text>
+    </View>
+  </View>
 </View>
 `;
