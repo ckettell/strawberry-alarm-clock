@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 import Clock from '../src/Clock'
-import Location from '../src/Location'
+import Location from '../src/location/index'
 import Time from '../src/Time'
 
  const AppNavigator = createStackNavigator({
