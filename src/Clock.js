@@ -29,6 +29,9 @@ export default class Clock extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
+			date: moment().format("LL"),
+			currentTime: new Date().toLocaleTimeString(),
+			isDateTimePickerVisible: false,
 			fireDate: '',
 			update: '',
 			futureFireDate: '0',
@@ -73,6 +76,8 @@ export default class Clock extends Component {
 			console.log(`Notification ${obj.id} dismissed`);
 		});
 
+		setInterval(() => { this.setCurrentTime() }, 200)
+
 		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
 			const obj = JSON.parse(e);
 			console.log(obj);
@@ -110,13 +115,24 @@ export default class Clock extends Component {
 		this.setAlarm();
   };
 
+	setCurrentTime() {
+		this.setState({
+			currentTime: new Date().toLocaleTimeString()
+		})
+	}
 
 	render() {
 		const { update, fireDate, futureFireDate } = this.state;
 		return (
 				<View style={styles.container}>
+					<Text style={styles.timeText}>
+						{this.state.currentTime}
+					</Text>
+					<Text style={styles.dateText}>
+						{this.state.date}
+					</Text>
 					<StatusBar style={{backgroundColor: 'transparent'}} />
-					<Button title="When would you like to arrive?" onPress={this.showDateTimePicker} />
+					<Button title="Set Arrival Time" onPress={this.showDateTimePicker} />
 					<DateTimePicker
 					mode={"time"}
           isVisible={this.state.isDateTimePickerVisible}
@@ -126,16 +142,13 @@ export default class Clock extends Component {
 					<Text style={styles.timeText}>
 					{this.state.time}
 					</Text>
-					<Button
-						onPress={this.sendNotification}
-						title="Send Notification Now"
-						color="#7fff00"
-					/>
-					<Button
-						onPress={this.stopAlarm}
-						title="Stop Alarm Sound"
-						color="#841584"
-					/>
+					<View>
+						<Button
+							onPress={this.stopAlarm}
+							title="Stop Alarm"
+							color="#ff0400"
+						/>
+					</View>
 				</View>
 		);
 	}
