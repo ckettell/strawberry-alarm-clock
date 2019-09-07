@@ -1,55 +1,90 @@
-import ReactNativeAN from 'react-native-alarm-notification';
-import React, {Component} from "react";
+import React, { Component } from 'react';
 import {
 	View,
 	Text,
 	StyleSheet,
-	StatusBar,
 	Button,
-	Alert,
-} from "react-native";
+	StatusBar,
+	DeviceEventEmitter
+} from 'react-native';
 
+import ReactNativeAN from 'react-native-alarm-notification';
 import moment from "moment";
-import StopAlarm from './StopAlarm';
-
-import DateTimePicker from "react-native-modal-datetime-picker";
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const alarmNotifData = {
-	id: "12345",                                  // Required
-	title: "Wake Up!",               // Required
-	message: "Your destiny awaits...",           // Required
-	channel: "my_channel_id",                     // Required. Same id as specified in MainApplication's onCreate method
-	ticker: "My Notification Ticker",
-	auto_cancel: false,                            // default: true
+	id: "22",
+	title: "Wake Up!",
+	message: "Your destiny awaits...",
 	vibrate: true,
-	vibration: 100,                               // default: 100, no vibration if vibrate: false
-	small_icon: "ic_launcher",                    // Required
-	large_icon: "ic_launcher",
+	vibration: 100,
 	play_sound: true,
-	sound_name: null,                             // Plays custom notification ringtone if sound_name: null
-	color: "red",
-	schedule_once: true,                          // Works with ReactNativeAN.scheduleAlarm so alarm fires once
-	tag: 'some_tag',
-
-	// You can add any additional data that is important for the notification
-	// It will be added to the PendingIntent along with the rest of the bundle.
-	// e.g.
-  	data: { foo: "bar" },
+	schedule_once: true,
+	color: "green",
+	channel: "wakeup",
+	data: { content: "my notification id is 22" },
 };
 
-
 export default class Clock extends Component {
-		state = {
-			date: moment().format("LL"),
-			alarmGoneOff: "false",
-			currentTime: new Date().toLocaleTimeString(),
-			alarm: "",
+	constructor(props, context) {
+		super(props, context);
+		this.state = {
+			fireDate: '',
+			update: '',
+			futureFireDate: '0',
 			travelTime: 0,
-			isDateTimePickerVisible: false
 		};
+		this.setAlarm = this.setAlarm.bind(this);
+		this.stopAlarm = this.stopAlarm.bind(this);
+	}
 
+	setAlarm = () => {
+		console.log('Alarm set')
+		const { fireDate } = this.state;
+		const details  = { ...alarmNotifData, fire_date: fireDate };
+		console.log(`alarm set: ${fireDate}`);
+		this.setState({ update: `alarm set: ${fireDate}` });
+		ReactNativeAN.scheduleAlarm(details);
+	};
 
-  showDateTimePicker = () => {
+	setFutureAlarm = () => {
+		const { futureFireDate } = this.state;
+		const fire_date = ReactNativeAN.parseDate(new Date(Date.now() + parseInt(futureFireDate)));
+		const details  = { ...alarmNotifData, fire_date };
+		console.log(`alarm set: ${fire_date}`);
+		this.setState({ update: `alarm set: ${fire_date}` });
+		ReactNativeAN.scheduleAlarm(details);
+	};
+
+	stopAlarm = () => {
+		this.setState({ update: '' });
+		ReactNativeAN.stopAlarm();
+	};
+
+	sendNotification = () => {
+		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" }, };
+		console.log(details);
+		ReactNativeAN.sendNotification(details);
+	};
+
+	componentDidMount() {
+		DeviceEventEmitter.addListener('OnNotificationDismissed', async function(e) {
+			const obj = JSON.parse(e);
+			console.log(`Notification ${obj.id} dismissed`);
+		});
+
+		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
+			const obj = JSON.parse(e);
+			console.log(obj);
+		});
+	}
+
+	componentWillUnmount() {
+		DeviceEventEmitter.removeListener('OnNotificationDismissed');
+		DeviceEventEmitter.removeListener('OnNotificationOpened');
+	}
+
+	showDateTimePicker = () => {
     this.setState({ isDateTimePickerVisible: true });
   };
 
@@ -68,78 +103,43 @@ export default class Clock extends Component {
 
 		//new alarm date object
 		const newAlarmDate = new Date(unixAlarmDate);
+
 		this.setState({
-			alarm: moment(newAlarmDate).format("HH:mm:SS")
+			fireDate: moment(newAlarmDate).format("DD-MM-YYYY HH:mm:ss")
 		})
+		this.setAlarm();
   };
 
-	updateTravelTime = duration => {
-		this.setState({
-			travelTime: duration
-		})
-	};
 
-	setCurrentTime() {
-		this.setState({
-			currentTime: new Date().toLocaleTimeString()
-		})
-	}
-
-	componentDidMount() {
-
-		setInterval(() => { this.wakeUp() }, 200)
-		setInterval(() => { this.setCurrentTime() }, 200)
-	}
-
-	wakeUp() {
-		if(this.state.currentTime == this.state.alarm){
-			this.setState({ alarmGoneOff: "true" })
-			ReactNativeAN.sendNotification(alarmNotifData)
-		}
-	};
-
-	stopAlarmHandler = () => {
-		console.log('Alarm Stopped');
-	}
-
-
-  render() {
-
+	render() {
+		const { update, fireDate, futureFireDate } = this.state;
 		return (
-			<View style={styles.container}>
-
-				<StatusBar style={{backgroundColor: 'transparent'}} />
-
-				<Button title="When would you like to wakeup?" onPress={this.showDateTimePicker} />
-
-				<DateTimePicker
+				<View style={styles.container}>
+					<StatusBar style={{backgroundColor: 'transparent'}} />
+					<Button title="When would you like to arrive?" onPress={this.showDateTimePicker} />
+					<DateTimePicker
 					mode={"time"}
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
-        />
-
-				<Text style={styles.timeText}>
+        	/>
+					<Text style={styles.timeText}>
 					{this.state.time}
-				</Text>
-				<Text style={styles.dateText}>
-					{this.state.date}
-				</Text>
-				<Text style={styles.dateText}>
-					{this.state.alarmGoneOff}
-				</Text>
-				<Text style={styles.dateText}>
-					{this.state.alarm}
-				</Text>
-				<Text testID="clock_time" style={styles.dateText}>
-					{this.state.currentTime}
-				</Text>
-				<StopAlarm onStopAlarm={this.stopAlarmHandler} />
-			</View>
-		)
+					</Text>
+					<Button
+						onPress={this.sendNotification}
+						title="Send Notification Now"
+						color="#7fff00"
+					/>
+					<Button
+						onPress={this.stopAlarm}
+						title="Stop Alarm Sound"
+						color="#841584"
+					/>
+				</View>
+		);
 	}
 }
-
 
 const styles = StyleSheet.create({
 	container: {
