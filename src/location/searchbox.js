@@ -12,17 +12,37 @@ constructor(props) {
   super(props);
   this.state = {
     searchFocused: false,
-    locationA: 'Ted',
+    locationA: '',
+    locationB: 'EhxDYW1iZXJ3ZWxsIEdyZWVuLCBMb25kb24sIFVLIi4qLAoUChIJ5R25z38DdkgRsEGCQSB9MKESFAoSCXOuT894A3ZIEcsmDvrEC_d0',
+    travelTime: '',
   }
 };
 
 
+calculateDistance = () => {
+
+    return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=place_id:${this.state.locationA}&destinations=place_id:${this.state.locationB}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+      .then( (response) => response.json() )
+      .then( (responseJson) => {
+
+        this.setState({
+          travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
+
+        })
+
+
+})
+
+
+      }
+
+
   setLocation = data => {
     this.setState({
-      locationA: data["id"]
+      locationA: data["place_id"]
 
     })
-    console.log(data)
+
   }
 
   render() {
@@ -44,6 +64,9 @@ constructor(props) {
     renderDescription={row => row.description} // custom description render
     onPress={(data, details = null) => {
       { this.setLocation(data) }
+      { this.calculateDistance() }
+
+
     }} // 'details' is provided when fetchDetails = true
 
        query={{

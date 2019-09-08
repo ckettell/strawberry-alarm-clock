@@ -12,8 +12,8 @@ export default class Location extends Component {
 
       componentDidMount(){
 
-        const loc = SearchBox.props.locationA
-        console.log(loc + ' locTION HERE');
+        // const loc = SearchBox.props.locationA
+        // console.log(loc + ' locTION HERE');
 
         return fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE')
         .then( (response) => response.json() )
@@ -29,7 +29,7 @@ export default class Location extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Where would like to go?</Text>
+        
          <SearchBox/>
         <Button
         title="Next"
