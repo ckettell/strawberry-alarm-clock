@@ -9,6 +9,8 @@ import {
 	Alert,
 } from "react-native";
 
+import BackgroundTimer from 'react-native-background-timer';
+
 import moment from "moment";
 import StopAlarm from './StopAlarm';
 
@@ -36,7 +38,6 @@ const alarmNotifData = {
 	// e.g.
   	data: { foo: "bar" },
 };
-
 
 export default class Clock extends Component {
 		state = {
@@ -71,6 +72,10 @@ export default class Clock extends Component {
 		this.setState({
 			alarm: moment(newAlarmDate).format("HH:mm:SS")
 		})
+		BackgroundTimer.runBackgroundTimer(() => {
+      this.wakeUp();
+			this.setCurrentTime();
+    }, (200));
   };
 
 	updateTravelTime = duration => {
@@ -85,10 +90,10 @@ export default class Clock extends Component {
 		})
 	}
 
-	componentDidMount() {
 
-		setInterval(() => { this.wakeUp() }, 200)
-		setInterval(() => { this.setCurrentTime() }, 200)
+
+	componentDidMount() {
+		setInterval(() => { this.setCurrentTime() }, 200);
 	}
 
 	wakeUp() {

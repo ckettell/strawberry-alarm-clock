@@ -55,6 +55,9 @@ calculateDistance = () => {
     <Text>
        {this.state.locationA}
    </Text>
+   <Text>
+      {this.state.travelTime}
+  </Text>
 
     <GooglePlacesAutocomplete
        placeholder="Where do you want to go?"
