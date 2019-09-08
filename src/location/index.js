@@ -33,7 +33,7 @@ export default class Location extends Component {
 
    }
    geoSuccess = (position) => {
-     console.log(position)
+     console.log(position.coords.latitude)
      this.setState({
        ready:true,
        Latitude: position.coords.latitude,
@@ -49,6 +49,15 @@ export default class Location extends Component {
 
 
   render() {
+
+    const currentLocation = {
+        latitude: this.state.Latitude,
+           longitude: this.state.Longitude,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }
+
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
