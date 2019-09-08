@@ -61,7 +61,7 @@ export default class Location extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
-         <SearchBox/>
+         <SearchBox location={currentLocation}/>
         <Button
         title="Next"
         onPress={() => this.props.navigation.navigate('Time')}

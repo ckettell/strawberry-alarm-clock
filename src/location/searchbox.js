@@ -10,10 +10,12 @@ import styles from "./searchBoxStyles.js";
 export default class SearchBox extends Component {
 constructor(props) {
   super(props);
+
   this.state = {
     searchFocused: false,
-    locationA: '',
-    locationB: 'EhxDYW1iZXJ3ZWxsIEdyZWVuLCBMb25kb24sIFVLIi4qLAoUChIJ5R25z38DdkgRsEGCQSB9MKESFAoSCXOuT894A3ZIEcsmDvrEC_d0',
+    locationALat: '',
+    locationALong: '',
+    locationB: '',
     travelTime: '',
   }
 };
@@ -21,31 +23,43 @@ constructor(props) {
 
 calculateDistance = () => {
 
-    return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=place_id:${this.state.locationA}&destinations=place_id:${this.state.locationB}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
-      .then( (response) => response.json() )
-      .then( (responseJson) => {
+  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=place_id:${this.state.locationA}&destinations=place_id:${this.state.locationB}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+  .then( (response) => response.json() )
+  .then( (responseJson) => {
 
-        this.setState({
-          travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
+    this.setState({
+      travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
 
-        })
-
-
-})
+    })
 
 
-      }
+  })
+
+
+}
+
+  setCurrentLocation = () => {
+
+    this.setState({
+       locationALat: this.props.location['latitude'],
+       locationALong: this.props.location['longitude'],
+
+    })
+
+  }
 
 
   setLocation = data => {
     this.setState({
-      locationA: data["place_id"]
+      locationB: data["place_id"]
 
     })
 
   }
 
   render() {
+
+    console.log(this.props.location['latitude'])
 
     const { searchFocused } = this.state;
         const { onLocationSelected } = this.props;
@@ -64,7 +78,9 @@ calculateDistance = () => {
     renderDescription={row => row.description} // custom description render
     onPress={(data, details = null) => {
       { this.setLocation(data) }
+      { this.setCurrentLocation()}
       { this.calculateDistance() }
+
 
 
     }} // 'details' is provided when fetchDetails = true
