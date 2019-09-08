@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { Text, Button } from 'react-native'
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import Geolocation from '@react-native-community/geolocation';
 
 import SearchBox from './searchbox'
 import SearchResults from './searchresults'
@@ -9,27 +10,48 @@ import styles from "./styles";
 
 export default class Location extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      ready: false,
+     Latitude: 0,
+     Longitude: 0,
+     error: null
+    }
+  };
 
-      componentDidMount(){
+  componentDidMount(){
 
-        // const loc = SearchBox.props.locationA
-        // console.log(loc + ' locTION HERE');
+      console.log('mount')
+     let geoOptions = {
+        enableHighAccuracy: true,
+        timeOut: 20000,
+      maximumAge: 60 * 60 * 24
+    };
+    this.setState({ready:false, error: null});
+    Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
 
-        return fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE')
-        .then( (response) => response.json() )
-        .then( (responseJson) => {
-          console.log(responseJson)
+   }
+   geoSuccess = (position) => {
+     console.log(position)
+     this.setState({
+       ready:true,
+       Latitude: position.coords.latitude,
+       Longitude: position.coords.longitude
+       })
 
-        });
-      }
+   }
+    geoFailure = (err) => {
+   this.setState({error: err.message});
 
+    }
 
 
 
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        
+
          <SearchBox/>
         <Button
         title="Next"
