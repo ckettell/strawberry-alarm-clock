@@ -18,43 +18,60 @@ constructor(props) {
     locationBLat: '',
     locationBLong: '',
     travelTime: '',
+    travelMode: '',
   }
 };
 
 
 calculateDistance = () => {
 
-  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLat}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+  if (this.state.travelMode == 'driving') {
+    console.log("driving")
+
+  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&departure_time=now&traffic_model=pessimistic&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
   .then( (response) => response.json() )
   .then( (responseJson) => {
-    console.log(responseJson)
 
     this.setState({
       travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
 
-    })
-
-
-    console.log(this.state.locationALat)
-    console.log(this.state.locationALong)
-    console.log(this.state.travelTime)
-
-
-
+    });
+    this.setTravelTime()
   })
+}
+else {
+  console.log("not driving")
 
+return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+.then( (response) => response.json() )
+.then( (responseJson) => {
+
+  this.setState({
+    travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
+
+  });
+  this.setTravelTime()
+})
 
 }
+}
+
+setTravelTime = () => {
+  console.log(this.props.updateTravelTime)
+  this.props.updateTravelTime(this.state.travelTime)
+};
 
   setCurrentLocation = () => {
-
 
 
     this.setState({
        locationALat: this.props.location['latitude'],
        locationALong: this.props.location['longitude'],
+       travelMode: this.props.travelMode
 
     })
+
+
 
   }
 
