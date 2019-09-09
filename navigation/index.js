@@ -3,7 +3,7 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 
 
-import Clock from '../src/Clock'
+import Clock from '../src/alarm/Clock'
 import Location from '../src/location/index'
 import Time from '../src/time/index'
 
