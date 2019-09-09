@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import { Text, Button, Picker } from 'react-native'
+import { Text, Button, Picker } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
 
-import SearchBox from './searchbox'
-import SearchResults from './searchresults'
+import SearchBox from './searchbox';
+import SearchResults from './searchresults';
 import styles from "./styles";
 
 export default class Location extends Component {
@@ -47,7 +47,9 @@ export default class Location extends Component {
 
     }
 
-
+    setTransportMode = (mode) => {
+      this.setState({travelMode: mode});
+    }
 
   render() {
 
@@ -62,22 +64,19 @@ export default class Location extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
-         <SearchBox location={currentLocation} travelMode= {this.state.travelMode}/>
+        <SearchBox location={currentLocation} travelMode= {this.state.travelMode}/>
         <Button
         title="Next"
         onPress={() => this.props.navigation.navigate('Time')}
-      />
-      <Picker
-        selectedValue = { this.state.travelMode }
-        style={{height: 50, width: 100}}
-        onValueChange={(itemValue, itemIndex) =>
-          this.setState({travelMode: itemValue})
-        }>
-        <Picker.Item label="Driving" value="driving"/>
-        <Picker.Item label="Walking" value="walking"/>
-        <Picker.Item label="Cycling" value="bicycling"/>
-        <Picker.Item label="Public Transport" value="transit"/>
-      </Picker>
+        />
+        <Button title='Public Transport'
+          onPress={() => this.setTransportMode('transit')}/>
+        <Button title='Walking'
+          onPress={() => this.setTransportMode('walking')}/>
+        <Button title='Cycling'
+          onPress={() => this.setTransportMode('bicycling')}/>
+        <Button title='Driving'
+          onPress={() => this.setTransportMode('driving')}/>
 
       </View>
     );
