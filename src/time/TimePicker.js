@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Time from 'index'
 
 import {
 	View,
@@ -9,7 +10,7 @@ import {
 	Alert,
 } from "react-native";
 
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
 
 import moment from "moment";
 
@@ -35,9 +36,20 @@ export default class TimePicker extends Component {
 		this.setState({
     alarmTime: moment(date).format("HH:mm:SS")
 	})
+	this.onChangeTime()
   };
 
+
+	onChangeTime() {
+		this.props.updateTime(this.state.alarmTime)
+	}
+
   render() {
+
+		const chosenTime = {
+			timePicked: this.state.alarmTime
+		}
+
     return(
 			<View>
 			<Button title="Set Arrival Time" onPress={this.showDateTimePicker} />
@@ -47,13 +59,6 @@ export default class TimePicker extends Component {
         onConfirm={this.handleDatePicked}
         onCancel={this.hideDateTimePicker}
       />
-			<Button
-			title="Go to clock"
-			onPress={() => this.props.navigation.navigate('Clock', { alarmDate: TimePicker.state.alarmTime })}
-			/>
-			<Text >
-			{this.state.alarmTime}
-			</Text>
 			</View>
     )
   }

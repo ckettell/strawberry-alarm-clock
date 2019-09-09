@@ -7,7 +7,6 @@ import Clock from '../src/Clock'
 import Location from '../src/location/index'
 import Time from '../src/time/index'
 
-
  const AppNavigator = createStackNavigator({
   Home: {
     screen: Location,
