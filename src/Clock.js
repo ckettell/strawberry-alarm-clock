@@ -125,10 +125,14 @@ export default class Clock extends Component {
 
 	render() {
 		const { update, fireDate, futureFireDate } = this.state;
+		const text = this.props.navigation.getParam('alarmDate', 'nothing sent');
 		return (
 				<View style={styles.container}>
 					<Text style={styles.timeText}>
 						{this.state.currentTime}
+					</Text>
+					<Text style={styles.timeText}>
+					{text}
 					</Text>
 					<Text style={styles.dateText}>
 						{this.state.date}

@@ -9,12 +9,16 @@ import {
 	Alert,
 } from "react-native";
 
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+
+import moment from "moment";
+
 import DateTimePicker from "react-native-modal-datetime-picker";
 
 export default class TimePicker extends Component {
   state = {
     isDateTimePickerVisible: false,
-    date: "",
+    alarmTime: "non set",
   };
 
   showDateTimePicker = () => {
@@ -28,7 +32,9 @@ export default class TimePicker extends Component {
   };
 
   handleDatePicked = date => {
-    alarm: moment(date).format("HH:mm:SS")
+		this.setState({
+    alarmTime: moment(date).format("HH:mm:SS")
+	})
   };
 
   render() {
@@ -41,6 +47,13 @@ export default class TimePicker extends Component {
         onConfirm={this.handleDatePicked}
         onCancel={this.hideDateTimePicker}
       />
+			<Button
+			title="Go to clock"
+			onPress={() => this.props.navigation.navigate('Clock', { alarmDate: TimePicker.state.alarmTime })}
+			/>
+			<Text >
+			{this.state.alarmTime}
+			</Text>
 			</View>
     )
   }
