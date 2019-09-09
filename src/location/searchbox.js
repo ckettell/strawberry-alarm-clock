@@ -99,7 +99,7 @@ calculateDistance = () => {
            width: "100%"
          },
          textInputContainer: {
-           flex: 1,
+           flex: 3,
            backgroundColor: "transparent",
            height: 54,
            marginHorizontal: 20,
