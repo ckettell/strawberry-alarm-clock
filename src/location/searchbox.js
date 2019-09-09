@@ -24,14 +24,20 @@ constructor(props) {
 
 calculateDistance = () => {
 
-  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=place_id:${this.state.locationA}&destinations=place_id:${this.state.locationB}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLat}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
   .then( (response) => response.json() )
   .then( (responseJson) => {
+    console.log(responseJson)
 
     this.setState({
       travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
 
     })
+
+
+    console.log(this.state.locationALat)
+    console.log(this.state.locationALong)
+    console.log(this.state.travelTime)
 
 
 
@@ -41,6 +47,8 @@ calculateDistance = () => {
 }
 
   setCurrentLocation = () => {
+
+
 
     this.setState({
        locationALat: this.props.location['latitude'],
@@ -80,7 +88,7 @@ calculateDistance = () => {
        fetchDetails={true}
     renderDescription={row => row.description} // custom description render
     onPress={(data, details = null) => {
-  
+
       { this.setDestination(details) }
       { this.setCurrentLocation()}
       { this.calculateDistance() }
