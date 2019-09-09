@@ -44,10 +44,8 @@ export default class Clock extends Component {
 	}
 
 	setAlarm = () => {
-		console.log('Alarm set')
 		const { fireDate } = this.state;
 		const details  = { ...alarmNotifData, fire_date: fireDate };
-		console.log(`alarm set: ${fireDate}`);
 		this.setState({ update: `alarm set: ${fireDate}` });
 		ReactNativeAN.scheduleAlarm(details);
 	};
@@ -56,7 +54,6 @@ export default class Clock extends Component {
 		const { futureFireDate } = this.state;
 		const fire_date = ReactNativeAN.parseDate(new Date(Date.now() + parseInt(futureFireDate)));
 		const details  = { ...alarmNotifData, fire_date };
-		console.log(`alarm set: ${fire_date}`);
 		this.setState({ update: `alarm set: ${fire_date}` });
 		ReactNativeAN.scheduleAlarm(details);
 	};
@@ -68,21 +65,18 @@ export default class Clock extends Component {
 
 	sendNotification = () => {
 		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" }, };
-		console.log(details);
 		ReactNativeAN.sendNotification(details);
 	};
 
 	componentDidMount() {
 		DeviceEventEmitter.addListener('OnNotificationDismissed', async function(e) {
 			const obj = JSON.parse(e);
-			console.log(`Notification ${obj.id} dismissed`);
 		});
 
 		setInterval(() => { this.setCurrentTime() }, 200)
 
 		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
 			const obj = JSON.parse(e);
-			console.log(obj);
 		});
 	}
 
