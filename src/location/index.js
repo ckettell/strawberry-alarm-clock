@@ -33,7 +33,7 @@ export default class Location extends Component {
 
    }
    geoSuccess = (position) => {
-     console.log(position.coords.latitude)
+     console.log(position.coords.longitude)
      this.setState({
        ready:true,
        Latitude: position.coords.latitude,
