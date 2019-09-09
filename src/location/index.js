@@ -69,14 +69,17 @@ export default class Location extends Component {
         title="Next"
         onPress={() => this.props.navigation.navigate('Time')}
         />
-        <Button title='Public Transport'
-          onPress={() => this.setTransportMode('transit')}/>
-        <Button title='Walking'
-          onPress={() => this.setTransportMode('walking')}/>
-        <Button title='Cycling'
-          onPress={() => this.setTransportMode('bicycling')}/>
-        <Button title='Driving'
-          onPress={() => this.setTransportMode('driving')}/>
+        <Picker
+          selectedValue={this.state.travelMode}
+          style={{height: 50, width: 100}}
+          onValueChange={(itemValue, itemIndex) =>
+            this.setTransportMode(itemValue)
+          }>
+          <Picker.Item label="Walking" value="walking" />
+          <Picker.Item label="Cycling" value="bicycling" />
+          <Picker.Item label="Public Transport" value="transit" />
+          <Picker.Item label="Driving" value="driving" />
+        </Picker>
 
       </View>
     );
