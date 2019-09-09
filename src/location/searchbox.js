@@ -18,13 +18,14 @@ constructor(props) {
     locationBLat: '',
     locationBLong: '',
     travelTime: '',
+    travelMode: '',
   }
 };
 
 
 calculateDistance = () => {
 
-  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLat}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
   .then( (response) => response.json() )
   .then( (responseJson) => {
     console.log(responseJson)
@@ -53,6 +54,7 @@ calculateDistance = () => {
     this.setState({
        locationALat: this.props.location['latitude'],
        locationALong: this.props.location['longitude'],
+       travelMode: this.props.travelMode
 
     })
 

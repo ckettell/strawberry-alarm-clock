@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Text, Button } from 'react-native'
+import { Text, Button, Picker } from 'react-native'
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
@@ -16,7 +16,8 @@ export default class Location extends Component {
       ready: false,
      Latitude: 0,
      Longitude: 0,
-     error: null
+     error: null,
+     travelMode: '',
     }
   };
 
@@ -61,11 +62,23 @@ export default class Location extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
-         <SearchBox location={currentLocation}/>
+         <SearchBox location={currentLocation} travelMode= {this.state.travelMode}/>
         <Button
         title="Next"
         onPress={() => this.props.navigation.navigate('Time')}
       />
+      <Picker
+        selectedValue = { this.state.travelMode }
+        style={{height: 50, width: 100}}
+        onValueChange={(itemValue, itemIndex) =>
+          this.setState({travelMode: itemValue})
+        }>
+        <Picker.Item label="Driving" value="driving"/>
+        <Picker.Item label="Walking" value="walking"/>
+        <Picker.Item label="Cycling" value="bicycling"/>
+        <Picker.Item label="Public Transport" value="transit"/>
+      </Picker>
+
       </View>
     );
   }
