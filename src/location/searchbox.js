@@ -15,7 +15,8 @@ constructor(props) {
     searchFocused: false,
     locationALat: '',
     locationALong: '',
-    locationB: '',
+    locationBLat: '',
+    locationBLong: '',
     travelTime: '',
   }
 };
@@ -31,6 +32,7 @@ calculateDistance = () => {
       travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
 
     })
+
 
 
   })
@@ -49,9 +51,10 @@ calculateDistance = () => {
   }
 
 
-  setLocation = data => {
+  setDestination = details => {
     this.setState({
-      locationB: data["place_id"]
+      locationBLat: details['geometry']['location']['lat'],
+      locationBLong: details['geometry']['location']['lng'],
 
     })
 
@@ -62,7 +65,7 @@ calculateDistance = () => {
     console.log(this.props.location['latitude'])
 
     const { searchFocused } = this.state;
-        const { onLocationSelected } = this.props;
+      const { onLocationSelected } = this.props;
 
   return(
   <View>
@@ -77,11 +80,10 @@ calculateDistance = () => {
        fetchDetails={true}
     renderDescription={row => row.description} // custom description render
     onPress={(data, details = null) => {
-      { this.setLocation(data) }
+  
+      { this.setDestination(details) }
       { this.setCurrentLocation()}
       { this.calculateDistance() }
-
-
 
     }} // 'details' is provided when fetchDetails = true
 
