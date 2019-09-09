@@ -10,10 +10,13 @@ import styles from "./searchBoxStyles.js";
 export default class SearchBox extends Component {
 constructor(props) {
   super(props);
+
   this.state = {
     searchFocused: false,
-    locationA: '',
-    locationB: 'EhxDYW1iZXJ3ZWxsIEdyZWVuLCBMb25kb24sIFVLIi4qLAoUChIJ5R25z38DdkgRsEGCQSB9MKESFAoSCXOuT894A3ZIEcsmDvrEC_d0',
+    locationALat: '',
+    locationALong: '',
+    locationBLat: '',
+    locationBLong: '',
     travelTime: '',
   }
 };
@@ -21,25 +24,37 @@ constructor(props) {
 
 calculateDistance = () => {
 
-    return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=place_id:${this.state.locationA}&destinations=place_id:${this.state.locationB}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
-      .then( (response) => response.json() )
-      .then( (responseJson) => {
+  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=place_id:${this.state.locationA}&destinations=place_id:${this.state.locationB}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+  .then( (response) => response.json() )
+  .then( (responseJson) => {
 
-        this.setState({
-          travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
-
-        })
-
-
-})
-
-
-      }
-
-
-  setLocation = data => {
     this.setState({
-      locationA: data["place_id"]
+      travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
+
+    })
+
+
+
+  })
+
+
+}
+
+  setCurrentLocation = () => {
+
+    this.setState({
+       locationALat: this.props.location['latitude'],
+       locationALong: this.props.location['longitude'],
+
+    })
+
+  }
+
+
+  setDestination = details => {
+    this.setState({
+      locationBLat: details['geometry']['location']['lat'],
+      locationBLong: details['geometry']['location']['lng'],
 
     })
 
@@ -47,8 +62,10 @@ calculateDistance = () => {
 
   render() {
 
+    console.log(this.props.location['latitude'])
+
     const { searchFocused } = this.state;
-        const { onLocationSelected } = this.props;
+      const { onLocationSelected } = this.props;
 
   return(
   <View>
@@ -63,9 +80,10 @@ calculateDistance = () => {
        fetchDetails={true}
     renderDescription={row => row.description} // custom description render
     onPress={(data, details = null) => {
-      { this.setLocation(data) }
+  
+      { this.setDestination(details) }
+      { this.setCurrentLocation()}
       { this.calculateDistance() }
-
 
     }} // 'details' is provided when fetchDetails = true
 
