@@ -31,15 +31,22 @@ calculateDistance = () => {
     this.setState({
       travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
 
-    })
-    console.log(responseJson)
+    });
+    this.setTravelTime()
+
+
+
   })
 
 
 }
 
+setTravelTime = () => {
+  console.log(this.props.updateTravelTime)
+  this.props.updateTravelTime(this.state.travelTime)
+};
+
   setCurrentLocation = () => {
-    console.log(this.props.travelMode)
 
 
     this.setState({
@@ -48,6 +55,8 @@ calculateDistance = () => {
        travelMode: this.props.travelMode
 
     })
+
+
 
   }
 

@@ -18,6 +18,7 @@ export default class Location extends Component {
      Longitude: 0,
      error: null,
      travelMode: '',
+     travelTime: '',
     }
   };
 
@@ -51,6 +52,15 @@ export default class Location extends Component {
       this.setState({travelMode: mode});
     }
 
+    setTravelTime = (time) => {
+      this.setState({
+        travelTime: time
+        })
+        console.log(this.state.travelTime)
+
+
+    }
+
   render() {
 
     const currentLocation = {
@@ -64,7 +74,7 @@ export default class Location extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
-        <SearchBox location={currentLocation} travelMode= {this.state.travelMode}/>
+        <SearchBox location={currentLocation} travelMode= {this.state.travelMode} updateTravelTime={this.setTravelTime.bind(this)}/>
         <Button
         title="Next"
         onPress={() => this.props.navigation.navigate('Time')}
