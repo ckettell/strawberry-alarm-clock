@@ -104,7 +104,7 @@ export default class AlarmCalculator extends Component {
         </Picker>
         <Weather location={currentLocation} alarmTime={this.state.alarmTime} updateWeatherForecast={this.setWeatherForecast.bind(this)}/>
         <Text>
-          Testing Forecast: {this.state.forecast}
+          Forecast: {this.state.forecast}
         </Text>
         <Button title='test'
           onPress={() => {
