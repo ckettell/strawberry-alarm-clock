@@ -71,7 +71,7 @@ calculateDistance = () => {
   return(
   <View>
     <Text>
-       {this.state.locationA}
+       `${this.state.locationA}`
    </Text>
 
     <GooglePlacesAutocomplete
