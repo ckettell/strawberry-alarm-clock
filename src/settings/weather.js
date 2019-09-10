@@ -8,6 +8,7 @@ constructor(props) {
   this.state = {
     apiKey: '0fd818ea25024ad2f4461e80460c8d1a',
     weather: '',
+    forecastTime: '',
   }
 };
 
@@ -34,15 +35,19 @@ constructor(props) {
       } else {
           console.log('error')
     }
+    this.setState({forecastTime: forecastTime})
   }
 
   reportWeather = () => {
     return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${this.props.location.latitude}&lon=${this.props.location.longitude}&&APPID=${this.state.apiKey}`)
     .then( (response) => response.json() )
     .then( (responseJson) => {
-      this.setState({
-        weather: responseJson.list[0].weather[0].description,
-      })
+      const forecastArray = responseJson.list;
+
+      for (let forecast of forecastArray) {
+        if (forecast.dt_txt.substr(11,15) == this.state.forecastTime) {break;}
+        this.setState({weather: forecast.weather[0].description})
+      }
     })
   }
 
