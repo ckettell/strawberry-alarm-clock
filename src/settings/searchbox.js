@@ -77,16 +77,12 @@ setTravelTime = () => {
 
   setCurrentLocation = () => {
 
-
     this.setState({
        locationALat: this.props.location['latitude'],
        locationALong: this.props.location['longitude'],
        travelMode: this.props.travelMode
 
     })
-
-
-
   }
 
 
@@ -97,7 +93,6 @@ setTravelTime = () => {
       locationBLong: details['geometry']['location']['lng'],
 
     })
-
   }
 
   render() {
@@ -111,15 +106,15 @@ setTravelTime = () => {
   <View>
     <Text>
        {this.state.locationA}
-   </Text>
+    </Text>
 
     <GooglePlacesAutocomplete
        placeholder="Where do you want to go?"
        placeholderTextColor="#333"
        onPress={onLocationSelected}
        fetchDetails={true}
-    renderDescription={row => row.description} // custom description render
-    onPress={(data, details = null) => {
+      renderDescription={row => row.description} // custom description render
+      onPress={(data, details = null) => {
 
       { this.setDestination(details) }
       { this.setCurrentLocation()}

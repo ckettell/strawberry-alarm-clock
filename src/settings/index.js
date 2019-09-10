@@ -20,6 +20,7 @@ export default class AlarmCalculator extends Component {
      error: null,
      travelMode: '',
      travelTime: '',
+     alarmTime: "11-10-2019 13:30:00",
     }
   };
 
@@ -27,8 +28,8 @@ export default class AlarmCalculator extends Component {
 
       console.log('mount')
      let geoOptions = {
-        enableHighAccuracy: true,
-        timeOut: 20000,
+      enableHighAccuracy: true,
+      timeOut: 20000,
       maximumAge: 60 * 60 * 24
     };
     this.setState({ready:false, error: null});
@@ -58,27 +59,25 @@ export default class AlarmCalculator extends Component {
         travelTime: time
         })
         console.log(this.state.travelTime)
-
-
     }
 
   render() {
 
     const currentLocation = {
         latitude: this.state.Latitude,
-           longitude: this.state.Longitude,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-        }
+        longitude: this.state.Longitude,
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.0121,
+    }
 
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View>
 
         <SearchBox location={currentLocation} travelMode= {this.state.travelMode} updateTravelTime={this.setTravelTime.bind(this)}/>
         <Button
-        title="Next"
-        onPress={() => this.props.navigation.navigate('Time')}
+          title="Next"
+          onPress={() => this.props.navigation.navigate('Time')}
         />
         <Picker
           selectedValue={this.state.travelMode}
@@ -91,7 +90,7 @@ export default class AlarmCalculator extends Component {
           <Picker.Item label="Public Transport" value="transit" />
           <Picker.Item label="Driving" value="driving" />
         </Picker>
-        <Weather location={currentLocation} alarmTime={this.state.alarmtime}/>
+        <Weather location={currentLocation} alarmTime={this.state.alarmTime}/>
 
       </View>
     );
