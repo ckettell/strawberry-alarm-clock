@@ -9,7 +9,7 @@ import SearchBox from './searchbox';
 import SearchResults from './searchresults';
 import styles from "./styles";
 
-export default class Location extends Component {
+export default class AlarmCalculator extends Component {
 
   constructor(props) {
     super(props);
@@ -91,7 +91,7 @@ export default class Location extends Component {
           <Picker.Item label="Public Transport" value="transit" />
           <Picker.Item label="Driving" value="driving" />
         </Picker>
-        <Weather location={currentLocation}/>
+        <Weather location={currentLocation} alarmTime={this.state.alarmtime}/>
 
       </View>
     );

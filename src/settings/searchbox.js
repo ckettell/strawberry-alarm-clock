@@ -69,7 +69,6 @@ return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imp
 })
 
 }
-}
 
 setTravelTime = () => {
   console.log(this.props.updateTravelTime)

@@ -4,12 +4,12 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 import Clock from '../src/Clock'
-import Location from '../src/location/index'
+import AlarmCalculator from '../src/settings/index'
 import Time from '../src/Time'
 
  const AppNavigator = createStackNavigator({
   Home: {
-    screen: Location,
+    screen: AlarmCalculator,
   },
   Time: {
     screen: Time,
