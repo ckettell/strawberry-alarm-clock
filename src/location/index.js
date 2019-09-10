@@ -4,6 +4,7 @@ import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
 
+import Weather from './weather'
 import SearchBox from './searchbox';
 import SearchResults from './searchresults';
 import styles from "./styles";
@@ -90,6 +91,7 @@ export default class Location extends Component {
           <Picker.Item label="Public Transport" value="transit" />
           <Picker.Item label="Driving" value="driving" />
         </Picker>
+        <Weather location={currentLocation}/>
 
       </View>
     );

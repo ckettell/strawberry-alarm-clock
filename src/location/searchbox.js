@@ -23,6 +23,7 @@ constructor(props) {
 };
 
 
+
 calculateDistance = () => {
 
   if (this.state.travelMode == 'driving') {
@@ -52,6 +53,8 @@ return fetch("https://developer.citymapper.com/api/1/traveltime/?startcoord=51.5
 }
 
 else {
+
+  }
 
 
 return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
