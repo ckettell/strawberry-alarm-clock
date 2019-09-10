@@ -23,20 +23,20 @@ constructor(props) {
 };
 
 
-calculateDistance = () => {
-  return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
-  .then( (response) => response.json() )
-  .then( (responseJson) => {
+  calculateDistance = () => {
+    return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+    .then( (response) => response.json() )
+    .then( (responseJson) => {
 
-    this.setState({
-      travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
+      this.setState({
+        travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
 
+      })
+      console.log(responseJson)
     })
-    console.log(responseJson)
-  })
 
 
-}
+  }
 
   setCurrentLocation = () => {
     console.log(this.props.travelMode)
@@ -71,7 +71,7 @@ calculateDistance = () => {
   return(
   <View>
     <Text>
-       `${this.state.locationA}`
+       {this.state.locationA}
    </Text>
 
     <GooglePlacesAutocomplete

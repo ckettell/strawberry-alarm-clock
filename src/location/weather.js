@@ -16,7 +16,7 @@ constructor(props) {
     .then( (response) => response.json() )
     .then( (responseJson) => {
       this.setState({
-        weather: responseJson.list[0].weather[0].main
+        weather: responseJson.list[0].weather[0].description
 
       })
       
