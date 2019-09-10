@@ -27,7 +27,7 @@ const alarmNotifData = {
 	data: { content: "my notification id is 22" },
 };
 
-export default class Clock extends Component {
+export default class AlarmSetter extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
@@ -59,6 +59,8 @@ export default class Clock extends Component {
 			const obj = JSON.parse(e);
 		});
 
+		this.changeAlarmTime()
+
 		setInterval(() => { this.setCurrentTime() }, 200)
 
 		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
@@ -77,6 +79,13 @@ export default class Clock extends Component {
     });
     this.setAlarm()
   }
+
+	changeAlarmTime() {
+		const sentAlarmDate = this.props.navigation.getParam('alarmDate', 'nothing sent')
+		this.setState({
+			fireDate: sentAlarmDate
+		})
+	}
 
   render() {
 		const { update, fireDate, futureFireDate } = this.state;

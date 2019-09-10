@@ -3,7 +3,7 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 
 
-import Clock from '../src/alarm/Clock'
+import Alarm from '../src/alarm/index'
 import Location from '../src/location/index'
 import Time from '../src/time/index'
 
@@ -14,8 +14,8 @@ import Time from '../src/time/index'
   Time: {
     screen: Time,
   },
-  Clock: {
-    screen: Clock,
+  Alarm: {
+    screen: Alarm,
   },
 }, {
     initialRouteName: 'Home',
