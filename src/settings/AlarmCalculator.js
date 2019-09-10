@@ -101,6 +101,6 @@ export default class AlarmCalculator extends Component {
         <Weather location={currentLocation} alarmTime={this.state.alarmtime}/>
 
       </View>
-    );
+    ); 
   }
 }
