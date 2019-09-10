@@ -23,23 +23,60 @@ constructor(props) {
 };
 
 
-  calculateDistance = () => {
-    return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
-    .then( (response) => response.json() )
-    .then( (responseJson) => {
 
-      this.setState({
-        travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
+calculateDistance = () => {
 
-      })
-      console.log(responseJson)
-    })
+  if (this.state.travelMode == 'driving') {
 
+  return fetch(`https://api.tomtom.com/routing/1/calculateRoute/${this.state.locationALat},${this.state.locationALong}:${this.state.locationBLat},${this.state.locationBLong}/json?departAt=now&routeType=fastest&traffic=true&avoid=unpavedRoads&travelMode=car&key=drstTICAYujEeR3lRBWB6GqIsSVWMjzZ`)
+  .then( (response) => response.json() )
+  .then( (responseJson) => {
+
+ console.log(responseJson['routes'][0]['summary']['travelTimeInSeconds'])
+    this.setState({
+      travelTime: responseJson['routes'][0]['summary']['travelTimeInSeconds']
+    });
+
+    this.setTravelTime()
+  })
+}
+
+else if (this.state.travelMode == 'transit') {
+
+return fetch("https://developer.citymapper.com/api/1/traveltime/?startcoord=51.525246%2C0.084672&endcoord=51.559098%2C0.074503&time_type=arrival&key=e78d4664ed02b8b5a19ab16002d1467e")
+.then( (response) => response.json() )
+.then( (responseJson) => {
+  console.log(responseJson)
+
+})
+
+}
+
+else {
 
   }
 
+
+return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
+.then( (response) => response.json() )
+.then( (responseJson) => {
+
+  this.setState({
+    travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
+
+  });
+  this.setTravelTime()
+})
+
+}
+}
+
+setTravelTime = () => {
+  console.log(this.props.updateTravelTime)
+  this.props.updateTravelTime(this.state.travelTime)
+};
+
   setCurrentLocation = () => {
-    console.log(this.props.travelMode)
 
 
     this.setState({
@@ -49,10 +86,13 @@ constructor(props) {
 
     })
 
+
+
   }
 
 
   setDestination = details => {
+    console.log(details)
     this.setState({
       locationBLat: details['geometry']['location']['lat'],
       locationBLong: details['geometry']['location']['lng'],
