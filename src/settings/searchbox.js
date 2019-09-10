@@ -32,13 +32,14 @@ calculateDistance = () => {
   .then( (response) => response.json() )
   .then( (responseJson) => {
 
- console.log(responseJson['routes'][0]['summary']['travelTimeInSeconds'])
+
     this.setState({
       travelTime: responseJson['routes'][0]['summary']['travelTimeInSeconds']
     });
 
     this.setTravelTime()
   })
+
 }
 
 else if (this.state.travelMode == 'transit') {
@@ -71,7 +72,6 @@ return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imp
 }
 
 setTravelTime = () => {
-  console.log(this.props.updateTravelTime)
   this.props.updateTravelTime(this.state.travelTime)
 };
 
@@ -91,7 +91,6 @@ setTravelTime = () => {
 
 
   setDestination = details => {
-    console.log(details)
     this.setState({
       locationBLat: details['geometry']['location']['lat'],
       locationBLong: details['geometry']['location']['lng'],
@@ -102,7 +101,6 @@ setTravelTime = () => {
 
   render() {
 
-    console.log(this.props.location['latitude'])
 
     const { searchFocused } = this.state;
       const { onLocationSelected } = this.props;

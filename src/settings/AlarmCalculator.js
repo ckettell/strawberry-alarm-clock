@@ -3,6 +3,7 @@ import { Text, Button, Picker } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
+import moment from "moment";
 
 import Weather from './weather'
 import SearchBox from './searchbox';
@@ -23,7 +24,8 @@ export default class AlarmCalculator extends Component {
      travelMode: '',
      travelTime: '',
      prepTime: 0,
-     arrivalTime: 0,
+     arrivalTime: 'hi',
+     alarmTime: '',
     }
   };
 
@@ -74,6 +76,46 @@ export default class AlarmCalculator extends Component {
       this.setState({
         arrivalTime: time
       })
+
+
+    }
+
+    calculateAlarm = () => {
+        console.log("ARIVALTIME:" + this.state.arrivalTime)
+        console.log("PREP TIME:" + this.state.prepTime)
+        console.log("MODE:" + this.state.travelMode)
+        console.log("travel time:" + this.state.travelTime)
+
+
+      const arrivalDate = (new Date(this.state.arrivalTime).getTime());
+      console.log(new Date(arrivalDate));
+
+      const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
+      console.log(prepAndTravelTime);
+
+      const wakeUpTime = (arrivalDate - prepAndTravelTime)
+      console.log(new Date(wakeUpTime));
+
+      const wakeUpTimeObject = new Date(wakeUpTime)
+      console.log(wakeUpTimeObject);
+      this.setState({
+        alarmTime: moment(wakeUpTime).format("HH:mm:ss")
+
+      })
+
+    }
+
+    navToTime = () => {
+      this.props.navigation.navigate('Time');
+    }
+
+    sendTimeToAlarm = () => {
+      this.calculateAlarm();
+      this.navToTime();
+
+    }
+    showAlarm = () => {
+      console.log(this.state.alarmTime);
     }
 
   render() {
@@ -92,10 +134,7 @@ export default class AlarmCalculator extends Component {
         updateArrivalTime={this.setArrivalTime.bind(this)}
         />
         <SearchBox location={currentLocation} travelMode= {this.state.travelMode} updateTravelTime={this.setTravelTime.bind(this)}/>
-        <Button
-        title="Next"
-        onPress={() => this.props.navigation.navigate('Time')}
-        />
+
         <PrepTime
         updatePrepTime={this.setPrepTime.bind(this)}
         />
@@ -112,6 +151,15 @@ export default class AlarmCalculator extends Component {
         </Picker>
         <Weather location={currentLocation} alarmTime={this.state.alarmtime}/>
 
+        <Button
+        title="Next"
+        onPress={() => this.sendTimeToAlarm()}/>
+        <Button
+        title="alarm Test"
+        onPress={() => this.calculateAlarm()}/>
+        <Button
+        title="show Alarm"
+        onPress={() => this.showAlarm()}/>
       </View>
     );
   }

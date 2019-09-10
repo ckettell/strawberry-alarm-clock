@@ -10,14 +10,24 @@ export default class PrepTime extends Component {
 
 setGetReadyTime(time){
   this.setState({
-    prepTime: time
+    prepTime: parseInt(time)
   })
   this.setPrepTime()
 }
 
 
 setPrepTime = () => {
+
+
   this.props.updatePrepTime(this.state.prepTime)
+
+
+
+}
+
+logPrepTime = () => {
+  console.log(this.state.prepTime);
+
 }
 
   render(){
@@ -35,6 +45,8 @@ setPrepTime = () => {
       <Picker.Item label="2" value='3' />
       <Picker.Item label="4" value='4' />
       </Picker>
+<Button title="log prep time" onPress={this.logPrepTime} />
+
       </View>
     )
   }

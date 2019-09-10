@@ -21,7 +21,7 @@ setArrivalState(time){
 
 
 setArrivalTime = () => {
-  this.props.updateArrivalTime(this.state.prepTime)
+  this.props.updateArrivalTime(this.state.arrivalTime)
 }
 
 showDateTimePicker = () => {
@@ -35,7 +35,11 @@ hideDateTimePicker = () => {
 };
 
 handleDatePicked = date => {
-  this.setArrivalState(date)
+  const dateObject = new Date(date)
+  this.setState({
+    arrivalTime: moment(dateObject).format("DD-MM-YYYY HH:mm:ss")
+  })
+  this.setArrivalTime()
 };
 
 
