@@ -8,6 +8,7 @@ import Weather from './weather'
 import SearchBox from './searchbox';
 import SearchResults from './searchresults';
 import PrepTime from './PrepTime';
+import ArrivalTime from './ArrivalTime';
 import styles from "./styles";
 
 export default class AlarmCalculator extends Component {
@@ -22,6 +23,7 @@ export default class AlarmCalculator extends Component {
      travelMode: '',
      travelTime: '',
      prepTime: 0,
+     arrivalTime: 0,
     }
   };
 
@@ -68,6 +70,12 @@ export default class AlarmCalculator extends Component {
       })
     }
 
+    setArrivalTime = (time) => {
+      this.setState({
+        arrivalTime: time
+      })
+    }
+
   render() {
 
     const currentLocation = {
@@ -80,13 +88,17 @@ export default class AlarmCalculator extends Component {
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
+        <ArrivalTime
+        updateArrivalTime={this.setArrivalTime.bind(this)}
+        />
         <SearchBox location={currentLocation} travelMode= {this.state.travelMode} updateTravelTime={this.setTravelTime.bind(this)}/>
         <Button
         title="Next"
         onPress={() => this.props.navigation.navigate('Time')}
         />
-        <PrepTime updatePrepTime={this.setPrepTime.bind(this)}/>
+        <PrepTime
+        updatePrepTime={this.setPrepTime.bind(this)}
+        />
         <Picker
           selectedValue={this.state.travelMode}
           style={{height: 50, width: 100}}
@@ -101,6 +113,6 @@ export default class AlarmCalculator extends Component {
         <Weather location={currentLocation} alarmTime={this.state.alarmtime}/>
 
       </View>
-    ); 
+    );
   }
 }
