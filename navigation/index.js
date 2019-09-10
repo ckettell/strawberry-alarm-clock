@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 import Clock from '../src/Clock'
-import AlarmCalculator from '../src/settings/index'
+import AlarmCalculator from '../src/settings/AlarmCalculator'
 import Time from '../src/Time'
 
  const AppNavigator = createStackNavigator({

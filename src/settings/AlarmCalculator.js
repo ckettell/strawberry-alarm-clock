@@ -7,6 +7,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Weather from './weather'
 import SearchBox from './searchbox';
 import SearchResults from './searchresults';
+import PrepTime from './PrepTime';
 import styles from "./styles";
 
 export default class AlarmCalculator extends Component {
@@ -20,6 +21,7 @@ export default class AlarmCalculator extends Component {
      error: null,
      travelMode: '',
      travelTime: '',
+     prepTime: 0,
     }
   };
 
@@ -58,8 +60,12 @@ export default class AlarmCalculator extends Component {
         travelTime: time
         })
         console.log(this.state.travelTime)
+    }
 
-
+    setPrepTime = (time) => {
+      this.setState({
+        prepTime: time
+      })
     }
 
   render() {
@@ -80,6 +86,7 @@ export default class AlarmCalculator extends Component {
         title="Next"
         onPress={() => this.props.navigation.navigate('Time')}
         />
+        <PrepTime updatePrepTime={this.setPrepTime.bind(this)}/>
         <Picker
           selectedValue={this.state.travelMode}
           style={{height: 50, width: 100}}
