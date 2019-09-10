@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.strawberry_alarm_clock_react">
+  package="com.strawberry_alarm_clock_react"
+>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -13,8 +14,12 @@
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
-      android:allowBackup="false"
       android:theme="@style/AppTheme">
+      <meta-data android:name="OnlineMaps.Key" android:value="undefined" />
+      <meta-data android:name="OnlineTraffic.Key" android:value="undefined" />
+      <meta-data android:name="OnlineSearch.Key" android:value="undefined" />
+      <meta-data android:name="OnlineRouting.Key" android:value="undefined" />
+      <meta-data android:name="GeofencingApi.Key" android:value="undefined" />
 
       <service android:name="com.emekalites.react.alarm.notification.ANService" android:enabled="true"/>
               <receiver android:name="com.emekalites.react.alarm.notification.ANAlarmReceiver" android:enabled="true"/>
