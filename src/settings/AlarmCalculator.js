@@ -101,6 +101,7 @@ export default class AlarmCalculator extends Component {
       this.setState({
         alarmTime: moment(wakeUpTime).format("HH:mm:ss")
 
+
       })
 
     }
