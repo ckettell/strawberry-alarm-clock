@@ -21,6 +21,7 @@ export default class AlarmCalculator extends Component {
      travelMode: '',
      travelTime: '',
      alarmTime: "11-10-2019 13:30:00",
+     forecast: '0',
     }
   };
 
@@ -61,6 +62,17 @@ export default class AlarmCalculator extends Component {
         console.log(this.state.travelTime)
     }
 
+    setWeatherForecast = (weather) => {
+      this.setState({
+        forecast: weather
+      })
+      console.log(this.state.forecast)
+    }
+
+    getForecast = () => {
+      console.log(this.state.forecast)
+    }
+
   render() {
 
     const currentLocation = {
@@ -90,8 +102,17 @@ export default class AlarmCalculator extends Component {
           <Picker.Item label="Public Transport" value="transit" />
           <Picker.Item label="Driving" value="driving" />
         </Picker>
-        <Weather location={currentLocation} alarmTime={this.state.alarmTime}/>
+        <Weather location={currentLocation} alarmTime={this.state.alarmTime} updateWeatherForecast={this.setWeatherForecast.bind(this)}/>
+        <Text>
+          Testing Forecast: {this.state.forecast}
+        </Text>
+        <Button title='test'
+          onPress={() => {
 
+          { this.getForecast() }
+
+        }}>
+        </Button>
       </View>
     );
   }

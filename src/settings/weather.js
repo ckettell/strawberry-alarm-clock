@@ -7,7 +7,7 @@ constructor(props) {
   super(props);
   this.state = {
     apiKey: '0fd818ea25024ad2f4461e80460c8d1a',
-    weather: '',
+    forecast: 'TEST',
     forecastTime: '',
   }
 };
@@ -36,6 +36,7 @@ constructor(props) {
           console.log('error')
     }
     this.setState({forecastTime: forecastTime})
+
   }
 
   reportWeather = () => {
@@ -46,26 +47,31 @@ constructor(props) {
 
       for (let forecast of forecastArray) {
         if (forecast.dt_txt.substr(11,15) == this.state.forecastTime) {break;}
-        this.setState({weather: forecast.weather[0].description})
+        this.setState({forecast: forecast.weather[0].description})
       }
     })
+
+
+  }
+
+  setWeatherForecast = () => {
+    this.props.updateWeatherForecast(this.state.forecast);
+
+  }
+
+  // need the following functions to run consecutively
+  componentDidMount() {
+    this.weatherTime()
+    this.reportWeather();
+    this.setWeatherForecast();
   }
 
 
-  render() {
-  const weather = this.state.weather;
 
+  render() {
     return(
-    <View>
-      <Button title='Weather'
-        onPress={() => {
-          {this.reportWeather()}
-          {this.weatherTime()}
-        }}
-      />
-      <Text>
-        The weather today is: {this.state.weather}
-      </Text>
-    </View>
-    );
+      <View>
+      </View>
+    )
+
   }}
