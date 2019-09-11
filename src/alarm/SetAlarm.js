@@ -119,6 +119,8 @@ export default class SetAlarm extends Component {
 		console.log(this.state.fireDate);
 	}
 
+	
+
 	wakeUp = () => {
         if (this.state.currentTime === this.state.fireDate){
             this.setState({
