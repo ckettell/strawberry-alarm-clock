@@ -7,6 +7,7 @@ import {
 	StatusBar,
 	DeviceEventEmitter
 } from 'react-native';
+import BackgroundTimer from 'react-native-background-timer';
 
 import ReactNativeAN from 'react-native-alarm-notification';
 import moment from "moment";
@@ -70,13 +71,19 @@ export default class SetAlarm extends Component {
 		ReactNativeAN.sendNotification(details);
 	};
 
+
 	componentDidMount() {
 		DeviceEventEmitter.addListener('OnNotificationDismissed', async function(e) {
 			const obj = JSON.parse(e);
 			console.log(`Notification ${obj.id} dismissed`);
 		});
 
-		setInterval(() => { this.setCurrentTime() }, 200)
+		BackgroundTimer.setInterval(() => {
+			this.wakeUp()
+			console.log("HIII")
+		}, 501)
+
+		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 200)
 
 		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
 			const obj = JSON.parse(e);
@@ -101,15 +108,29 @@ export default class SetAlarm extends Component {
 		var newDate = this.props.navigation.getParam('alarmDate', 'nothing sent')
 
 		setTimeout(() => this.setState({
-			fireDate: moment(newDate).format("DD-MM-YYYY HH:mm:ss")
+			fireDate: moment(newDate).format("HH:mm:ss")
 		}), 2000)
 
-		setTimeout(() => this.setAlarm(), 4000)
+		console.log(this.state.currentTime)
+		 setTimeout(() => console.log(this.state.fireDate), 4000)
 	}
 
 	showAlarmTime = () => {
 		console.log(this.state.fireDate);
 	}
+
+	wakeUp = () => {
+        if (this.state.currentTime === this.state.fireDate){
+            this.setState({
+                alarmGoneOff: 'true'
+            })
+						ReactNativeAN.sendNotification(alarmNotifData);
+						console.log("TRUE")
+
+        }
+				console.log(this.state.currentTime)
+
+    }
 
 	render() {
 		const { update, fireDate, futureFireDate } = this.state;
