@@ -61,7 +61,6 @@ export default class AlarmCalculator extends Component {
       this.setState({
         travelTime: time
         })
-        console.log(this.state.travelTime)
     }
 
     setPrepTime = (time) => {
@@ -74,26 +73,17 @@ export default class AlarmCalculator extends Component {
       this.setState({
         arrivalTime: time
       })
-
     }
 
     setTravelMode = (mode) => {
       this.setState({
         travelMode: mode,
       })
-      console.log(this.state.travelMode);
     }
 
-
     calculateAlarm = () => {
-        console.log("ARIVALTIME:" + this.state.arrivalTime)
-        console.log("PREP TIME:" + this.state.prepTime)
-        console.log("MODE:" + this.state.travelMode)
-        console.log("travel time:" + this.state.travelTime)
-
 
       const arrivalDate = (new Date(this.state.arrivalTime).getTime());
-      console.log(new Date(arrivalDate));
 
       const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
       console.log(prepAndTravelTime);
@@ -106,17 +96,13 @@ export default class AlarmCalculator extends Component {
       this.setState({
         alarmTime:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
 
-
       })
-
     }
 
     navToTime = () => {
-      this.props.navigation.navigate('SetAlarm', { alarmDate: "09-11-2019 11:28:00" });
+      this.props.navigation.navigate('SetAlarm', { alarmDate: "09-11-2019 14:34:00" });
       console.log(this.state.alarmTime);
     }
-
-
 
     sendTimeToAlarm = () => {
       this.calculateAlarm();
@@ -127,39 +113,41 @@ export default class AlarmCalculator extends Component {
       console.log(this.state.alarmTime);
     }
 
+
   render() {
 
     const currentLocation = {
         latitude: this.state.Latitude,
-           longitude: this.state.Longitude,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
+        longitude: this.state.Longitude,
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.0121,
         }
-
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <ArrivalTime
         updateArrivalTime={this.setArrivalTime.bind(this)}
         />
-        <SearchBox location={currentLocation} travelMode= {this.state.travelMode} updateTravelTime={this.setTravelTime.bind(this)}/>
+        <SearchBox
+         location={currentLocation}
+         travelMode= {this.state.travelMode}
+         updateTravelTime={this.setTravelTime.bind(this)}
+         />
 
-        <TravelMode updateTravelMode={this.setTravelMode.bind(this)}/>
+        <TravelMode
+        updateTravelMode={this.setTravelMode.bind(this)}
+        />
         <PrepTime
         updatePrepTime={this.setPrepTime.bind(this)}
         />
-
-        <Weather location={currentLocation} alarmTime={this.state.alarmtime}/>
-
-
-
-
-        <Button title="save alarm" onPress={this.calculateAlarm} />
+        <Button
+        title="save alarm"
+        onPress={this.calculateAlarm}
+         />
         <Button
         title="send alarm"
-        onPress={() => this.navToTime()}/>
-
-
+        onPress={() => this.navToTime()}
+        />
       </View>
     );
   }

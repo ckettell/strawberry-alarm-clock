@@ -25,7 +25,7 @@ const alarmNotifData = {
 	data: { content: "my notification id is 22" },
 };
 
-export default class Clock extends Component {
+export default class SetAlarm extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
@@ -108,14 +108,15 @@ export default class Clock extends Component {
 		}
 
 
-	retrieveAlarm = () => {
-		this.setState({
-			fireDate: this.props.navigation.getParam('alarmDate', 'nothing sent')
+		retrieveAlarm = () => {
+			var newDate = this.props.navigation.getParam('alarmDate', 'nothing sent')
 
-		})
-		setTimeout(() => this.setAlarm(), 4000)
+			setTimeout(() => this.setState({
+				fireDate: moment(newDate).format("DD-MM-YYYY HH:mm:ss")
+			}), 2000)
 
-	}
+			setTimeout(() => this.setAlarm(), 4000)
+		}
 
 	showAlarmTime = () => {
 			console.log(this.state.fireDate);
