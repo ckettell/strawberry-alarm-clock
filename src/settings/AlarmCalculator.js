@@ -76,7 +76,6 @@ export default class AlarmCalculator extends Component {
       console.log(this.state.forecast)
     }
 
-    }
 
     setPrepTime = (time) => {
       this.setState({
@@ -137,7 +136,7 @@ export default class AlarmCalculator extends Component {
         latitudeDelta: 0.015,
         longitudeDelta: 0.0121,
     }
-        
+
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -149,9 +148,9 @@ export default class AlarmCalculator extends Component {
          travelMode= {this.state.travelMode}
          updateTravelTime={this.setTravelTime.bind(this)}
          />
-        <Weather 
-        location={currentLocation} 
-        alarmTime={this.state.alarmTime} 
+        <Weather
+        location={currentLocation}
+        alarmTime={this.state.alarmTime}
         updateWeatherForecast={this.setWeatherForecast.bind(this)}
          />
          <Text>
