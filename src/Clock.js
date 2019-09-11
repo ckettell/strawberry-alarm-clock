@@ -19,6 +19,8 @@ const alarmNotifData = {
 	vibrate: true,
 	vibration: 100,
 	play_sound: true,
+	sound_name: null,
+	forecast: "no change",
 	schedule_once: true,
 	color: "green",
 	channel: "wakeup",
@@ -69,6 +71,14 @@ export default class Clock extends Component {
 		console.log(details);
 		ReactNativeAN.sendNotification(details);
 	};
+
+	setForecast = (weather) => {
+		alarmNotifData.forecast = weather;
+	}
+
+	check = () => {
+		console.log(alarmNotifData.forecast);
+	}
 
 	componentDidMount() {
 		DeviceEventEmitter.addListener('OnNotificationDismissed', async function(e) {
@@ -121,6 +131,7 @@ export default class Clock extends Component {
 		})
 	}
 
+
 	render() {
 		const { update, fireDate, futureFireDate } = this.state;
 		return (
@@ -148,6 +159,16 @@ export default class Clock extends Component {
 							title="Stop Alarm"
 							color="#ff0400"
 						/>
+						<Button
+							title='test'
+							onPress= {this.setForecast('rain')}
+							color="#ff0400">
+						</Button>
+						<Button
+							title='check'
+							onPress={this.check}
+							color="#ff0400">
+						</Button>
 					</View>
 				</View>
 		);

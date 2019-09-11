@@ -11,6 +11,26 @@ exports[`renders correctly 1`] = `
     }
   }
 >
+  <Text
+    style={
+      Object {
+        "color": "#999999",
+        "fontSize": 90,
+      }
+    }
+  >
+    11:37:52
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#999999",
+        "fontSize": 40,
+      }
+    }
+  >
+    September 11, 2019
+  </Text>
   <View
     accessibilityRole="button"
     accessibilityStates={Array []}
@@ -49,7 +69,7 @@ exports[`renders correctly 1`] = `
           ]
         }
       >
-        When would you like to wakeup?
+        Set Arrival Time
       </Text>
     </View>
   </View>
@@ -172,7 +192,7 @@ exports[`renders correctly 1`] = `
         >
           <View>
             <RCTDatePicker
-              date={1567864886090}
+              date={1568198272283}
               minuteInterval={1}
               mode="time"
               onChange={[Function]}
@@ -274,87 +294,141 @@ exports[`renders correctly 1`] = `
       }
     }
   />
-  <Text
-    style={
-      Object {
-        "color": "#999999",
-        "fontSize": 40,
-      }
-    }
-  >
-    September 7, 2019
-  </Text>
-  <Text
-    style={
-      Object {
-        "color": "#999999",
-        "fontSize": 40,
-      }
-    }
-  >
-    false
-  </Text>
-  <Text
-    style={
-      Object {
-        "color": "#999999",
-        "fontSize": 40,
-      }
-    }
-  >
-    
-  </Text>
-  <Text
-    style={
-      Object {
-        "color": "#999999",
-        "fontSize": 40,
-      }
-    }
-    testID="clock_time"
-  >
-    3:01:26 PM
-  </Text>
-  <View
-    accessibilityRole="button"
-    accessibilityStates={Array []}
-    accessible={true}
-    clickable={true}
-    isTVSelectable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
-  >
+  <View>
     <View
+      accessibilityRole="button"
+      accessibilityStates={Array []}
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {},
-        ]
+        Object {
+          "opacity": 1,
+        }
       }
     >
-      <Text
+      <View
         style={
           Array [
-            Object {
-              "color": "#007AFF",
-              "fontSize": 18,
-              "padding": 8,
-              "textAlign": "center",
-            },
+            Object {},
           ]
         }
       >
-        Stop Alarm
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#ff0400",
+              },
+            ]
+          }
+        >
+          Stop Alarm
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityRole="button"
+      accessibilityStates={Array []}
+      accessible={true}
+      clickable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#ff0400",
+              },
+            ]
+          }
+        >
+          test
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityRole="button"
+      accessibilityStates={Array []}
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#ff0400",
+              },
+            ]
+          }
+        >
+          check
+        </Text>
+      </View>
     </View>
   </View>
 </View>

@@ -13,7 +13,7 @@ constructor(props) {
 };
 
   getRelevantForecastTime = () => {
-    const alarmDate = this.props.alarmTime;
+    const alarmDate = this.props.alarmTime; '11-09-2019 08:39:23'
     var alarmTime = alarmDate.substr(11, 15);
     var forecastTime;
       if (alarmTime >= "01:30:00" && alarmTime < "04:30:00") {
@@ -30,12 +30,17 @@ constructor(props) {
         forecastTime = "18:00:00";
       } else if (alarmTime >= "19:30:00" && alarmTime < "22:30:00") {
         forecastTime = "21:00:00";
-      } else if (alarmTime >= "22:30:00" && alarmTime < "01:30:00") {
-        forecastTime = "00:00:00";
       } else {
-          console.log('error')
-    }
+        forecastTime = "00:00:00";
+      }
 
+
+  }
+
+  isBetween = (time, lowerbound, upperbound) => {
+    if (time >= lowerbound && time < upperbound) {
+      return true
+    }
   }
 
   getRelevantForecast = (forecasts, relevantForecastTime) => {
@@ -58,7 +63,7 @@ constructor(props) {
     return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${this.props.location.latitude}&lon=${this.props.location.longitude}&&APPID=${this.state.apiKey}`)
     .then( (response) => response.json() )
     .then( (responseJson) => responseJson.list)
-    .then( (threeHourlyForecasts) => this.getRelevantForecast(threeHourlyForecasts) )
+    .then( (threeHourlyForecasts) => this.getRelevantForecast(threeHourlyForecasts, relevantForecastTime) )
     .then( (relevantForecast) => this.getWeather(relevantForecast))
     .then( (weather) => this.setWeatherForecast(weather))
 
