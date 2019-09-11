@@ -117,19 +117,24 @@ export default class SetAlarm extends Component {
 
 		return (
 			<View style={styles.container}>
+
 				<Text style={styles.timeText}>
 					{this.state.currentTime}
 				</Text>
-				<Text style={styles.dateText}>
+
+				<Text style={styles.daysText}>
 					{this.state.date}
 				</Text>
+
 				<StatusBar
 					style={{backgroundColor: 'transparent'}}
 				/>
-				<Button
-					title="Set Arrival Time"
-					onPress={this.showDateTimePicker}
-				/>
+
+				<TouchableOpacity onPress={this.showDateTimePicker}>
+					<Text style={styles.button}>
+						Set Arrival Time
+					</Text>
+				</TouchableOpacity>
 
 				<Text style={styles.timeText}>
 					{this.state.time}
@@ -137,38 +142,59 @@ export default class SetAlarm extends Component {
 
 
 				<TouchableOpacity onPress={this.stopAlarm}>
-					<Text style={styles.button}>
+					<Text style={styles.stopButton}>
 						Stop Alarm
 					</Text>
 				</TouchableOpacity>
 
-				<Button
-					title="show alarm time"
-					onPress={this.showAlarmTime}
-				/>
-				</View>
+				<TouchableOpacity onPress={this.showAlarmTime}>
+					<Text style={styles.button}>
+						show alarm time
+					</Text>
+				</TouchableOpacity>
 
+			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#e6e6fa',
-		justifyContent: 'center',
-		alignItems: 'center',
+	container:
+  {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#383838',
 	},
-	timeText: {
-		color: '#999999',
-		fontSize: 90,
-	},
-	dateText: {
-		color: '#999999',
-		fontSize: 40,
-	},
+
+  timeText:
+  {
+    fontSize: 50,
+    color: '#e59400',
+		borderColor: '#000000'
+  },
+
+  daysText:
+  {
+    color: '#e59400',
+    fontSize: 25,
+		borderColor: '#000000'
+  },
+
 	button: {
-		backgroundColor: '#add8e6',
+    backgroundColor: '#696969',
+    borderColor: '#ff7f50',
+    borderWidth: 2,
+    borderRadius: 6,
+    color: '#e59400',
+    fontSize: 24,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 5,
+    textAlign:'center',
+  },
+	stopButton: {
+		backgroundColor: 'red',
 		borderColor: 'black',
 		borderWidth: 2,
 		borderRadius: 12,
@@ -179,4 +205,5 @@ const styles = StyleSheet.create({
 		padding: 12,
 		textAlign:'center',
 	},
+
 })

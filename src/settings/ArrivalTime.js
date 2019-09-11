@@ -72,16 +72,16 @@ handleDatePicked = date => {
 }
 
 const arrivalTimeStyles = StyleSheet.create({
-    button: {
-    backgroundColor: '#add8e6',
-    borderColor: 'black',
+  button: {
+    backgroundColor: '#696969',
+    borderColor: '#ff7f50',
     borderWidth: 2,
-    borderRadius: 12,
-    color: 'white',
+    borderRadius: 6,
+    color: '#e59400',
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',
-    padding: 12,
+    padding: 5,
     textAlign:'center',
   },
 })

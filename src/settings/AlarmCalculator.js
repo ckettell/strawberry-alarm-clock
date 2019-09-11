@@ -191,18 +191,18 @@ export default class AlarmCalculator extends Component {
 const alarmCalcStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e6e6fa',
+    backgroundColor: '#383838',
   },
   button: {
-    backgroundColor: '#add8e6',
-    borderColor: 'black',
+    backgroundColor: '#696969',
+    borderColor: '#ff7f50',
     borderWidth: 2,
     borderRadius: 12,
-    color: 'white',
+    color: '#e59400',
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',
-    padding: 12,
+    padding: 5,
     textAlign:'center',
   },
   forecast: {
