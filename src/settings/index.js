@@ -20,7 +20,7 @@ export default class AlarmCalculator extends Component {
      error: null,
      travelMode: '',
      travelTime: '',
-     alarmTime: "11-10-2019 04:15:17",
+     alarmTime: '',
      forecast: '0',
     }
   };

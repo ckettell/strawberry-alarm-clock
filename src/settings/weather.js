@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Button } from 'react-native';
 import { View } from "native-base";
+import moment from "moment";
 
 const times = {
   "03:00:00": ["01:30:00", "04:30:00"],
@@ -24,27 +25,32 @@ constructor(props) {
 };
 
   getRelevantForecastTime = () => {
-    const alarmDate = this.props.alarmTime; '11-09-2019 08:39:23'
-    var alarmTime = alarmDate.substr(11, 15);
-    return (this.getTimeSlot(times, alarmTime));
+    const alarmDate = this.props.alarmTime;
+    const alarmTime = alarmDate.substr(11, 15);
+    var relevantTime = (this.getTimeSlot(times, alarmTime));
+    if (typeof relevantTime === "undefined") {
+      return '00:00:00'
+    } else {
+      return relevantTime
+    }
   }
 
-
-  isBetween = (time, lowerbound, upperbound) => {
+  isInbetween = (time, lowerbound, upperbound) => {
     if (time >= lowerbound && time < upperbound) {
       return true
     }
   }
 
   getTimeSlot = (object, value) => {
-  return Object.keys(object).find(key => this.isBetween(value, object[key][0], object[key][1]));
+  return Object.keys(object).find(key => this.isInbetween(value, object[key][0], object[key][1]));
   }
 
   getRelevantForecast = (forecasts, relevantForecastTime) => {
     for (let forecast of forecasts) {
-        if (forecast.dt_txt.substr(11,15) == relevantForecastTime) {break;}
+        if (forecast.dt_txt.substr(11,15) == relevantForecastTime) {
         return forecast
       }
+    }
   }
 
   getWeather = (forecast) => {
@@ -57,7 +63,6 @@ constructor(props) {
 
   reportWeather = () => {
     var relevantForecastTime = this.getRelevantForecastTime()
-    console.log('revtime', relevantForecastTime)
     return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${this.props.location.latitude}&lon=${this.props.location.longitude}&&APPID=${this.state.apiKey}`)
     .then( (response) => response.json() )
     .then( (responseJson) => responseJson.list)
