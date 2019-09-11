@@ -1,5 +1,12 @@
 import React, {Component} from "react";
-import { Text, Button, Picker } from 'react-native';
+import {
+  Text,
+  Button,
+  Picker,
+  TouchableOpacity,
+  StyleSheet
+} from 'react-native';
+
 import { View, InputGroup, Input } from "native-base";
 
 import moment from "moment";
@@ -47,15 +54,33 @@ handleDatePicked = date => {
 
     return(
       <View>
-      <Button title="Set Arrival Time" onPress={this.showDateTimePicker} />
-      <DateTimePicker
-      mode={"time"}
-      isVisible={this.state.isDateTimePickerVisible}
-      onConfirm={this.handleDatePicked}
-      onCancel={this.hideDateTimePicker}
-      />
+        <DateTimePicker
+        mode={"time"}
+        isVisible={this.state.isDateTimePickerVisible}
+        onConfirm={this.handleDatePicked}
+        onCancel={this.hideDateTimePicker}
+        />
+        <TouchableOpacity     onPress={this.showDateTimePicker}>
+        <Text   style={arrivalTimeStyles.button}>Set Arrival Time
+        </Text>
+        </TouchableOpacity>
       </View>
     )
   }
 
 }
+
+const arrivalTimeStyles = StyleSheet.create({
+    button: {
+    backgroundColor: '#add8e6',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 12,
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 12,
+    textAlign:'center',
+  },
+})

@@ -1,5 +1,11 @@
 import React, {Component} from "react";
-import { Text, Button, Picker } from 'react-native';
+import {
+  Text,
+  Button,
+  Picker,
+  StyleSheet,
+  TouchableOpacity} from 'react-native';
+
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
@@ -139,7 +145,7 @@ export default class AlarmCalculator extends Component {
 
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={alarmCalcStyles.container}>
         <ArrivalTime
         updateArrivalTime={this.setArrivalTime.bind(this)}
         />
@@ -162,16 +168,38 @@ export default class AlarmCalculator extends Component {
         <PrepTime
         updatePrepTime={this.setPrepTime.bind(this)}
         />
-        <Button
-        title="save alarm"
-        onPress={this.calculateAlarm}
-         />
 
-        <Button
-        title="send alarm"
-        onPress={() => this.navToTime()}
-        />
+        <TouchableOpacity     onPress={this.calculateAlarm}>
+        <Text   style={alarmCalcStyles.button}>save alarm
+        </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.calculateAlarm}>
+        <Text style={alarmCalcStyles.button}>send alarm</Text>
+        </TouchableOpacity>
+
       </View>
     );
   }
 }
+
+const alarmCalcStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#e6e6fa',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+    button: {
+    backgroundColor: '#add8e6',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 12,
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 12,
+    textAlign:'center',
+  },
+})
