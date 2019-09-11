@@ -5,14 +5,16 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import Clock from '../src/Clock'
 import AlarmCalculator from '../src/settings/AlarmCalculator'
-import Time from '../src/Time'
+import SetAlarm from '../src/alarm/SetAlarm'
+
+
 
  const AppNavigator = createStackNavigator({
   Home: {
     screen: AlarmCalculator,
   },
-  Time: {
-    screen: Time,
+  SetAlarm: {
+    screen: SetAlarm,
   },
   Clock: {
     screen: Clock,

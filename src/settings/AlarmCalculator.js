@@ -104,7 +104,7 @@ export default class AlarmCalculator extends Component {
       const wakeUpTimeObject = new Date(wakeUpTime)
       console.log(wakeUpTimeObject);
       this.setState({
-        alarmTime: moment(wakeUpTime).format("HH:mm:ss")
+        alarmTime:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
 
 
       })
@@ -112,8 +112,11 @@ export default class AlarmCalculator extends Component {
     }
 
     navToTime = () => {
-      this.props.navigation.navigate('Time');
+      this.props.navigation.navigate('SetAlarm', { alarmDate: "09-11-2019 11:28:00" });
+      console.log(this.state.alarmTime);
     }
+
+
 
     sendTimeToAlarm = () => {
       this.calculateAlarm();
@@ -148,15 +151,15 @@ export default class AlarmCalculator extends Component {
 
         <Weather location={currentLocation} alarmTime={this.state.alarmtime}/>
 
+
+
+
+        <Button title="save alarm" onPress={this.calculateAlarm} />
         <Button
-        title="Next"
-        onPress={() => this.sendTimeToAlarm()}/>
-        <Button
-        title="alarm Test"
-        onPress={() => this.calculateAlarm()}/>
-        <Button
-        title="show Alarm"
-        onPress={() => this.showAlarm()}/>
+        title="send alarm"
+        onPress={() => this.navToTime()}/>
+
+
       </View>
     );
   }
