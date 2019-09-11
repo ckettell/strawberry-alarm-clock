@@ -45,10 +45,16 @@ export default class Clock extends Component {
 		console.log('Alarm set')
 		const { fireDate } = this.state;
 		const details  = { ...alarmNotifData, fire_date: fireDate };
-		console.log(`alarm set: ${fireDate}`);
+		console.log(`alarm set: ${this.state.fireDate}`);
 		this.setState({ update: `alarm set: ${fireDate}` });
+		console.log(details);
 		ReactNativeAN.scheduleAlarm(details);
 	};
+
+	getScheduledAlarms = () => {
+		var alarms = ReactNativeAN.getScheduledAlarms()
+		console.log(alarms);
+	}
 
 	setFutureAlarm = () => {
 		const { futureFireDate } = this.state;
@@ -82,6 +88,8 @@ export default class Clock extends Component {
 			const obj = JSON.parse(e);
 			console.log(obj);
 		});
+
+		this.retrieveAlarm()
 	}
 
 	componentWillUnmount() {
@@ -99,27 +107,38 @@ export default class Clock extends Component {
 	});
   };
 
-  handleDatePicked = date => {
-		//convert date to unix timestamp (milliseconds)
-		const arrivalDate = new Date(date).getTime();
-
-		//calculate new alarm date, given travel time (milliseconds)
-		const unixAlarmDate = arrivalDate - (this.state.travelTime * 1000);
-
-		//new alarm date object
-		const newAlarmDate = new Date(unixAlarmDate);
-
-		this.setState({
-			fireDate: moment(newAlarmDate).format("DD-MM-YYYY HH:mm:ss")
-		})
-		this.setAlarm();
-  };
+  // handleDatePicked = date => {
+	// 	//convert date to unix timestamp (milliseconds)
+	// 	const arrivalDate = new Date(date).getTime();
+	//
+	// 	//calculate new alarm date, given travel time (milliseconds)
+	// 	const unixAlarmDate = arrivalDate - (this.state.travelTime * 1000);
+	//
+	// 	//new alarm date object
+	// 	const newAlarmDate = new Date(unixAlarmDate);
+	//
+	// 	this.setState({
+	// 		fireDate: moment(newAlarmDate).format("DD-MM-YYYY HH:mm:ss")
+	// 	})
+	// 	this.setAlarm();
+  // };
 
 	setCurrentTime() {
 		this.setState({
 			currentTime: new Date().toLocaleTimeString()
 		})
 	}
+
+	retrieveAlarm = () => {
+					var newDate = this.props.navigation.getParam('alarmDate', 'nothing sent')
+
+					setTimeout(() => this.setState({
+						fireDate: moment(newDate).format("DD-MM-YYYY HH:mm:ss")
+					}), 2000)
+
+	        setTimeout(() => this.setAlarm(), 4000)
+	    }
+
 
 	render() {
 		const { update, fireDate, futureFireDate } = this.state;
@@ -133,12 +152,7 @@ export default class Clock extends Component {
 					</Text>
 					<StatusBar style={{backgroundColor: 'transparent'}} />
 					<Button title="Set Arrival Time" onPress={this.showDateTimePicker} />
-					<DateTimePicker
-					mode={"time"}
-          isVisible={this.state.isDateTimePickerVisible}
-          onConfirm={this.handleDatePicked}
-          onCancel={this.hideDateTimePicker}
-        	/>
+
 					<Text style={styles.timeText}>
 					{this.state.time}
 					</Text>
@@ -148,6 +162,8 @@ export default class Clock extends Component {
 							title="Stop Alarm"
 							color="#ff0400"
 						/>
+						<Button title="see scheduled alarms" onPress={this.getScheduledAlarms} />
+
 					</View>
 				</View>
 		);

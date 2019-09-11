@@ -10,7 +10,7 @@ export default class Time extends Component {
         <Text>Time</Text>
         <Button
         title="Go to clock"
-        onPress={() => this.props.navigation.navigate('Clock')}
+        onPress={() => this.props.navigation.navigate('Clock', { alarmDate: "09-11-2019 13:58:00"})}
       />
       </View>
     );
