@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import { Text, Button } from 'react-native';
 import { View } from "native-base";
 
+const times = {
+  "03:00:00": ["01:30:00", "04:30:00"],
+  "06:00:00": ["04:30:00", "07:30:00"],
+  "09:00:00": ["07:30:00", "10:30:00"],
+  "12:00:00": ["10:30:00", "13:30:00"],
+  "15:00:00": ["13:30:00", "16:30:00"],
+  "18:00:00": ["16:30:00", "19:30:00"],
+  "21:00:00": ["19:30:00", "22:30:00"],
+  "00:00:00": ["22:30:00", "01:30:00"],
+};
+
 export default class Weather extends Component {
 constructor(props) {
   super(props);
@@ -15,27 +26,18 @@ constructor(props) {
   getRelevantForecastTime = () => {
     const alarmDate = this.props.alarmTime;
     var alarmTime = alarmDate.substr(11, 15);
-    var forecastTime;
-      if (alarmTime >= "01:30:00" && alarmTime < "04:30:00") {
-        forecastTime = "03:00:00";
-      } else if (alarmTime >= "04:30:00" && alarmTime < "07:30:00") {
-        forecastTime = "06:00:00";
-      } else if (alarmTime >= "07:30:00" && alarmTime < "10:30:00") {
-        forecastTime = "09:00:00";
-      } else if (alarmTime >= "10:30:00" && alarmTime < "13:30:00") {
-        forecastTime = "12:00:00";
-      } else if (alarmTime >= "13:30:00" && alarmTime < "16:30:00") {
-        forecastTime = "15:00:00";
-      } else if (alarmTime >= "16:30:00" && alarmTime < "19:30:00") {
-        forecastTime = "18:00:00";
-      } else if (alarmTime >= "19:30:00" && alarmTime < "22:30:00") {
-        forecastTime = "21:00:00";
-      } else if (alarmTime >= "22:30:00" && alarmTime < "01:30:00") {
-        forecastTime = "00:00:00";
-      } else {
-          console.log('error')
-    }
+    return (this.getTimeSlot(times, alarmTime));
+  }
 
+
+  isBetween = (time, lowerbound, upperbound) => {
+    if (time >= lowerbound && time < upperbound) {
+      return true
+    }
+  }
+
+  getTimeSlot = (object, value) => {
+  return Object.keys(object).find(key => this.isBetween(value, object[key][0], object[key][1]));
   }
 
   getRelevantForecast = (forecasts, relevantForecastTime) => {
@@ -55,10 +57,11 @@ constructor(props) {
 
   reportWeather = () => {
     var relevantForecastTime = this.getRelevantForecastTime()
+    console.log('revtime', relevantForecastTime)
     return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${this.props.location.latitude}&lon=${this.props.location.longitude}&&APPID=${this.state.apiKey}`)
     .then( (response) => response.json() )
     .then( (responseJson) => responseJson.list)
-    .then( (threeHourlyForecasts) => this.getRelevantForecast(threeHourlyForecasts) )
+    .then( (threeHourlyForecasts) => this.getRelevantForecast(threeHourlyForecasts, relevantForecastTime) )
     .then( (relevantForecast) => this.getWeather(relevantForecast))
     .then( (weather) => this.setWeatherForecast(weather))
 
