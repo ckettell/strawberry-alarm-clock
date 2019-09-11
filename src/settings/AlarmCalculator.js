@@ -8,6 +8,7 @@ import moment from "moment";
 import Weather from './weather'
 import SearchBox from './searchbox';
 import SearchResults from './searchresults';
+
 import PrepTime from './PrepTime';
 import TravelMode from './travelMode';
 import ArrivalTime from './ArrivalTime';
@@ -24,6 +25,7 @@ export default class AlarmCalculator extends Component {
      error: null,
      travelMode: '',
      travelTime: '',
+     forecast: '',
      prepTime: 0,
      arrivalTime: 'hi',
      alarmTime: '',
@@ -56,11 +58,24 @@ export default class AlarmCalculator extends Component {
 
     }
 
-
     setTravelTime = (time) => {
       this.setState({
         travelTime: time
         })
+        console.log(this.state.travelTime)
+    }
+
+    setWeatherForecast = (weather) => {
+      this.setState({
+        forecast: weather
+      })
+      console.log(this.state.forecast)
+    }
+
+    getForecast = () => {
+      console.log(this.state.forecast)
+    }
+
     }
 
     setPrepTime = (time) => {
@@ -121,8 +136,7 @@ export default class AlarmCalculator extends Component {
         longitude: this.state.Longitude,
         latitudeDelta: 0.015,
         longitudeDelta: 0.0121,
-        }
-
+    }
         
 
     return (
@@ -135,7 +149,14 @@ export default class AlarmCalculator extends Component {
          travelMode= {this.state.travelMode}
          updateTravelTime={this.setTravelTime.bind(this)}
          />
-
+        <Weather 
+        location={currentLocation} 
+        alarmTime={this.state.alarmTime} 
+        updateWeatherForecast={this.setWeatherForecast.bind(this)}
+         />
+         <Text>
+         Forecast: {this.state.forecast}
+        </Text>
         <TravelMode
         updateTravelMode={this.setTravelMode.bind(this)}
         />
