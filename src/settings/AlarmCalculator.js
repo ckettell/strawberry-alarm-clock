@@ -123,6 +123,8 @@ export default class AlarmCalculator extends Component {
         longitudeDelta: 0.0121,
         }
 
+        
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <ArrivalTime
@@ -144,6 +146,7 @@ export default class AlarmCalculator extends Component {
         title="save alarm"
         onPress={this.calculateAlarm}
          />
+
         <Button
         title="send alarm"
         onPress={() => this.navToTime()}
