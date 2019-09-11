@@ -100,7 +100,7 @@ export default class AlarmCalculator extends Component {
     }
 
     navToTime = () => {
-      this.props.navigation.navigate('SetAlarm', { alarmDate: "09-11-2019 14:34:00" });
+      this.props.navigation.navigate('SetAlarm', { alarmDate: this.state.alarmTime });
       console.log(this.state.alarmTime);
     }
 

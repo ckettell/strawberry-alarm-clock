@@ -83,72 +83,68 @@ export default class SetAlarm extends Component {
 			console.log(obj);
 		});
 
-
 		this.retrieveAlarm()
-
-
-
 	}
-
-
 
 	componentWillUnmount() {
 		DeviceEventEmitter.removeListener('OnNotificationDismissed');
 		DeviceEventEmitter.removeListener('OnNotificationOpened');
 	}
 
-
-
-
-
 	setCurrentTime() {
 		this.setState({
 			currentTime: new Date().toLocaleTimeString()
-			})
-		}
+		})
+	}
 
+	retrieveAlarm = () => {
+		var newDate = this.props.navigation.getParam('alarmDate', 'nothing sent')
 
-		retrieveAlarm = () => {
-			var newDate = this.props.navigation.getParam('alarmDate', 'nothing sent')
+		setTimeout(() => this.setState({
+			fireDate: moment(newDate).format("DD-MM-YYYY HH:mm:ss")
+		}), 2000)
 
-			setTimeout(() => this.setState({
-				fireDate: moment(newDate).format("DD-MM-YYYY HH:mm:ss")
-			}), 2000)
-
-			setTimeout(() => this.setAlarm(), 4000)
-		}
+		setTimeout(() => this.setAlarm(), 4000)
+	}
 
 	showAlarmTime = () => {
-			console.log(this.state.fireDate);
+		console.log(this.state.fireDate);
 	}
 
 	render() {
 		const { update, fireDate, futureFireDate } = this.state;
 
 		return (
-				<View style={styles.container}>
-					<Text style={styles.timeText}>
-						{this.state.currentTime}
-					</Text>
-					<Text style={styles.dateText}>
-						{this.state.date}
-					</Text>
-					<StatusBar style={{backgroundColor: 'transparent'}} />
-					<Button title="Set Arrival Time" onPress={this.showDateTimePicker} />
+			<View style={styles.container}>
+			<Text style={styles.timeText}>
+			{this.state.currentTime}
+			</Text>
+			<Text style={styles.dateText}>
+			{this.state.date}
+			</Text>
+			<StatusBar
+			style={{backgroundColor: 'transparent'}}
+			/>
+			<Button
+			title="Set Arrival Time"
+			onPress={this.showDateTimePicker}
+			/>
 
-					<Text style={styles.timeText}>
-					{this.state.time}
-					</Text>
-					<View>
-						<Button
-							onPress={this.stopAlarm}
-							title="Stop Alarm"
-							color="#ff0400"
-						/>
-						<Button title="show alarm time" onPress={this.showAlarmTime} />
-
-					</View>
-				</View>
+			<Text style={styles.timeText}>
+			{this.state.time}
+			</Text>
+			<View>
+			<Button
+			onPress={this.stopAlarm}
+			title="Stop Alarm"
+			color="#ff0400"
+			/>
+			<Button
+			title="show alarm time"
+			onPress={this.showAlarmTime}
+			/>
+			</View>
+			</View>
 		);
 	}
 }
@@ -162,12 +158,12 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		borderColor: '#CCCCCC',
-	  borderTopWidth: 1,
-	  borderBottomWidth: 1,
-	  height: 50,
-	  fontSize: 25,
-	  paddingLeft: 20,
-	  paddingRight: 20
+		borderTopWidth: 1,
+		borderBottomWidth: 1,
+		height: 50,
+		fontSize: 25,
+		paddingLeft: 20,
+		paddingRight: 20
 	},
 	timeText: {
 		color: '#999999',
