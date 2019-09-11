@@ -40,28 +40,27 @@ export default class AlarmCalculator extends Component {
 
   componentDidMount(){
 
-      console.log('mount')
+    console.log('mount')
      let geoOptions = {
-        enableHighAccuracy: true,
-        timeOut: 20000,
+      enableHighAccuracy: true,
+      timeOut: 20000,
       maximumAge: 60 * 60 * 24
     };
-    this.setState({ready:false, error: null});
-    Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
+      this.setState({ready:false, error: null});
+      Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
+    }
 
-   }
-   geoSuccess = (position) => {
-     console.log(position.coords.longitude)
-     this.setState({
-       ready:true,
-       Latitude: position.coords.latitude,
-       Longitude: position.coords.longitude
-       })
+    geoSuccess = (position) => {
+      console.log(position.coords.longitude)
+       this.setState({
+        ready:true,
+        Latitude: position.coords.latitude,
+        Longitude: position.coords.longitude
+      })
+    }
 
-   }
     geoFailure = (err) => {
-   this.setState({error: err.message});
-
+     this.setState({error: err.message});
     }
 
     setTravelTime = (time) => {
@@ -146,20 +145,24 @@ export default class AlarmCalculator extends Component {
 
     return (
       <View style={alarmCalcStyles.container}>
+
         <ArrivalTime
           updateArrivalTime={this.setArrivalTime.bind(this)}
         />
+
         <SearchBox
            textAlign={'center'}
            location={currentLocation}
            travelMode= {this.state.travelMode}
            updateTravelTime={this.setTravelTime.bind(this)}
-         />
+        />
+
         <Weather
           location={currentLocation}
           alarmTime={this.state.alarmTime}
           updateWeatherForecast={this.setWeatherForecast.bind(this)}
          />
+
         <Text style={alarmCalcStyles.forecast}>
          Forecast: {this.state.forecast}
         </Text>
@@ -167,6 +170,7 @@ export default class AlarmCalculator extends Component {
         <TravelMode
           updateTravelMode={this.setTravelMode.bind(this)}
         />
+
         <PrepTime
           updatePrepTime={this.setPrepTime.bind(this)}
         />

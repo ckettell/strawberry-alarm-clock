@@ -7,6 +7,7 @@ import {
 	StatusBar,
 	DeviceEventEmitter,
 	TouchableOpacity,
+	ImageBackground,
 } from 'react-native';
 
 import ReactNativeAN from 'react-native-alarm-notification';
@@ -117,42 +118,43 @@ export default class SetAlarm extends Component {
 
 		return (
 			<View style={styles.container}>
+				<ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '80%', height: '80%', alignItems: 'center'}}>
 
-				<Text style={styles.timeText}>
-					{this.state.currentTime}
-				</Text>
-
-				<Text style={styles.daysText}>
-					{this.state.date}
-				</Text>
-
-				<StatusBar
-					style={{backgroundColor: 'transparent'}}
-				/>
-
-				<TouchableOpacity onPress={this.showDateTimePicker}>
-					<Text style={styles.button}>
-						Set Arrival Time
+					<Text style={styles.timeText}>
+						{this.state.currentTime}
 					</Text>
-				</TouchableOpacity>
 
-				<Text style={styles.timeText}>
-					{this.state.time}
-				</Text>
-
-
-				<TouchableOpacity onPress={this.stopAlarm}>
-					<Text style={styles.stopButton}>
-						Stop Alarm
+					<Text style={styles.daysText}>
+						{this.state.date}
 					</Text>
-				</TouchableOpacity>
 
-				<TouchableOpacity onPress={this.showAlarmTime}>
-					<Text style={styles.button}>
-						show alarm time
+					<StatusBar
+						style={{backgroundColor: 'transparent'}}
+					/>
+
+					<TouchableOpacity onPress={this.showDateTimePicker}>
+						<Text style={styles.button}>
+							Set Arrival Time
+						</Text>
+					</TouchableOpacity>
+
+					<Text style={styles.timeText}>
+						{this.state.time}
 					</Text>
-				</TouchableOpacity>
 
+
+					<TouchableOpacity onPress={this.stopAlarm}>
+						<Text style={styles.stopButton}>
+							Stop Alarm
+						</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity onPress={this.showAlarmTime}>
+						<Text style={styles.button}>
+							show alarm time
+						</Text>
+					</TouchableOpacity>
+				</ImageBackground>
 			</View>
 		);
 	}

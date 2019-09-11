@@ -40,7 +40,6 @@ constructor(props) {
     .then( (threeHourlyForecasts) => this.getRelevantForecast(threeHourlyForecasts, this.props.alarmTime) )
     .then( (relevantForecast) => this.getWeather(relevantForecast))
     .then( (weather) => this.setWeatherForecast(weather))
-
   }
 
   // need the following functions to run consecutively
@@ -48,12 +47,9 @@ constructor(props) {
     this.reportWeather()
   }
 
-
-
   render() {
     return(
       <View>
       </View>
     )
-
   }}
