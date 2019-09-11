@@ -3,17 +3,6 @@ import { Text, Button } from 'react-native';
 import { View } from "native-base";
 import moment from "moment";
 
-const times = {
-  "03:00:00": ["01:30:00", "04:30:00"],
-  "06:00:00": ["04:30:00", "07:30:00"],
-  "09:00:00": ["07:30:00", "10:30:00"],
-  "12:00:00": ["10:30:00", "13:30:00"],
-  "15:00:00": ["13:30:00", "16:30:00"],
-  "18:00:00": ["16:30:00", "19:30:00"],
-  "21:00:00": ["19:30:00", "22:30:00"],
-  "00:00:00": ["22:30:00", "01:30:00"],
-};
-
 export default class Weather extends Component {
 constructor(props) {
   super(props);
@@ -24,30 +13,13 @@ constructor(props) {
   }
 };
 
-  getRelevantForecastTime = () => {
-    const alarmDate = this.props.alarmTime;
-    const alarmTime = alarmDate.substr(11, 15);
-    var relevantTime = (this.getTimeSlot(times, alarmTime));
-    if (typeof relevantTime === "undefined") {
-      return '00:00:00'
-    } else {
-      return relevantTime
-    }
-  }
-
-  isInbetween = (time, lowerbound, upperbound) => {
-    if (time >= lowerbound && time < upperbound) {
-      return true
-    }
-  }
-
-  getTimeSlot = (object, value) => {
-  return Object.keys(object).find(key => this.isInbetween(value, object[key][0], object[key][1]));
-  }
-
-  getRelevantForecast = (forecasts, relevantForecastTime) => {
+  getRelevantForecast = (forecasts, alarmDate) => {
+    console.log(alarmDate);
     for (let forecast of forecasts) {
-        if (forecast.dt_txt.substr(11,15) == relevantForecastTime) {
+        var forecastDate = moment(forecast.dt_txt).format("DD-MM-YYYY HH:mm:ss");
+        var lowerTimeBound = moment(forecastDate).subtract('1.5', 'hours').format("DD-MM-YYYY HH:mm:ss");
+        var upperTimeBound = moment(forecastDate).add('1.5', 'hours').format("DD-MM-YYYY HH:mm:ss");
+        if (moment(alarmDate).isBetween(lowerTimeBound, upperTimeBound)) {
         return forecast
       }
     }
@@ -62,11 +34,10 @@ constructor(props) {
   }
 
   reportWeather = () => {
-    var relevantForecastTime = this.getRelevantForecastTime()
     return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${this.props.location.latitude}&lon=${this.props.location.longitude}&&APPID=${this.state.apiKey}`)
     .then( (response) => response.json() )
     .then( (responseJson) => responseJson.list)
-    .then( (threeHourlyForecasts) => this.getRelevantForecast(threeHourlyForecasts, relevantForecastTime) )
+    .then( (threeHourlyForecasts) => this.getRelevantForecast(threeHourlyForecasts, this.props.alarmTime) )
     .then( (relevantForecast) => this.getWeather(relevantForecast))
     .then( (weather) => this.setWeatherForecast(weather))
 

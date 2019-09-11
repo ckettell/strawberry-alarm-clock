@@ -8,6 +8,7 @@ import Weather from './weather'
 import SearchBox from './searchbox';
 import SearchResults from './searchresults';
 import styles from "./styles";
+import moment from "moment";
 
 export default class AlarmCalculator extends Component {
 
@@ -20,7 +21,7 @@ export default class AlarmCalculator extends Component {
      error: null,
      travelMode: '',
      travelTime: '',
-     alarmTime: '',
+     alarmTime: (moment('12-09-2019 18:00:00').format("DD-MM-YYYY HH:mm:ss")),
      forecast: '0',
     }
   };
