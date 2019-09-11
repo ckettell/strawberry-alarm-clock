@@ -5,7 +5,8 @@ import {
 	StyleSheet,
 	Button,
 	StatusBar,
-	DeviceEventEmitter
+	DeviceEventEmitter,
+	TouchableOpacity,
 } from 'react-native';
 
 import ReactNativeAN from 'react-native-alarm-notification';
@@ -116,35 +117,37 @@ export default class SetAlarm extends Component {
 
 		return (
 			<View style={styles.container}>
-			<Text style={styles.timeText}>
-			{this.state.currentTime}
-			</Text>
-			<Text style={styles.dateText}>
-			{this.state.date}
-			</Text>
-			<StatusBar
-			style={{backgroundColor: 'transparent'}}
-			/>
-			<Button
-			title="Set Arrival Time"
-			onPress={this.showDateTimePicker}
-			/>
+				<Text style={styles.timeText}>
+					{this.state.currentTime}
+				</Text>
+				<Text style={styles.dateText}>
+					{this.state.date}
+				</Text>
+				<StatusBar
+					style={{backgroundColor: 'transparent'}}
+				/>
+				<Button
+					title="Set Arrival Time"
+					onPress={this.showDateTimePicker}
+				/>
 
-			<Text style={styles.timeText}>
-			{this.state.time}
-			</Text>
-			<View>
-			<Button
-			onPress={this.stopAlarm}
-			title="Stop Alarm"
-			color="#ff0400"
-			/>
-			<Button
-			title="show alarm time"
-			onPress={this.showAlarmTime}
-			/>
-			</View>
-			</View>
+				<Text style={styles.timeText}>
+					{this.state.time}
+				</Text>
+
+
+				<TouchableOpacity onPress={this.stopAlarm}>
+					<Text style={styles.button}>
+						Stop Alarm
+					</Text>
+				</TouchableOpacity>
+
+				<Button
+					title="show alarm time"
+					onPress={this.showAlarmTime}
+				/>
+				</View>
+
 		);
 	}
 }
@@ -152,18 +155,9 @@ export default class SetAlarm extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#0001',
+		backgroundColor: '#e6e6fa',
 		justifyContent: 'center',
 		alignItems: 'center',
-	},
-	input: {
-		borderColor: '#CCCCCC',
-		borderTopWidth: 1,
-		borderBottomWidth: 1,
-		height: 50,
-		fontSize: 25,
-		paddingLeft: 20,
-		paddingRight: 20
 	},
 	timeText: {
 		color: '#999999',
@@ -173,8 +167,16 @@ const styles = StyleSheet.create({
 		color: '#999999',
 		fontSize: 40,
 	},
-	helloText: {
-		color: '#999999',
-		fontSize: 20,
-	}
+	button: {
+		backgroundColor: '#add8e6',
+		borderColor: 'black',
+		borderWidth: 2,
+		borderRadius: 12,
+		color: 'white',
+		fontSize: 24,
+		fontWeight: 'bold',
+		overflow: 'hidden',
+		padding: 12,
+		textAlign:'center',
+	},
 })

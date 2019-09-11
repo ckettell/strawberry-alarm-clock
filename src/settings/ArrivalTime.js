@@ -36,9 +36,9 @@ showDateTimePicker = () => {
 };
 
 hideDateTimePicker = () => {
-  this.setState({
-  isDateTimePickerVisible: false
-});
+    this.setState({
+    isDateTimePickerVisible: false
+  });
 };
 
 handleDatePicked = date => {
@@ -60,9 +60,10 @@ handleDatePicked = date => {
         onConfirm={this.handleDatePicked}
         onCancel={this.hideDateTimePicker}
         />
-        <TouchableOpacity     onPress={this.showDateTimePicker}>
-        <Text   style={arrivalTimeStyles.button}>Set Arrival Time
-        </Text>
+        <TouchableOpacity onPress={this.showDateTimePicker}>
+          <Text style={arrivalTimeStyles.button}>
+            Set Arrival Time
+          </Text>
         </TouchableOpacity>
       </View>
     )

@@ -147,35 +147,40 @@ export default class AlarmCalculator extends Component {
     return (
       <View style={alarmCalcStyles.container}>
         <ArrivalTime
-        updateArrivalTime={this.setArrivalTime.bind(this)}
+          updateArrivalTime={this.setArrivalTime.bind(this)}
         />
         <SearchBox
-         location={currentLocation}
-         travelMode= {this.state.travelMode}
-         updateTravelTime={this.setTravelTime.bind(this)}
+           textAlign={'center'}
+           location={currentLocation}
+           travelMode= {this.state.travelMode}
+           updateTravelTime={this.setTravelTime.bind(this)}
          />
         <Weather
-        location={currentLocation}
-        alarmTime={this.state.alarmTime}
-        updateWeatherForecast={this.setWeatherForecast.bind(this)}
+          location={currentLocation}
+          alarmTime={this.state.alarmTime}
+          updateWeatherForecast={this.setWeatherForecast.bind(this)}
          />
-         <Text>
+        <Text style={alarmCalcStyles.forecast}>
          Forecast: {this.state.forecast}
         </Text>
+
         <TravelMode
-        updateTravelMode={this.setTravelMode.bind(this)}
+          updateTravelMode={this.setTravelMode.bind(this)}
         />
         <PrepTime
-        updatePrepTime={this.setPrepTime.bind(this)}
+          updatePrepTime={this.setPrepTime.bind(this)}
         />
 
-        <TouchableOpacity     onPress={this.calculateAlarm}>
-        <Text   style={alarmCalcStyles.button}>save alarm
-        </Text>
+        <TouchableOpacity onPress={this.calculateAlarm}>
+          <Text style={alarmCalcStyles.button}>
+            save alarm
+          </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={this.calculateAlarm}>
-        <Text style={alarmCalcStyles.button}>send alarm</Text>
+        <TouchableOpacity onPress={this.navToTime}>
+          <Text style={alarmCalcStyles.button}>
+            send alarm
+          </Text>
         </TouchableOpacity>
 
       </View>
@@ -187,10 +192,8 @@ const alarmCalcStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#e6e6fa',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-    button: {
+  button: {
     backgroundColor: '#add8e6',
     borderColor: 'black',
     borderWidth: 2,
@@ -202,4 +205,8 @@ const alarmCalcStyles = StyleSheet.create({
     padding: 12,
     textAlign:'center',
   },
+  forecast: {
+    color: 'black',
+    fontSize: 25,
+  }
 })

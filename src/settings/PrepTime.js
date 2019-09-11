@@ -11,8 +11,8 @@ import { View, InputGroup, Input } from "native-base";
 
 export default class PrepTime extends Component {
   state = {
-    prepTime: 0,
-  }
+  prepTime: 0,
+}
 
 
 setGetReadyTime(time){
@@ -24,32 +24,28 @@ setGetReadyTime(time){
 
 
 setPrepTime = () => {
-
-
   this.props.updatePrepTime(this.state.prepTime)
-
-
-
 }
 
 logPrepTime = () => {
   console.log(this.state.prepTime);
-
 }
 
   render(){
 
     return(
       <View>
-        <TouchableOpacity     onPress={this.logPrepTime}>
-        <Text   style={prepTimeStyles.button}>Set log prep time
-        </Text>
+        <TouchableOpacity onPress={this.logPrepTime}>
+          <Text style={prepTimeStyles.button}>
+            Set log prep time
+          </Text>
         </TouchableOpacity>
+
         <Picker
-        title='Get Ready Time'
-        style={{height: 50, width: 100}}
-        onValueChange={(itemValue, itemIndex) =>
-          this.setGetReadyTime(itemValue)
+          title='Get Ready Time'
+          style={{height: 50, width: 100}}
+          onValueChange={(itemValue, itemIndex) =>
+            this.setGetReadyTime(itemValue)
         }>
         <Picker.Item label="1" value='1' />
         <Picker.Item label="2" value='2' />
