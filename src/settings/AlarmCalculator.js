@@ -9,6 +9,7 @@ import Weather from './weather'
 import SearchBox from './searchbox';
 import SearchResults from './searchresults';
 import PrepTime from './PrepTime';
+import TravelMode from './travelMode';
 import ArrivalTime from './ArrivalTime';
 import styles from "./styles";
 
@@ -55,9 +56,6 @@ export default class AlarmCalculator extends Component {
 
     }
 
-    setTransportMode = (mode) => {
-      this.setState({travelMode: mode});
-    }
 
     setTravelTime = (time) => {
       this.setState({
@@ -77,8 +75,15 @@ export default class AlarmCalculator extends Component {
         arrivalTime: time
       })
 
-
     }
+
+    setTravelMode = (mode) => {
+      this.setState({
+        travelMode: mode,
+      })
+      console.log(this.state.travelMode);
+    }
+
 
     calculateAlarm = () => {
         console.log("ARIVALTIME:" + this.state.arrivalTime)
@@ -136,20 +141,11 @@ export default class AlarmCalculator extends Component {
         />
         <SearchBox location={currentLocation} travelMode= {this.state.travelMode} updateTravelTime={this.setTravelTime.bind(this)}/>
 
+        <TravelMode updateTravelMode={this.setTravelMode.bind(this)}/>
         <PrepTime
         updatePrepTime={this.setPrepTime.bind(this)}
         />
-        <Picker
-          selectedValue={this.state.travelMode}
-          style={{height: 50, width: 100}}
-          onValueChange={(itemValue, itemIndex) =>
-            this.setTransportMode(itemValue)
-          }>
-          <Picker.Item label="Walking" value="walking" />
-          <Picker.Item label="Cycling" value="bicycling" />
-          <Picker.Item label="Public Transport" value="transit" />
-          <Picker.Item label="Driving" value="driving" />
-        </Picker>
+
         <Weather location={currentLocation} alarmTime={this.state.alarmtime}/>
 
         <Button
