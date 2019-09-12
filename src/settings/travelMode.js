@@ -23,9 +23,6 @@ export default class TravelMode extends Component {
     this.props.updateTravelMode(this.state.travelMode)
   }
 
-
-
-
   render(){
 
     let data = [{

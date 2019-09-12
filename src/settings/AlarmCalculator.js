@@ -196,14 +196,20 @@ export default class AlarmCalculator extends Component {
 
     return (
        <View style={alarmCalcStyles.container}>
-        <ArrivalTime
-         updateArrivalTime={this.setArrivalTime.bind(this)}
-        />
-        <SearchBox
-         location={currentLocation}
-         travelMode= {this.state.travelMode}
-         updateTravelTime={this.setTravelTime.bind(this)}
-        />
+
+			 <SearchBox
+				location={currentLocation}
+				travelMode= {this.state.travelMode}
+				updateTravelTime={this.setTravelTime.bind(this)}
+			 />
+			 <Text >
+			</Text>
+			 <Text >
+			 </Text>
+			 <Text >
+			 </Text>
+			 <Text >
+			 </Text>
 
         <TravelMode
          updateTravelMode={this.setTravelMode.bind(this)}
@@ -211,6 +217,9 @@ export default class AlarmCalculator extends Component {
         <PrepTime
          updatePrepTime={this.setPrepTime.bind(this)}
         />
+				<ArrivalTime
+				 updateArrivalTime={this.setArrivalTime.bind(this)}
+				/>
 
         <TouchableOpacity onPress={this.calculateAlarm}>
           <Text style={alarmCalcStyles.button}>
@@ -238,7 +247,7 @@ export default class AlarmCalculator extends Component {
   const alarmCalcStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#383838',
+		margin: 'auto',
   },
   button: {
     backgroundColor: '#696969',
@@ -258,5 +267,8 @@ export default class AlarmCalculator extends Component {
     color: '#ff7f50',
     fontSize: 25,
     fontFamily: 'AntDesign',
-  }
+  },
+	travelMore: {
+		marginTop: '10%',
+	}
 })

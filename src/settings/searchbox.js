@@ -112,7 +112,7 @@ console.log(this.props.travelMode);
     </Text>
 
     <GooglePlacesAutocomplete
-       placeholder="Where do you want to go?"
+       placeholder="Destination?"
        placeholderTextColor="#333"
        onPress={onLocationSelected}
        fetchDetails={true}
