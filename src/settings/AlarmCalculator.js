@@ -6,6 +6,12 @@ import Geolocation from '@react-native-community/geolocation';
 import moment from "moment";
 import BackgroundTimer from 'react-native-background-timer';
 import ReactNativeAN from 'react-native-alarm-notification';
+import {
+	getRelevantForecast,
+	getWeather,
+	setWeatherForecast,
+	reportWeather
+} from './weather'
 
 
 import Weather from './weather'
@@ -39,17 +45,17 @@ export default class AlarmCalculator extends Component {
 			date: moment().format("LL"),
 			fireDate: 'hi',
 			update: '',
-      ready: false,
-     Latitude: 0,
-     Longitude: 0,
-     forecast: '',
-     error: null,
-     travelMode: '',
-     travelTime: '',
-     prepTime: 0,
-     arrivalTime: 'hi',
-     alarmTime: '',
-     currentTime: new Date().toLocaleTimeString(),
+			ready: false,
+			Latitude: 0,
+      Longitude: 0,
+      forecast: '',
+      error: null,
+      travelMode: '',
+      travelTime: '',
+      prepTime: 0,
+      arrivalTime: 'hi',
+      alarmTime: '',
+      currentTime: new Date().toLocaleTimeString(),
 	 };
 		this.setAlarm = this.setAlarm.bind(this);
 		this.stopAlarm = this.stopAlarm.bind(this);
@@ -153,25 +159,26 @@ export default class AlarmCalculator extends Component {
 
     calculateAlarm = () => {
 
-			const formattedArrivalTime = moment(this.state.arrivalTime).format("DD-MM-YYYY HH:mm:ss");
-
+			const formattedArrivalTime = moment(this.state.arrivalTime).format("ddd, DD MMM YYYY HH:mm:ss ZZ");
+			console.log('formattedArrivalTime: ' + formattedArrivalTime)
       const arrivalDate = (new Date(formattedArrivalTime).getTime());
 
       const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
       console.log(prepAndTravelTime);
 
-      const wakeUpTime = (arrivalDate - prepAndTravelTime)
+      const wakeUpTime = (arrivalDate - prepAndTravelTime);
 
 
-      const wakeUpTimeObject = new Date(wakeUpTime)
+      const wakeUpTimeObject = new Date(wakeUpTime);
 
 
 
       this.setState({
         fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
-      })
+      });
+			const formattedDate = moment(this.state.arrivalTime).format("ddd, DD MMM YYYY HH:mm:ss ZZ");
+      setTimeout(() => {reportWeather(this.state.Latitude,this.state.Longitude, formattedDate)},1000);
 
-      setInterval(() => { console.log(this.state.fireDate) }, 2000)
     }
 
     // navToTime = () => {
@@ -247,11 +254,6 @@ export default class AlarmCalculator extends Component {
          title="Go to clock"
          onPress={() => this.props.navigation.navigate('Clock')}
        />
-       <Weather
-        location={currentLocation}
-        alarmTime={this.state.fireDate}
-        updateWeatherForecast={this.setWeatherForecast.bind(this)}
-         />
         <Button
          title="Check Alarm Weather"
          onPress={() => console.log(this.state.forecast)}
