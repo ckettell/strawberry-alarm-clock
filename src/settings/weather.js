@@ -4,14 +4,14 @@ import { View } from "native-base";
 import moment from "moment";
 
 export default class Weather extends Component {
-constructor(props) {
-  super(props);
-  this.state = {
-    apiKey: '0fd818ea25024ad2f4461e80460c8d1a',
-    forecast: '',
-    forecastTime: '',
-  }
-};
+  constructor(props) {
+    super(props);
+    this.state = {
+      apiKey: '0fd818ea25024ad2f4461e80460c8d1a',
+      forecast: '',
+      forecastTime: '',
+    }
+  };
 
   getRelevantForecast = (forecasts, alarmDate) => {
     console.log(alarmDate);
@@ -55,5 +55,5 @@ constructor(props) {
       <View>
       </View>
     )
-
-  }}
+  }
+}

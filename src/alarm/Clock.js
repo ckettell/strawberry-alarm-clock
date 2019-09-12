@@ -5,8 +5,11 @@ import {
 	StyleSheet,
 	Button,
 	StatusBar,
-	DeviceEventEmitter
+	DeviceEventEmitter,
+	ImageBackground,
+	TouchableOpacity
 } from 'react-native';
+
 import BackgroundTimer from 'react-native-background-timer';
 
 import ReactNativeAN from 'react-native-alarm-notification';
@@ -45,61 +48,85 @@ export default class Clock extends Component {
 
 		return (
 			<View style={styles.container}>
-			<Text style={styles.timeText}>
-			{this.state.currentTime}
-			</Text>
-			<Text style={styles.dateText}>
-			{this.state.date}
-			</Text>
-			<StatusBar
-			style={{backgroundColor: 'transparent'}}
-			/>
 
-			<Text style={styles.timeText}>
-			{this.state.time}
-			</Text>
-			<View>
-			<Button
-			onPress={this.stopAlarm}
-			title="Stop Alarm"
-			color="#ff0400"
-			/>
-			</View>
-			<Button
-			title="Settings"
-			onPress={() => this.props.navigation.navigate('Home')}
-		/>
+			<ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '100%', height: '100%', alignItems: 'center'}}>
+			<StatusBar style={{backgroundColor: 'transparent'}}/>
+
+				<Text style={styles.timeText}>
+					{this.state.currentTime}
+				</Text>
+
+				<Text style={styles.daysText}>
+					{this.state.date}
+				</Text>
+
+				<Text style={styles.timeText}>
+					{this.state.time}
+				</Text>
+
+				<TouchableOpacity onPress={this.stopAlarm}>
+					<Text style={styles.stopButton}>
+						Stop Alarm
+					</Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+					<Text style={styles.button}>
+						Settings
+					</Text>
+				</TouchableOpacity>
+
+			</ImageBackground>
 			</View>
 		);
 	}
 }
 
+
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#0001',
-		justifyContent: 'center',
-		alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#383838',
 	},
-	input: {
-		borderColor: '#CCCCCC',
-		borderTopWidth: 1,
-		borderBottomWidth: 1,
-		height: 50,
-		fontSize: 25,
-		paddingLeft: 20,
-		paddingRight: 20
+
+  timeText: {
+    fontSize: 90,
+    color: '#e59400',
+		borderColor: '#000000',
+		fontFamily: 'digital-7',
+  },
+
+  daysText: {
+    color: '#e59400',
+    fontSize: 30,
+		borderColor: '#000000',
+		fontFamily: 'digital-7',
+  },
+
+	button: {
+    backgroundColor: '#696969',
+    borderColor: '#ff7f50',
+    borderWidth: 2,
+    borderRadius: 6,
+    color: '#e59400',
+    fontSize: 24,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 5,
+    textAlign:'center',
+  },
+	stopButton: {
+		backgroundColor: 'darkolivegreen',
+		borderColor: 'black',
+		borderWidth: 2,
+		borderRadius: 12,
+		color: 'red',
+		fontSize: 24,
+		fontWeight: 'bold',
+		overflow: 'hidden',
+		padding: 7,
+		textAlign:'center',
 	},
-	timeText: {
-		color: '#999999',
-		fontSize: 90,
-	},
-	dateText: {
-		color: '#999999',
-		fontSize: 40,
-	},
-	helloText: {
-		color: '#999999',
-		fontSize: 20,
-	}
 })

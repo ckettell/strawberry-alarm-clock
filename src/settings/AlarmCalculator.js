@@ -1,5 +1,13 @@
 import React, {Component} from "react";
-import { Text, Button, Picker, DeviceEventEmitter } from 'react-native';
+import {
+  Text,
+  Button,
+  Picker,
+  DeviceEventEmitter,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
+
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
@@ -35,10 +43,10 @@ export default class AlarmCalculator extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-			date: moment().format("LL"),
-			fireDate: 'hi',
-			update: '',
-      ready: false,
+	   date: moment().format("LL"),
+		 fireDate: 'hi',
+		 update: '',
+    ready: false,
      Latitude: 0,
      Longitude: 0,
      error: null,
@@ -67,11 +75,11 @@ export default class AlarmCalculator extends Component {
 		ReactNativeAN.stopAlarm();
 	};
 	sendNotification = () => {
-		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" }, };
+		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" },
+  };
 		console.log(details);
 		ReactNativeAN.sendNotification(details);
 	};
-
 
   componentDidMount(){
 
@@ -80,179 +88,175 @@ export default class AlarmCalculator extends Component {
 			console.log(`Notification ${obj.id} dismissed`);
 		});
 
-      console.log('mount')
-     let geoOptions = {
+    console.log('mount')
+      let geoOptions = {
         enableHighAccuracy: true,
         timeOut: 20000,
-      maximumAge: 60 * 60 * 24
+        maximumAge: 60 * 60 * 24
     };
-    this.setState({ready:false, error: null});
-    Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
+      this.setState({ready:false, error: null});
+      Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
 
+      BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 500)
 
+      BackgroundTimer.setInterval(() => { this.calculateAlarm() }, 30000)
 
-		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 500)
+  		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
+		const obj = JSON.parse(e);
+		console.log(obj);
+	});
+}
 
-    BackgroundTimer.setInterval(() => { this.calculateAlarm() }, 30000)
-
-		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
-			const obj = JSON.parse(e);
-			console.log(obj);
-		});
-
-
-   }
-
-
-   geoSuccess = (position) => {
+  geoSuccess = (position) => {
      console.log(position.coords.longitude)
      this.setState({
        ready:true,
        Latitude: position.coords.latitude,
        Longitude: position.coords.longitude
-       })
+     })
+  }
 
-   }
-    geoFailure = (err) => {
+  geoFailure = (err) => {
    this.setState({error: err.message});
+  }
 
-    }
+  setTravelTime = (time) => {
+    this.setState({
+      travelTime: time
+    })
+  }
 
+  setPrepTime = (time) => {
+    this.setState({
+      prepTime: time
+    })
+  }
 
-    setTravelTime = (time) => {
-      this.setState({
-        travelTime: time
-        })
-    }
+  setArrivalTime = (time) => {
+    this.setState({
+      arrivalTime: time
+    })
+  }
 
-    setPrepTime = (time) => {
-      this.setState({
-        prepTime: time
-      })
-    }
+  setTravelMode = (mode) => {
+    this.setState({
+      travelMode: mode,
+    })
+     }
 
-    setArrivalTime = (time) => {
-      this.setState({
-        arrivalTime: time
-      })
-    }
+  calculateAlarm = () => {
 
-    setTravelMode = (mode) => {
-      this.setState({
-        travelMode: mode,
-      })
-       }
+		const formattedArrivalTime = moment(this.state.arrivalTime).format("DD-MM-YYYY HH:mm:ss");
 
-    calculateAlarm = () => {
+    const arrivalDate = (new Date(formattedArrivalTime).getTime());
 
-			const formattedArrivalTime = moment(this.state.arrivalTime).format("DD-MM-YYYY HH:mm:ss");
+    const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
+    console.log(prepAndTravelTime);
 
-      const arrivalDate = (new Date(formattedArrivalTime).getTime());
-
-      const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
-      console.log(prepAndTravelTime);
-
-      const wakeUpTime = (arrivalDate - prepAndTravelTime)
+    const wakeUpTime = (arrivalDate - prepAndTravelTime)
 
 
-      const wakeUpTimeObject = new Date(wakeUpTime)
+    const wakeUpTimeObject = new Date(wakeUpTime)
 
-      this.setState({
-        fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
-      })
+    this.setState({
+      fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
+    })
 
-      setInterval(() => { console.log(this.state.fireDate) }, 2000)
-    }
+    setInterval(() => { console.log(this.state.fireDate) }, 2000)
+  }
 
-    // navToTime = () => {
-    //   this.props.navigation.navigate('SetAlarm', { alarmDate: this.state.alarmTime });
-    // }
+  sendTimeToAlarm = () => {
+    this.calculateAlarm();
+    this.navToTime();
+  }
 
-    sendTimeToAlarm = () => {
-      this.calculateAlarm();
-      this.navToTime();
+  showAlarm = () => {
+    console.log(this.state.alarmTime);
+  }
 
-    }
-    showAlarm = () => {
-      console.log(this.state.alarmTime);
-    }
+	componentWillUnmount() {
+		DeviceEventEmitter.removeListener('OnNotificationDismissed');
+		DeviceEventEmitter.removeListener('OnNotificationOpened');
+	}
 
-
-
-
-
-    // wakeUp = () => {
-    //       if (this.state.currentTime === this.state.alarmTime){
-    //         console.log("TRUEEEE");
-    //
-    //           ReactNativeAN.sendNotification(alarmNotifData);
-    //       }
-    //       console.log("ALARM:" + this.state.alarmTime);
-    //       console.log("CUREENT" + this.state.currentTime);
-    //
-    //   }
-
-		componentWillUnmount() {
-			DeviceEventEmitter.removeListener('OnNotificationDismissed');
-			DeviceEventEmitter.removeListener('OnNotificationOpened');
-		}
-
-    setCurrentTime() {
-        this.setState({
-          currentTime: new Date().toLocaleTimeString()
-        })
-
-      }
-
-
-
-
-
+  setCurrentTime() {
+    this.setState({
+      currentTime: new Date().toLocaleTimeString()
+    })
+  }
 
   render() {
 
     const currentLocation = {
-        latitude: this.state.Latitude,
-        longitude: this.state.Longitude,
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.0121,
-        }
-
-
+      latitude: this.state.Latitude,
+      longitude: this.state.Longitude,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    }
 
     return (
-      <View >
+       <View style={alarmCalcStyles.container}>
         <ArrivalTime
-        updateArrivalTime={this.setArrivalTime.bind(this)}
+         updateArrivalTime={this.setArrivalTime.bind(this)}
         />
         <SearchBox
          location={currentLocation}
          travelMode= {this.state.travelMode}
          updateTravelTime={this.setTravelTime.bind(this)}
-         />
-
+        />
 
         <TravelMode
-        updateTravelMode={this.setTravelMode.bind(this)}
+         updateTravelMode={this.setTravelMode.bind(this)}
         />
         <PrepTime
-        updatePrepTime={this.setPrepTime.bind(this)}
+         updatePrepTime={this.setPrepTime.bind(this)}
         />
-        <Button
-        title="Estimate alarm"
-        onPress={this.calculateAlarm}
-         />
-         <Button
-         title="Set alarm"
-         onPress={this.setAlarm}
-          />
 
-         <Button
-         title="Go to clock"
-         onPress={() => this.props.navigation.navigate('Clock')}
-       />
+        <TouchableOpacity onPress={this.calculateAlarm}>
+          <Text style={alarmCalcStyles.button}>
+            Estimate alarm
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.setAlarm}>
+          <Text style={alarmCalcStyles.button}>
+            Set alarm
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Clock')}>
+          <Text style={alarmCalcStyles.button}>
+            GO TO STRAWBERRY CLOCK
+          </Text>
+        </TouchableOpacity>
 
       </View>
     );
   }
 }
+
+  const alarmCalcStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#383838',
+  },
+  button: {
+    backgroundColor: '#696969',
+    borderColor: '#ff7f50',
+    borderWidth: 2,
+    borderRadius: 12,
+    color: '#e59400',
+    fontSize: 24,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 5,
+    textAlign:'center',
+    alignItems: 'center',
+    fontFamily: 'digital-7'
+  },
+  forecast: {
+    color: '#ff7f50',
+    fontSize: 25,
+    fontFamily: 'AntDesign',
+  }
+})
