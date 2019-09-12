@@ -145,9 +145,12 @@ export default class AlarmCalculator extends Component {
 
     wakeUp = () => {
           if (this.state.currentTime === this.state.alarmTime){
+            console.log("TRUEEEE");
 
               ReactNativeAN.sendNotification(alarmNotifData);
           }
+          console.log("ALARM:" + this.state.alarmTime);
+          console.log("CUREENT" + this.state.currentTime);
 
       }
 
@@ -155,6 +158,7 @@ export default class AlarmCalculator extends Component {
         this.setState({
           currentTime: new Date().toLocaleTimeString()
         })
+
       }
 
 
