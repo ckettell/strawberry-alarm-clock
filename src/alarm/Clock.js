@@ -21,6 +21,7 @@ export default class Clock extends Component {
 			date: moment().format("LL"),
 			currentTime: new Date().toLocaleTimeString(),
 			update: '',
+			travelTime: '',
 		};
 		this.stopAlarm = this.stopAlarm.bind(this);
 	}
@@ -31,6 +32,9 @@ export default class Clock extends Component {
 	};
 
 	componentDidMount() {
+
+		this.retrieveAlarm()
+
 		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 200)
 	}
 
@@ -40,11 +44,27 @@ export default class Clock extends Component {
 		})
 	}
 
+	retrieveAlarm = () => {
+		console.log(this.props);
+			 this.setState({
+					 travelTime: this.props.navigation.getParam('calcTravelTime', 'nothing sent')
+
+			 })
+			 setTimeout(() => {
+				 console.log(this.state.travelTime)
+			 }, 2000)
+
+
+	 }
+
 	render() {
 		const { update, fireDate, futureFireDate } = this.state;
 
 		return (
 			<View style={styles.container}>
+			<Text>
+			{this.state.travelTime}
+			</Text>
 			<Text style={styles.timeText}>
 			{this.state.currentTime}
 			</Text>

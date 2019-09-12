@@ -27,16 +27,18 @@ calculateDistance = () => {
 
 
   if (this.state.travelMode == 'driving') {
-    console.log("HIIII");
+
 
   return fetch(`https://api.tomtom.com/routing/1/calculateRoute/${this.state.locationALat},${this.state.locationALong}:${this.state.locationBLat},${this.state.locationBLong}/json?departAt=now&routeType=fastest&traffic=true&avoid=unpavedRoads&travelMode=car&key=drstTICAYujEeR3lRBWB6GqIsSVWMjzZ`)
   .then( (response) => response.json() )
   .then( (responseJson) => {
 
 
+
     this.setState({
       travelTime: responseJson['routes'][0]['summary']['travelTimeInSeconds']
     });
+
 
     setInterval(() => { console.log(this.state.travelTime) }, 1000)
 
@@ -77,8 +79,9 @@ return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imp
 
 }
 
-setTravelTime = () => {
+setTravelTime = () => {;
   this.props.updateTravelTime(this.state.travelTime)
+
 };
 
   setCurrentLocation = () => {

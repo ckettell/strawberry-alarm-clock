@@ -16,8 +16,7 @@ export default class TravelMode extends Component {
   }
 
   setModeInCalc = () => {
-    console.log(this.props);
-    console.log(this.state.travelMode);
+
     this.props.updateTravelMode(this.state.travelMode)
   }
 

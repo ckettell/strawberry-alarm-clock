@@ -120,9 +120,11 @@ export default class AlarmCalculator extends Component {
 
 
     setTravelTime = (time) => {
+      console.log("HIIYOO");
       this.setState({
         travelTime: time
         })
+        console.log(this.state.travelTime);
     }
 
     setPrepTime = (time) => {
@@ -151,6 +153,7 @@ export default class AlarmCalculator extends Component {
 
       const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
       console.log(prepAndTravelTime);
+      console.log(this.state.travelTime);
 
       const wakeUpTime = (arrivalDate - prepAndTravelTime)
 
@@ -247,9 +250,9 @@ export default class AlarmCalculator extends Component {
          onPress={this.setAlarm}
           />
 
-         <Button
+       <Button
          title="Go to clock"
-         onPress={() => this.props.navigation.navigate('Clock')}
+         onPress={() => this.props.navigation.navigate('Clock', { calcTravelTime: this.state.travelTime })}
        />
 
       </View>
