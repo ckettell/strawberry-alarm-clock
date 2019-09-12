@@ -5,7 +5,8 @@ import {
   Picker,
   DeviceEventEmitter,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground
 } from 'react-native';
 
 import { View, InputGroup, Input } from "native-base";
@@ -46,7 +47,7 @@ export default class AlarmCalculator extends Component {
 	   date: moment().format("LL"),
 		 fireDate: 'hi',
 		 update: '',
-    ready: false,
+     ready: false,
      Latitude: 0,
      Longitude: 0,
      error: null,
@@ -196,20 +197,27 @@ export default class AlarmCalculator extends Component {
 
     return (
        <View style={alarmCalcStyles.container}>
-        <ArrivalTime
-         updateArrivalTime={this.setArrivalTime.bind(this)}
-        />
+       <ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/LED_Strawberry_Floor_2000x.jpg')} style={alarmCalcStyles.imgBackground}>
+        <Text style={alarmCalcStyles.text}>
+          SETTINGS:
+        </Text>
+
         <SearchBox
-         location={currentLocation}
-         travelMode= {this.state.travelMode}
-         updateTravelTime={this.setTravelTime.bind(this)}
+          location={currentLocation}
+          travelMode= {this.state.travelMode}
+          updateTravelTime={this.setTravelTime.bind(this)}
         />
 
         <TravelMode
-         updateTravelMode={this.setTravelMode.bind(this)}
+          updateTravelMode={this.setTravelMode.bind(this)}
         />
+
         <PrepTime
-         updatePrepTime={this.setPrepTime.bind(this)}
+          updatePrepTime={this.setPrepTime.bind(this)}
+        />
+
+        <ArrivalTime
+          updateArrivalTime={this.setArrivalTime.bind(this)}
         />
 
         <TouchableOpacity onPress={this.calculateAlarm}>
@@ -229,7 +237,7 @@ export default class AlarmCalculator extends Component {
             GO TO STRAWBERRY CLOCK
           </Text>
         </TouchableOpacity>
-
+        </ImageBackground>
       </View>
     );
   }
@@ -238,14 +246,14 @@ export default class AlarmCalculator extends Component {
   const alarmCalcStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#383838',
+    backgroundColor: 'black',
   },
   button: {
-    backgroundColor: '#696969',
-    borderColor: '#ff7f50',
+    backgroundColor: 'black',
+    borderColor: 'deepskyblue',
     borderWidth: 2,
     borderRadius: 12,
-    color: '#e59400',
+    color: 'deepskyblue',
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',
@@ -254,9 +262,16 @@ export default class AlarmCalculator extends Component {
     alignItems: 'center',
     fontFamily: 'digital-7'
   },
-  forecast: {
-    color: '#ff7f50',
-    fontSize: 25,
-    fontFamily: 'AntDesign',
+  text: {
+    color: 'red',
+    textAlign:'center',
+    fontSize: 40,
+    borderColor: 'limegreen',
+    borderWidth: 5,
+  },
+  imgBackground: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center'
   }
 })
