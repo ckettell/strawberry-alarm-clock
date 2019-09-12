@@ -118,7 +118,6 @@ export default class SetAlarm extends Component {
 
 		return (
 			<View style={styles.container}>
-				<ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '80%', height: '80%', alignItems: 'center'}}>
 
 					<Text style={styles.timeText}>
 						{this.state.currentTime}
@@ -154,7 +153,7 @@ export default class SetAlarm extends Component {
 							show alarm time
 						</Text>
 					</TouchableOpacity>
-				</ImageBackground>
+			
 			</View>
 		);
 	}
@@ -209,3 +208,5 @@ const styles = StyleSheet.create({
 	},
 
 })
+
+// <ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '80%', height: '80%', alignItems: 'center'}}>

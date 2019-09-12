@@ -59,24 +59,21 @@ else {
 
 
 return fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.locationALat},${this.state.locationALong}&destinations=${this.state.locationBLat},${this.state.locationBLong}&mode=${this.state.travelMode}&key=AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE`)
-.then( (response) => response.json() )
-.then( (responseJson) => {
+  .then( (response) => response.json() )
+  .then( (responseJson) => {
 
-  this.setState({
-    travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
-
-  });
-  this.setTravelTime()
-})
-
+    this.setState({
+      travelTime: responseJson['rows'][0]['elements'][0]['duration']['value']
+    });
+    this.setTravelTime()
+  })
 }
 
-setTravelTime = () => {
-  this.props.updateTravelTime(this.state.travelTime)
-};
+  setTravelTime = () => {
+    this.props.updateTravelTime(this.state.travelTime)
+  };
 
   setCurrentLocation = () => {
-
     this.setState({
        locationALat: this.props.location['latitude'],
        locationALong: this.props.location['longitude'],
@@ -114,16 +111,16 @@ setTravelTime = () => {
          renderDescription={row => row.description} // custom description render
          onPress={(data, details = null) => {
 
-        { this.setDestination(details) }
-        { this.setCurrentLocation()}
-        { this.calculateDistance() }
-
-      }} // 'details' is provided when fetchDetails = true
+          { this.setDestination(details) }
+          { this.setCurrentLocation()}
+          { this.calculateDistance() }
+        }} // 'details' is provided when fetchDetails = true
 
          query={{
            key: "AIzaSyCoaWQAbcunCXBFbD79q2xCRYtGv8-sQWE",
            language: "en"
          }}
+
          textInputProps={{
            onFocus: () => {
              this.setState({ searchFocused: true });

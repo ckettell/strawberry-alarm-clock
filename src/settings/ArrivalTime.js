@@ -55,10 +55,10 @@ handleDatePicked = date => {
     return(
       <View>
         <DateTimePicker
-        mode={"time"}
-        isVisible={this.state.isDateTimePickerVisible}
-        onConfirm={this.handleDatePicked}
-        onCancel={this.hideDateTimePicker}
+          mode={"time"}
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this.handleDatePicked}
+          onCancel={this.hideDateTimePicker}
         />
         <TouchableOpacity onPress={this.showDateTimePicker}>
           <Text style={arrivalTimeStyles.button}>

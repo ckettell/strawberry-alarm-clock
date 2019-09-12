@@ -4,7 +4,31 @@ import {
   Button,
   Picker,
   StyleSheet,
-  TouchableOpacity} from 'react-native';
+  TouchableOpacity
+} from 'react-native';
+
+import Svg, {
+  Circle,
+  Ellipse,
+  G,
+  TSpan,
+  TextPath,
+  Path,
+  Polygon,
+  Polyline,
+  Line,
+  Rect,
+  Use,
+  Image,
+  Symbol,
+  Defs,
+  LinearGradient,
+  RadialGradient,
+  Stop,
+  ClipPath,
+  Pattern,
+  Mask,
+} from 'react-native-svg';
 
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -146,10 +170,6 @@ export default class AlarmCalculator extends Component {
     return (
       <View style={alarmCalcStyles.container}>
 
-        <ArrivalTime
-          updateArrivalTime={this.setArrivalTime.bind(this)}
-        />
-
         <SearchBox
            textAlign={'center'}
            location={currentLocation}
@@ -163,12 +183,12 @@ export default class AlarmCalculator extends Component {
           updateWeatherForecast={this.setWeatherForecast.bind(this)}
          />
 
-        <Text style={alarmCalcStyles.forecast}>
-         Forecast: {this.state.forecast}
-        </Text>
-
         <TravelMode
           updateTravelMode={this.setTravelMode.bind(this)}
+        />
+
+        <ArrivalTime
+          updateArrivalTime={this.setArrivalTime.bind(this)}
         />
 
         <PrepTime
@@ -186,6 +206,10 @@ export default class AlarmCalculator extends Component {
             send alarm
           </Text>
         </TouchableOpacity>
+
+        <Text style={alarmCalcStyles.forecast}>
+          Forecast: {this.state.forecast}
+        </Text>
 
       </View>
     );
@@ -208,9 +232,12 @@ const alarmCalcStyles = StyleSheet.create({
     overflow: 'hidden',
     padding: 5,
     textAlign:'center',
+
+    bottom: 0,
+    alignItems: 'center',
   },
   forecast: {
-    color: 'black',
+    color: '#ff7f50',
     fontSize: 25,
   }
 })
