@@ -30,6 +30,7 @@ constructor(props) {
   }
 
   setWeatherForecast = (weather) => {
+    console.log('settingweatherforecast')
     this.props.updateWeatherForecast(weather);
   }
 
@@ -43,17 +44,19 @@ constructor(props) {
 
   }
 
-  // need the following functions to run consecutively
-  componentDidMount() {
-    this.reportWeather()
-  }
-
 
 
   render() {
+    console.log(this.props);
     return(
       <View>
+        <Button title='Get Forecast'
+        onPress={() => this.reportWeather()}/>
+        <Text>
+          Weather forecast: {this.state.forecast}
+        </Text>
       </View>
     )
 
-  }}
+  }
+}

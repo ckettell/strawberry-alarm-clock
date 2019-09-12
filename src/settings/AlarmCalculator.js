@@ -24,6 +24,7 @@ const alarmNotifData = {
 	vibrate: true,
 	vibration: 100,
 	play_sound: true,
+  sound_name: null,
 	schedule_once: true,
 	color: "green",
 	channel: "wakeup",
@@ -41,6 +42,7 @@ export default class AlarmCalculator extends Component {
       ready: false,
      Latitude: 0,
      Longitude: 0,
+     forecast: '',
      error: null,
      travelMode: '',
      travelTime: '',
@@ -72,6 +74,13 @@ export default class AlarmCalculator extends Component {
 		ReactNativeAN.sendNotification(details);
 	};
 
+  setWeatherForecast = (weather) => {
+      this.setState({
+        forecast: weather
+      })
+      console.log(this.state.forecast);
+  };
+
 
   componentDidMount(){
 
@@ -87,9 +96,8 @@ export default class AlarmCalculator extends Component {
       maximumAge: 60 * 60 * 24
     };
     this.setState({ready:false, error: null});
+
     Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
-
-
 
 		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 500)
 
@@ -157,6 +165,8 @@ export default class AlarmCalculator extends Component {
 
       const wakeUpTimeObject = new Date(wakeUpTime)
 
+
+
       this.setState({
         fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
       })
@@ -177,20 +187,6 @@ export default class AlarmCalculator extends Component {
       console.log(this.state.alarmTime);
     }
 
-
-
-
-
-    // wakeUp = () => {
-    //       if (this.state.currentTime === this.state.alarmTime){
-    //         console.log("TRUEEEE");
-    //
-    //           ReactNativeAN.sendNotification(alarmNotifData);
-    //       }
-    //       console.log("ALARM:" + this.state.alarmTime);
-    //       console.log("CUREENT" + this.state.currentTime);
-    //
-    //   }
 
 		componentWillUnmount() {
 			DeviceEventEmitter.removeListener('OnNotificationDismissed');
@@ -251,6 +247,15 @@ export default class AlarmCalculator extends Component {
          title="Go to clock"
          onPress={() => this.props.navigation.navigate('Clock')}
        />
+       <Weather
+        location={currentLocation}
+        alarmTime={this.state.fireDate}
+        updateWeatherForecast={this.setWeatherForecast.bind(this)}
+         />
+        <Button
+         title="Check Alarm Weather"
+         onPress={() => console.log(this.state.forecast)}
+         />
 
       </View>
     );
