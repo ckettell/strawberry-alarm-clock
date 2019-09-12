@@ -13,8 +13,9 @@ export default class ArrivalTime extends Component {
 
 
 setArrivalState(time){
+  var formattedTime = moment(time).format("ddd, DD MMM YYYY HH:mm:ss ZZ")
   this.setState({
-    arrivalTime: time
+    arrivalTime: formattedTime
   })
   this.setArrivalTime()
 }
@@ -22,6 +23,7 @@ setArrivalState(time){
 
 setArrivalTime = () => {
   this.props.updateArrivalTime(this.state.arrivalTime)
+  console.log('setArrivalTime 23 :' + this.state.arrivalTime)
 }
 
 showDateTimePicker = () => {
@@ -37,7 +39,7 @@ hideDateTimePicker = () => {
 handleDatePicked = date => {
   const dateObject = new Date(date)
   this.setState({
-    arrivalTime: moment(dateObject).format("DD-MM-YYYY HH:mm:ss")
+    arrivalTime: moment(dateObject).format("ddd, DD MMM YYYY HH:mm:ss ZZ")
   })
   this.setArrivalTime()
 };

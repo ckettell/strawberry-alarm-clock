@@ -157,10 +157,10 @@ export default class AlarmCalculator extends Component {
       })
        }
 
+
     calculateAlarm = () => {
 
 			const formattedArrivalTime = moment(this.state.arrivalTime).format("ddd, DD MMM YYYY HH:mm:ss ZZ");
-			console.log('formattedArrivalTime: ' + formattedArrivalTime)
       const arrivalDate = (new Date(formattedArrivalTime).getTime());
 
       const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
@@ -171,19 +171,18 @@ export default class AlarmCalculator extends Component {
 
       const wakeUpTimeObject = new Date(wakeUpTime);
 
-
+			getWeatherForecast = (weather) => {
+				this.setState({forecast: weather})
+			}
 
       this.setState({
         fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
       });
+			setTimeout(() => {console.log(this.state.fireDate)},1000)
 			const formattedDate = moment(this.state.arrivalTime).format("ddd, DD MMM YYYY HH:mm:ss ZZ");
-      setTimeout(() => {reportWeather(this.state.Latitude,this.state.Longitude, formattedDate)},1000);
+			setTimeout(() => {reportWeather(this.state.Latitude,this.state.Longitude, formattedDate)}, 1000)
 
     }
-
-    // navToTime = () => {
-    //   this.props.navigation.navigate('SetAlarm', { alarmDate: this.state.alarmTime });
-    // }
 
     sendTimeToAlarm = () => {
       this.calculateAlarm();
