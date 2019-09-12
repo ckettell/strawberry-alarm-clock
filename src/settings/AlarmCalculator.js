@@ -232,12 +232,12 @@ const alarmCalcStyles = StyleSheet.create({
     overflow: 'hidden',
     padding: 5,
     textAlign:'center',
-
-    bottom: 0,
     alignItems: 'center',
+    fontFamily: 'digital-7'
   },
   forecast: {
     color: '#ff7f50',
     fontSize: 25,
+    fontFamily: 'AntDesign',
   }
 })

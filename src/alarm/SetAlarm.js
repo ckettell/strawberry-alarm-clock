@@ -153,7 +153,7 @@ export default class SetAlarm extends Component {
 							show alarm time
 						</Text>
 					</TouchableOpacity>
-			
+
 			</View>
 		);
 	}
@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
   {
     fontSize: 50,
     color: '#e59400',
-		borderColor: '#000000'
+		borderColor: '#000000',
+		fontFamily: 'digital-7',
   },
 
   daysText:
