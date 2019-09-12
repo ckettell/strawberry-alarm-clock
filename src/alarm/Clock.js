@@ -24,6 +24,7 @@ export default class Clock extends Component {
 			date: moment().format("LL"),
 			currentTime: new Date().toLocaleTimeString(),
 			update: '',
+			travelTime: '',
 		};
 		this.stopAlarm = this.stopAlarm.bind(this);
 	}
@@ -33,8 +34,20 @@ export default class Clock extends Component {
 		ReactNativeAN.stopAlarm();
 	};
 
+	retrieveAlarm = () => {
+	console.log(this.props);
+		 this.setState({
+						 travelTime: this.props.navigation.getParam('calcTravelTime', 'nothing sent')
+
+		 })
+		 setTimeout(() => {
+				 console.log(this.state.travelTime)
+		 }, 2000)
+ }
+
 	componentDidMount() {
 		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 200)
+		this.retrieveAlarm()
 	}
 
 	setCurrentTime() {
@@ -49,34 +62,36 @@ export default class Clock extends Component {
 		return (
 			<View style={styles.container}>
 
-			<ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '100%', height: '100%', alignItems: 'center'}}>
 			<StatusBar style={{backgroundColor: 'transparent'}}/>
 
-				<Text style={styles.timeText}>
-					{this.state.currentTime}
+			<Text style={styles.timeText}>
+				{this.state.currentTime}
+			</Text>
+
+			<Text style={styles.timeText}>
+				{this.state.travelTime}
+			</Text>
+
+			<Text style={styles.daysText}>
+				{this.state.date}
+			</Text>
+
+			<Text style={styles.timeText}>
+				{this.state.time}
+			</Text>
+
+			<TouchableOpacity onPress={this.stopAlarm}>
+				<Text style={styles.stopButton}>
+					Stop Alarm
 				</Text>
+			</TouchableOpacity>
 
-				<Text style={styles.daysText}>
-					{this.state.date}
+			<TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+				<Text style={styles.button}>
+					Settings
 				</Text>
+			</TouchableOpacity>
 
-				<Text style={styles.timeText}>
-					{this.state.time}
-				</Text>
-
-				<TouchableOpacity onPress={this.stopAlarm}>
-					<Text style={styles.stopButton}>
-						Stop Alarm
-					</Text>
-				</TouchableOpacity>
-
-				<TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
-					<Text style={styles.button}>
-						Settings
-					</Text>
-				</TouchableOpacity>
-
-			</ImageBackground>
 			</View>
 		);
 	}
@@ -109,12 +124,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#696969',
     borderColor: '#ff7f50',
     borderWidth: 2,
-    borderRadius: 6,
+    borderRadius: 12,
     color: '#e59400',
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',
-    padding: 5,
+    padding: 7,
     textAlign:'center',
   },
 	stopButton: {

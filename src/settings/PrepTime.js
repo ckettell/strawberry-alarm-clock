@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import { Text, Button, Picker } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
+import { Dropdown } from 'react-native-material-dropdown';
+
 
 export default class PrepTime extends Component {
   state = {
@@ -31,22 +33,24 @@ logPrepTime = () => {
 }
 
   render(){
+    let data = [{
+  value: '1',
+}, {
+  value: '2',
+}, {
+  value: '3',
+}, {
+  value: '4',
+}, {
+  value: '5',
+}];
 
     return(
       <View>
-      <Picker
-      title='Get Ready Time'
-      style={{height: 50, width: 100}}
-      onValueChange={(itemValue, itemIndex) =>
-        this.setGetReadyTime(itemValue)
-      }>
-      <Picker.Item label="1" value='1' />
-      <Picker.Item label="2" value='2' />
-      <Picker.Item label="2" value='3' />
-      <Picker.Item label="4" value='4' />
-      </Picker>
-
-
+      <Dropdown
+      label='Get Ready Time'
+      data={data}
+      onChangeText={(prepTime) => this.setGetReadyTime(prepTime)}/>
       </View>
     )
   }

@@ -224,9 +224,9 @@ export default class AlarmCalculator extends Component {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Clock')}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Clock', { calcTravelTime: this.state.travelTime })}>
           <Text style={alarmCalcStyles.button}>
-            GO TO STRAWBERRY CLOCK
+            Go to Clock
           </Text>
         </TouchableOpacity>
 
