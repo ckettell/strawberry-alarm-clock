@@ -4,6 +4,7 @@ import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
 import moment from "moment";
+import BackgroundTimer from 'react-native-background-timer';
 
 import Weather from './weather'
 import SearchBox from './searchbox';
@@ -40,6 +41,8 @@ export default class AlarmCalculator extends Component {
     };
     this.setState({ready:false, error: null});
     Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
+    BackgroundTimer.setInterval(() => { this.updateCalcAlarm()}, 10000)
+
 
    }
    geoSuccess = (position) => {
@@ -113,6 +116,20 @@ export default class AlarmCalculator extends Component {
       console.log(this.state.alarmTime);
     }
 
+    updateCalcAlarm = (date) => {
+      this.setState({
+        alarmTime: moment(date).format("HH:mm:ss")
+      })
+      this.setBackgroundAlarm()
+    }
+
+    setBackgroundAlarm = () => {
+      console.log(this.props.updateBackgroundAlarm)
+      this.props.updateBackgroundAlarm(this.state.alarmTime)
+
+
+    }
+
 
   render() {
 
@@ -135,6 +152,7 @@ export default class AlarmCalculator extends Component {
          travelMode= {this.state.travelMode}
          updateTravelTime={this.setTravelTime.bind(this)}
          />
+
 
         <TravelMode
         updateTravelMode={this.setTravelMode.bind(this)}

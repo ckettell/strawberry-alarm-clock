@@ -12,6 +12,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import ReactNativeAN from 'react-native-alarm-notification';
 import moment from "moment";
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import AlarmCalculator from '../settings/AlarmCalculator'
 
 const alarmNotifData = {
 	id: "22",
@@ -80,10 +81,11 @@ export default class SetAlarm extends Component {
 
 		BackgroundTimer.setInterval(() => {
 			this.wakeUp()
-			console.log("HIII")
 		}, 501)
 
 		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 200)
+
+
 
 		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
 			const obj = JSON.parse(e);
@@ -119,7 +121,17 @@ export default class SetAlarm extends Component {
 		console.log(this.state.fireDate);
 	}
 
-	
+	updateBackAlarm = (date) => {
+
+		this.setState({
+			fireDate: moment(date).format("HH:mm:ss")
+
+		})
+
+
+	}
+
+
 
 	wakeUp = () => {
         if (this.state.currentTime === this.state.fireDate){
@@ -130,7 +142,7 @@ export default class SetAlarm extends Component {
 						console.log("TRUE")
 
         }
-				console.log(this.state.currentTime)
+				
 
     }
 
@@ -167,6 +179,16 @@ export default class SetAlarm extends Component {
 			onPress={this.showAlarmTime}
 			/>
 			</View>
+
+			<AlarmCalculator
+			updateBackgroundAlarm={this.updateBackAlarm.bind(this)}
+
+			/>
+
+			<Button
+			title="Settings"
+			onPress={() => this.props.navigation.navigate('Home')}
+		/>
 			</View>
 		);
 	}

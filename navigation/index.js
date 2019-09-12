@@ -20,7 +20,7 @@ import SetAlarm from '../src/alarm/SetAlarm'
     screen: Clock,
   },
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'SetAlarm',
 });
 
 export default createAppContainer(AppNavigator);
