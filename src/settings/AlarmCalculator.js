@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Text, Button, Picker } from 'react-native';
+import { Text, Button, Picker, DeviceEventEmitter } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
@@ -32,9 +32,12 @@ const alarmNotifData = {
 
 export default class AlarmCalculator extends Component {
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
     this.state = {
+			date: moment().format("LL"),
+			fireDate: 'hi',
+			update: '',
       ready: false,
      Latitude: 0,
      Longitude: 0,
@@ -45,10 +48,37 @@ export default class AlarmCalculator extends Component {
      arrivalTime: 'hi',
      alarmTime: '',
      currentTime: new Date().toLocaleTimeString(),
-    }
-  };
+	 };
+		this.setAlarm = this.setAlarm.bind(this);
+		this.stopAlarm = this.stopAlarm.bind(this);
+  }
+
+	setAlarm = () => {
+		console.log('Alarm set')
+		const { fireDate } = this.state;
+		const details  = { ...alarmNotifData, fire_date: fireDate };
+		console.log(`alarm set: ${fireDate}`);
+		this.setState({ update: `alarm set: ${fireDate}` });
+		ReactNativeAN.scheduleAlarm(details);
+	};
+
+	stopAlarm = () => {
+		this.setState({ update: '' });
+		ReactNativeAN.stopAlarm();
+	};
+	sendNotification = () => {
+		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" }, };
+		console.log(details);
+		ReactNativeAN.sendNotification(details);
+	};
+
 
   componentDidMount(){
+
+		DeviceEventEmitter.addListener('OnNotificationDismissed', async function(e) {
+			const obj = JSON.parse(e);
+			console.log(`Notification ${obj.id} dismissed`);
+		});
 
       console.log('mount')
      let geoOptions = {
@@ -59,16 +89,21 @@ export default class AlarmCalculator extends Component {
     this.setState({ready:false, error: null});
     Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
 
-    BackgroundTimer.setInterval(() => {
-			this.wakeUp()
-		}, 501)
+
 
 		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 500)
 
     BackgroundTimer.setInterval(() => { this.calculateAlarm() }, 30000)
 
+		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
+			const obj = JSON.parse(e);
+			console.log(obj);
+		});
+
 
    }
+
+
    geoSuccess = (position) => {
      console.log(position.coords.longitude)
      this.setState({
@@ -110,7 +145,9 @@ export default class AlarmCalculator extends Component {
 
     calculateAlarm = () => {
 
-      const arrivalDate = (new Date(this.state.arrivalTime).getTime());
+			const formattedArrivalTime = moment(this.state.arrivalTime).format("DD-MM-YYYY HH:mm:ss");
+
+      const arrivalDate = (new Date(formattedArrivalTime).getTime());
 
       const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
       console.log(prepAndTravelTime);
@@ -121,7 +158,7 @@ export default class AlarmCalculator extends Component {
       const wakeUpTimeObject = new Date(wakeUpTime)
 
       this.setState({
-        alarmTime:  moment(wakeUpTimeObject).format("HH:mm:ss")
+        fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
       })
       setInterval(() => { console.log(this.state.alarmTime) }, 2000)
     }
@@ -143,16 +180,21 @@ export default class AlarmCalculator extends Component {
 
 
 
-    wakeUp = () => {
-          if (this.state.currentTime === this.state.alarmTime){
-            console.log("TRUEEEE");
+    // wakeUp = () => {
+    //       if (this.state.currentTime === this.state.alarmTime){
+    //         console.log("TRUEEEE");
+    //
+    //           ReactNativeAN.sendNotification(alarmNotifData);
+    //       }
+    //       console.log("ALARM:" + this.state.alarmTime);
+    //       console.log("CUREENT" + this.state.currentTime);
+    //
+    //   }
 
-              ReactNativeAN.sendNotification(alarmNotifData);
-          }
-          console.log("ALARM:" + this.state.alarmTime);
-          console.log("CUREENT" + this.state.currentTime);
-
-      }
+		componentWillUnmount() {
+			DeviceEventEmitter.removeListener('OnNotificationDismissed');
+			DeviceEventEmitter.removeListener('OnNotificationOpened');
+		}
 
     setCurrentTime() {
         this.setState({
@@ -199,6 +241,10 @@ export default class AlarmCalculator extends Component {
         title="save alarm"
         onPress={this.calculateAlarm}
          />
+				 <Button
+         title="Set alarm"
+         onPress={this.setAlarm}
+          />
          <Button
          title="Go to clock"
          onPress={() => this.props.navigation.navigate('SetAlarm')}
