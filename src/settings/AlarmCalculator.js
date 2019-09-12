@@ -88,26 +88,26 @@ export default class AlarmCalculator extends Component {
   };
 
 
-  componentDidMount(){
+	componentDidMount(){
 
 		DeviceEventEmitter.addListener('OnNotificationDismissed', async function(e) {
 			const obj = JSON.parse(e);
 			console.log(`Notification ${obj.id} dismissed`);
 		});
 
-      console.log('mount')
-     let geoOptions = {
-        enableHighAccuracy: true,
-        timeOut: 20000,
-      maximumAge: 60 * 60 * 24
-    };
-    this.setState({ready:false, error: null});
+		console.log('mount')
+		let geoOptions = {
+			enableHighAccuracy: true,
+			timeOut: 20000,
+			maximumAge: 60 * 60 * 24
+		};
+		this.setState({ready:false, error: null});
 
-    Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
+		Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
 
 		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 500)
 
-    BackgroundTimer.setInterval(() => { this.calculateAlarm() }, 30000)
+		BackgroundTimer.setInterval(() => { this.calculateAlarm() }, 30000)
 
 		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
 			const obj = JSON.parse(e);
@@ -115,47 +115,66 @@ export default class AlarmCalculator extends Component {
 		});
 
 
-   }
+	}
 
 
-   geoSuccess = (position) => {
-     console.log(position.coords.longitude)
-     this.setState({
-       ready:true,
-       Latitude: position.coords.latitude,
-       Longitude: position.coords.longitude
-       })
+	geoSuccess = (position) => {
+		console.log(position.coords.longitude)
+		this.setState({
+			ready:true,
+			Latitude: position.coords.latitude,
+			Longitude: position.coords.longitude
+		})
 
-   }
-    geoFailure = (err) => {
-   this.setState({error: err.message});
+	}
+	geoFailure = (err) => {
+		this.setState({error: err.message});
 
-    }
+	}
 
 
-    setTravelTime = (time) => {
-      this.setState({
-        travelTime: time
-        })
-    }
+	setTravelTime = (time) => {
+		this.setState({
+			travelTime: time
+		})
+	}
 
-    setPrepTime = (time) => {
-      this.setState({
-        prepTime: time
-      })
-    }
+	setPrepTime = (time) => {
+		this.setState({
+			prepTime: time
+		})
+	}
 
-    setArrivalTime = (time) => {
-      this.setState({
-        arrivalTime: time
-      })
-    }
+	setArrivalTime = (time) => {
+		this.setState({
+			arrivalTime: time
+		})
+	}
 
-    setTravelMode = (mode) => {
-      this.setState({
-        travelMode: mode,
-      })
-       }
+	setTravelMode = (mode) => {
+		this.setState({
+			travelMode: mode,
+		})
+	}
+
+	setAlarmMusic = (forecast) => {
+		console.log('Here!')
+		var forecast_string = forecast.toString();
+		if (forecast_string === 'Clouds') {
+			alarmNotifData.sound_name = 'california_dreamin.m4a'
+		} else if (forecast_string === 'Clear') {
+			alarmNotifData.sound_name = 'mr_blue_sky.m4a'
+		}
+		else if (forecast_string === 'Rain') {
+			alarmNotifData.sound_name = 'raindrops.m4a'
+		}
+		else if (forecast_string === 'Thunderstorm') {
+			alarmNotifData.sound_name = 'riders_on_the_storm.m4a'
+		}
+		else {
+
+		}
+	}
 
 
     calculateAlarm = () => {
@@ -172,16 +191,17 @@ export default class AlarmCalculator extends Component {
       const wakeUpTimeObject = new Date(wakeUpTime);
 
 			getWeatherForecast = (weather) => {
-				this.setState({forecast: weather})
+				this.setState({forecast: weather.toString()})
 			}
+
 
       this.setState({
         fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
       });
-			setTimeout(() => {console.log(this.state.fireDate)},1000)
+			setTimeout(() => {console.log(this.state.fireDate)},100)
 			const formattedDate = moment(this.state.arrivalTime).format("ddd, DD MMM YYYY HH:mm:ss ZZ");
-			setTimeout(() => {reportWeather(this.state.Latitude,this.state.Longitude, formattedDate)}, 1000)
-
+			setTimeout(() => {reportWeather(this.state.Latitude,this.state.Longitude, formattedDate)}, 100)
+			setTimeout(() => {this.setAlarmMusic(this.state.forecast)}, 500)
     }
 
     sendTimeToAlarm = () => {
@@ -257,6 +277,10 @@ export default class AlarmCalculator extends Component {
          title="Check Alarm Weather"
          onPress={() => console.log(this.state.forecast)}
          />
+				 <Button
+          title="Check Alarm Music"
+          onPress={() => console.log(alarmNotifData.sound_name)}
+          />
 
       </View>
     );

@@ -12,7 +12,7 @@ export function getRelevantForecast(forecasts, alarmDate) {
 }
 
 export function getWeather(forecast) {
-  return forecast.weather[0].description
+  return forecast.weather[0].main
 }
 
 export function reportWeather(latitude, longitude, alarmDate) {
