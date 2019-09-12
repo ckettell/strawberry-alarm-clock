@@ -4,7 +4,6 @@ import { View, InputGroup, Input } from "native-base";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
-import styles from "./searchBoxStyles.js";
 
 
 export default class SearchBox extends Component {
@@ -39,7 +38,7 @@ calculateDistance = () => {
       travelTime: responseJson['routes'][0]['summary']['travelTimeInSeconds']
     });
 
-    setInterval(() => { console.log(this.state.travelTime); }, 1000)
+    setInterval(() => { console.log(this.state.travelTime) }, 1000)
 
     this.setTravelTime()
   })

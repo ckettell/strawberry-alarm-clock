@@ -3,9 +3,9 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 
 
-import Clock from '../src/Clock'
+import Clock from '../src/alarm/Clock'
 import AlarmCalculator from '../src/settings/AlarmCalculator'
-import SetAlarm from '../src/alarm/SetAlarm'
+
 
 
 
@@ -13,14 +13,11 @@ import SetAlarm from '../src/alarm/SetAlarm'
   Home: {
     screen: AlarmCalculator,
   },
-  SetAlarm: {
-    screen: SetAlarm,
-  },
   Clock: {
     screen: Clock,
   },
 }, {
-    initialRouteName: 'SetAlarm',
+    initialRouteName: 'Home',
 });
 
 export default createAppContainer(AppNavigator);

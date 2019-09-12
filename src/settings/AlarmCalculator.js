@@ -10,7 +10,7 @@ import ReactNativeAN from 'react-native-alarm-notification';
 
 import Weather from './weather'
 import SearchBox from './searchbox';
-import SearchResults from './searchresults';
+
 import PrepTime from './PrepTime';
 import TravelMode from './travelMode';
 import ArrivalTime from './ArrivalTime';
@@ -160,7 +160,8 @@ export default class AlarmCalculator extends Component {
       this.setState({
         fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
       })
-      setInterval(() => { console.log(this.state.alarmTime) }, 2000)
+
+      setInterval(() => { console.log(this.state.fireDate) }, 2000)
     }
 
     // navToTime = () => {
@@ -220,7 +221,7 @@ export default class AlarmCalculator extends Component {
 
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View >
         <ArrivalTime
         updateArrivalTime={this.setArrivalTime.bind(this)}
         />
@@ -238,16 +239,17 @@ export default class AlarmCalculator extends Component {
         updatePrepTime={this.setPrepTime.bind(this)}
         />
         <Button
-        title="save alarm"
+        title="Estimate alarm"
         onPress={this.calculateAlarm}
          />
-				 <Button
+         <Button
          title="Set alarm"
          onPress={this.setAlarm}
           />
+
          <Button
          title="Go to clock"
-         onPress={() => this.props.navigation.navigate('SetAlarm')}
+         onPress={() => this.props.navigation.navigate('Clock')}
        />
 
       </View>
