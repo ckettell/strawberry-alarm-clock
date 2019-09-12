@@ -11,10 +11,13 @@ export default class TravelMode extends Component {
     this.setState({
       travelMode: mode,
     })
-    this.setModeInCalc()
+
+    setInterval(() => { this.setModeInCalc() }, 1000)
   }
 
   setModeInCalc = () => {
+    console.log(this.props);
+    console.log(this.state.travelMode);
     this.props.updateTravelMode(this.state.travelMode)
   }
 
@@ -29,6 +32,7 @@ export default class TravelMode extends Component {
         selectedValue={this.state.travelMode}
         style={{height: 50, width: 100}}
         onValueChange={(itemValue, itemIndex) =>
+
           this.setTransportMode(itemValue)
         }>
         <Picker.Item label="Walking" value="walking" />

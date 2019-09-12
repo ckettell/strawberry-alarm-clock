@@ -45,7 +45,7 @@ logPrepTime = () => {
       <Picker.Item label="2" value='3' />
       <Picker.Item label="4" value='4' />
       </Picker>
-<Button title="log prep time" onPress={this.logPrepTime} />
+
 
       </View>
     )

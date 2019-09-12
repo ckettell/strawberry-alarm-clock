@@ -4,7 +4,6 @@ import { View, InputGroup, Input } from "native-base";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
-import styles from "./searchBoxStyles.js";
 
 
 export default class SearchBox extends Component {
@@ -26,7 +25,9 @@ constructor(props) {
 
 calculateDistance = () => {
 
+
   if (this.state.travelMode == 'driving') {
+    console.log("HIIII");
 
   return fetch(`https://api.tomtom.com/routing/1/calculateRoute/${this.state.locationALat},${this.state.locationALong}:${this.state.locationBLat},${this.state.locationBLong}/json?departAt=now&routeType=fastest&traffic=true&avoid=unpavedRoads&travelMode=car&key=drstTICAYujEeR3lRBWB6GqIsSVWMjzZ`)
   .then( (response) => response.json() )
@@ -37,8 +38,13 @@ calculateDistance = () => {
       travelTime: responseJson['routes'][0]['summary']['travelTimeInSeconds']
     });
 
+    setInterval(() => { console.log(this.state.travelTime) }, 1000)
+
     this.setTravelTime()
   })
+
+
+
 
 }
 
@@ -76,12 +82,11 @@ setTravelTime = () => {
 };
 
   setCurrentLocation = () => {
-
+console.log(this.props.travelMode);
     this.setState({
        locationALat: this.props.location['latitude'],
        locationALong: this.props.location['longitude'],
        travelMode: this.props.travelMode
-
     })
   }
 

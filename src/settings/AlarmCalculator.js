@@ -1,38 +1,84 @@
 import React, {Component} from "react";
-import { Text, Button, Picker } from 'react-native';
+import { Text, Button, Picker, DeviceEventEmitter } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
 import moment from "moment";
+import BackgroundTimer from 'react-native-background-timer';
+import ReactNativeAN from 'react-native-alarm-notification';
+
 
 import Weather from './weather'
 import SearchBox from './searchbox';
-import SearchResults from './searchresults';
 
 import PrepTime from './PrepTime';
 import TravelMode from './travelMode';
 import ArrivalTime from './ArrivalTime';
 import styles from "./styles";
 
+
+const alarmNotifData = {
+	id: "22",
+	title: "Wake Up!",
+	message: "Your destiny awaits...",
+	vibrate: true,
+	vibration: 100,
+	play_sound: true,
+	schedule_once: true,
+	color: "green",
+	channel: "wakeup",
+	data: { content: "my notification id is 22" },
+};
+
 export default class AlarmCalculator extends Component {
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
     this.state = {
+			date: moment().format("LL"),
+			fireDate: 'hi',
+			update: '',
       ready: false,
      Latitude: 0,
      Longitude: 0,
      error: null,
      travelMode: '',
      travelTime: '',
-     forecast: '',
      prepTime: 0,
      arrivalTime: 'hi',
      alarmTime: '',
-    }
-  };
+     currentTime: new Date().toLocaleTimeString(),
+	 };
+		this.setAlarm = this.setAlarm.bind(this);
+		this.stopAlarm = this.stopAlarm.bind(this);
+  }
+
+	setAlarm = () => {
+		console.log('Alarm set')
+		const { fireDate } = this.state;
+		const details  = { ...alarmNotifData, fire_date: fireDate };
+		console.log(`alarm set: ${fireDate}`);
+		this.setState({ update: `alarm set: ${fireDate}` });
+		ReactNativeAN.scheduleAlarm(details);
+	};
+
+	stopAlarm = () => {
+		this.setState({ update: '' });
+		ReactNativeAN.stopAlarm();
+	};
+	sendNotification = () => {
+		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" }, };
+		console.log(details);
+		ReactNativeAN.sendNotification(details);
+	};
+
 
   componentDidMount(){
+
+		DeviceEventEmitter.addListener('OnNotificationDismissed', async function(e) {
+			const obj = JSON.parse(e);
+			console.log(`Notification ${obj.id} dismissed`);
+		});
 
       console.log('mount')
      let geoOptions = {
@@ -43,7 +89,21 @@ export default class AlarmCalculator extends Component {
     this.setState({ready:false, error: null});
     Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
 
+
+
+		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 500)
+
+    BackgroundTimer.setInterval(() => { this.calculateAlarm() }, 30000)
+
+		DeviceEventEmitter.addListener('OnNotificationOpened', async function(e) {
+			const obj = JSON.parse(e);
+			console.log(obj);
+		});
+
+
    }
+
+
    geoSuccess = (position) => {
      console.log(position.coords.longitude)
      this.setState({
@@ -58,24 +118,12 @@ export default class AlarmCalculator extends Component {
 
     }
 
+
     setTravelTime = (time) => {
       this.setState({
         travelTime: time
         })
-        console.log(this.state.travelTime)
     }
-
-    setWeatherForecast = (weather) => {
-      this.setState({
-        forecast: weather
-      })
-      console.log(this.state.forecast)
-    }
-
-    getForecast = () => {
-      console.log(this.state.forecast)
-    }
-
 
     setPrepTime = (time) => {
       this.setState({
@@ -93,30 +141,32 @@ export default class AlarmCalculator extends Component {
       this.setState({
         travelMode: mode,
       })
-    }
+       }
 
     calculateAlarm = () => {
 
-      const arrivalDate = (new Date(this.state.arrivalTime).getTime());
+			const formattedArrivalTime = moment(this.state.arrivalTime).format("DD-MM-YYYY HH:mm:ss");
+
+      const arrivalDate = (new Date(formattedArrivalTime).getTime());
 
       const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
       console.log(prepAndTravelTime);
 
       const wakeUpTime = (arrivalDate - prepAndTravelTime)
-      console.log(new Date(wakeUpTime));
+
 
       const wakeUpTimeObject = new Date(wakeUpTime)
-      console.log(wakeUpTimeObject);
+
       this.setState({
-        alarmTime:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
-
+        fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
       })
+
+      setInterval(() => { console.log(this.state.fireDate) }, 2000)
     }
 
-    navToTime = () => {
-      this.props.navigation.navigate('SetAlarm', { alarmDate: this.state.alarmTime });
-      console.log(this.state.alarmTime);
-    }
+    // navToTime = () => {
+    //   this.props.navigation.navigate('SetAlarm', { alarmDate: this.state.alarmTime });
+    // }
 
     sendTimeToAlarm = () => {
       this.calculateAlarm();
@@ -128,6 +178,37 @@ export default class AlarmCalculator extends Component {
     }
 
 
+
+
+
+    // wakeUp = () => {
+    //       if (this.state.currentTime === this.state.alarmTime){
+    //         console.log("TRUEEEE");
+    //
+    //           ReactNativeAN.sendNotification(alarmNotifData);
+    //       }
+    //       console.log("ALARM:" + this.state.alarmTime);
+    //       console.log("CUREENT" + this.state.currentTime);
+    //
+    //   }
+
+		componentWillUnmount() {
+			DeviceEventEmitter.removeListener('OnNotificationDismissed');
+			DeviceEventEmitter.removeListener('OnNotificationOpened');
+		}
+
+    setCurrentTime() {
+        this.setState({
+          currentTime: new Date().toLocaleTimeString()
+        })
+
+      }
+
+
+
+
+
+
   render() {
 
     const currentLocation = {
@@ -135,11 +216,12 @@ export default class AlarmCalculator extends Component {
         longitude: this.state.Longitude,
         latitudeDelta: 0.015,
         longitudeDelta: 0.0121,
-    }
+        }
+
 
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View >
         <ArrivalTime
         updateArrivalTime={this.setArrivalTime.bind(this)}
         />
@@ -148,14 +230,8 @@ export default class AlarmCalculator extends Component {
          travelMode= {this.state.travelMode}
          updateTravelTime={this.setTravelTime.bind(this)}
          />
-        <Weather
-        location={currentLocation}
-        alarmTime={this.state.alarmTime}
-        updateWeatherForecast={this.setWeatherForecast.bind(this)}
-         />
-         <Text>
-         Forecast: {this.state.forecast}
-        </Text>
+
+
         <TravelMode
         updateTravelMode={this.setTravelMode.bind(this)}
         />
@@ -163,14 +239,19 @@ export default class AlarmCalculator extends Component {
         updatePrepTime={this.setPrepTime.bind(this)}
         />
         <Button
-        title="save alarm"
+        title="Estimate alarm"
         onPress={this.calculateAlarm}
          />
+         <Button
+         title="Set alarm"
+         onPress={this.setAlarm}
+          />
 
-        <Button
-        title="send alarm"
-        onPress={() => this.navToTime()}
-        />
+         <Button
+         title="Go to clock"
+         onPress={() => this.props.navigation.navigate('Clock')}
+       />
+
       </View>
     );
   }
