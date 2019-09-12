@@ -7,7 +7,8 @@ import {
 	StatusBar,
 	DeviceEventEmitter,
 	ImageBackground,
-	TouchableOpacity
+	TouchableOpacity,
+	Image
 } from 'react-native';
 
 import BackgroundTimer from 'react-native-background-timer';
@@ -49,15 +50,11 @@ export default class Clock extends Component {
 		return (
 			<View style={styles.container}>
 
-			<ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '100%', height: '100%', alignItems: 'center'}}>
+			<ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/20989632.jpg')} style={{width: '100%', height: '80%', alignItems: 'center'}}>
 			<StatusBar style={{backgroundColor: 'transparent'}}/>
 
 				<Text style={styles.timeText}>
 					{this.state.currentTime}
-				</Text>
-
-				<Text style={styles.daysText}>
-					{this.state.date}
 				</Text>
 
 				<Text style={styles.timeText}>
@@ -76,6 +73,8 @@ export default class Clock extends Component {
 					</Text>
 				</TouchableOpacity>
 
+				<Image source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/9e5c6603038b46625396f0177a9e305e.jpg')} style={{width: '50%', height: '20%', alignItems: 'center'}} />
+
 			</ImageBackground>
 			</View>
 		);
@@ -88,29 +87,29 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#383838',
+    backgroundColor: 'black',
 	},
 
   timeText: {
-    fontSize: 90,
-    color: '#e59400',
+    fontSize: 125,
+    color: 'deepskyblue',
 		borderColor: '#000000',
 		fontFamily: 'digital-7',
   },
 
   daysText: {
-    color: '#e59400',
-    fontSize: 30,
+    color: 'limegreen',
+    fontSize: 40,
 		borderColor: '#000000',
 		fontFamily: 'digital-7',
   },
 
 	button: {
-    backgroundColor: '#696969',
-    borderColor: '#ff7f50',
+    backgroundColor: 'black',
+    borderColor: 'deepskyblue',
     borderWidth: 2,
     borderRadius: 6,
-    color: '#e59400',
+    color: 'deepskyblue',
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',
@@ -118,8 +117,8 @@ const styles = StyleSheet.create({
     textAlign:'center',
   },
 	stopButton: {
-		backgroundColor: 'darkolivegreen',
-		borderColor: 'black',
+		backgroundColor: 'black',
+		borderColor: 'red',
 		borderWidth: 2,
 		borderRadius: 12,
 		color: 'red',

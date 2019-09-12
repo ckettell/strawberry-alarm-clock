@@ -143,7 +143,7 @@ export default class AlarmCalculator extends Component {
     this.setState({
       travelMode: mode,
     })
-     }
+  }
 
   calculateAlarm = () => {
 
