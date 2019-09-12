@@ -126,19 +126,20 @@ export default class AlarmCalculator extends Component {
 
     calculateAlarm = () => {
 
-      const arrivalDate = (new Date(this.state.arrivalTime).getTime());
+        const formattedArrivalTime = moment(this.state.arrivalTime).format("DD-MM-YYYY HH:mm:ss");
 
-      const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
-      console.log(prepAndTravelTime);
+        const arrivalDate = (new Date(formattedArrivalTime).getTime());
 
-      const wakeUpTime = (arrivalDate - prepAndTravelTime)
-      console.log(new Date(wakeUpTime));
+        const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
+        console.log(prepAndTravelTime);
 
-      const wakeUpTimeObject = new Date(wakeUpTime)
-      console.log(wakeUpTimeObject);
-      this.setState({
+        const wakeUpTime = (arrivalDate - prepAndTravelTime)
+        console.log(new Date(wakeUpTime));
+
+        const wakeUpTimeObject = new Date(wakeUpTime)
+        console.log(wakeUpTimeObject);
+        this.setState({
         alarmTime:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
-
       })
     }
 

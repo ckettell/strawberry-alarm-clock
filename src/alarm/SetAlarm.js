@@ -118,6 +118,7 @@ export default class SetAlarm extends Component {
 
 		return (
 			<View style={styles.container}>
+			<ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '100%', height: '100%', alignItems: 'center'}}>
 
 					<Text style={styles.timeText}>
 						{this.state.currentTime}
@@ -131,12 +132,6 @@ export default class SetAlarm extends Component {
 						style={{backgroundColor: 'transparent'}}
 					/>
 
-					<TouchableOpacity onPress={this.showDateTimePicker}>
-						<Text style={styles.button}>
-							Set Arrival Time
-						</Text>
-					</TouchableOpacity>
-
 					<Text style={styles.timeText}>
 						{this.state.time}
 					</Text>
@@ -148,12 +143,7 @@ export default class SetAlarm extends Component {
 						</Text>
 					</TouchableOpacity>
 
-					<TouchableOpacity onPress={this.showAlarmTime}>
-						<Text style={styles.button}>
-							show alarm time
-						</Text>
-					</TouchableOpacity>
-
+				</ImageBackground>
 			</View>
 		);
 	}
@@ -170,7 +160,7 @@ const styles = StyleSheet.create({
 
   timeText:
   {
-    fontSize: 50,
+    fontSize: 90,
     color: '#e59400',
 		borderColor: '#000000',
 		fontFamily: 'digital-7',
@@ -179,8 +169,9 @@ const styles = StyleSheet.create({
   daysText:
   {
     color: '#e59400',
-    fontSize: 25,
-		borderColor: '#000000'
+    fontSize: 30,
+		borderColor: '#000000',
+		fontFamily: 'digital-7',
   },
 
 	button: {
@@ -207,7 +198,4 @@ const styles = StyleSheet.create({
 		padding: 12,
 		textAlign:'center',
 	},
-
 })
-
-// <ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '80%', height: '80%', alignItems: 'center'}}>
