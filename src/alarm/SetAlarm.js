@@ -19,6 +19,7 @@ const alarmNotifData = {
 	vibrate: true,
 	vibration: 100,
 	play_sound: true,
+	sound_name: '',
 	schedule_once: true,
 	color: "green",
 	channel: "wakeup",
@@ -33,6 +34,7 @@ export default class Clock extends Component {
 			currentTime: new Date().toLocaleTimeString(),
 			isDateTimePickerVisible: false,
 			fireDate: 'hi',
+			forecast: '',
 			update: '',
 			futureFireDate: '0',
 			travelTime: 0,
@@ -42,10 +44,11 @@ export default class Clock extends Component {
 	}
 
 	setAlarm = () => {
-		console.log('Alarm set')
+		console.log('Alarm set!!!')
 		const { fireDate } = this.state;
 		const details  = { ...alarmNotifData, fire_date: fireDate };
 		console.log(`alarm set: ${fireDate}`);
+		console.log(moment(this.state.alarmTime));
 		this.setState({ update: `alarm set: ${fireDate}` });
 		ReactNativeAN.scheduleAlarm(details);
 	};
@@ -86,7 +89,7 @@ export default class Clock extends Component {
 
 		this.retrieveAlarm()
 
-
+		this.updateAlarmSound(this.state.forecast)
 
 	}
 
@@ -97,9 +100,17 @@ export default class Clock extends Component {
 		DeviceEventEmitter.removeListener('OnNotificationOpened');
 	}
 
+	updateAlarmSound = (forecast) => {
 
+	}
 
-
+	const musicHash = {
+	 "storm": ['heavy intensity rain', 'very heavy rain', 'extreme rain', 'heavy intensity shower rain'],
+	 "clear": ["clear sky"],
+	 "rain": ["light rain", "moderate rain", "light intensity shower rain", "shower rain"],
+	 "lightcloud": ["few clouds", "scattered clouds"],
+	 "cloudy": ["broken clouds", "overcast clouds"],
+	};
 
 	setCurrentTime() {
 		this.setState({
@@ -111,7 +122,6 @@ export default class Clock extends Component {
 	retrieveAlarm = () => {
 		this.setState({
 			fireDate: this.props.navigation.getParam('alarmDate', 'nothing sent')
-
 		})
 		setTimeout(() => this.setAlarm(), 4000)
 

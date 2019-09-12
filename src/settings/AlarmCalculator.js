@@ -14,6 +14,14 @@ import TravelMode from './travelMode';
 import ArrivalTime from './ArrivalTime';
 import styles from "./styles";
 
+const musicHash = {
+ "storm": ['heavy intensity rain', 'very heavy rain', 'extreme rain', 'heavy intensity shower rain'],
+ "clear": ["clear sky"],
+ "rain": ["light rain", "moderate rain", "light intensity shower rain", "shower rain"],
+ "lightcloud": ["few clouds", "scattered clouds"],
+ "cloudy": ["broken clouds", "overcast clouds"],
+};
+
 export default class AlarmCalculator extends Component {
 
   constructor(props) {
@@ -33,6 +41,8 @@ export default class AlarmCalculator extends Component {
   };
 
   componentDidMount(){
+
+    this.updateAlarmSound(this.state.forecast)
 
       console.log('mount')
      let geoOptions = {
@@ -72,6 +82,7 @@ export default class AlarmCalculator extends Component {
       console.log(this.state.forecast)
     }
 
+
     getForecast = () => {
       console.log(this.state.forecast)
     }
@@ -96,8 +107,8 @@ export default class AlarmCalculator extends Component {
     }
 
     calculateAlarm = () => {
-
-      const arrivalDate = (new Date(this.state.arrivalTime).getTime());
+      const formattedArrivalTime = moment(this.state.arrivalTime).format("DD-MM-YYYY HH:mm:ss");
+      const arrivalDate = (new Date(formattedArrivalTime).getTime());
 
       const prepAndTravelTime = (this.state.prepTime + this.state.travelTime) * 1000;
       console.log(prepAndTravelTime);
@@ -111,10 +122,11 @@ export default class AlarmCalculator extends Component {
         alarmTime:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
 
       })
+      console.log(this.state.alarmTime);
     }
 
     navToTime = () => {
-      this.props.navigation.navigate('SetAlarm', { alarmDate: (moment(this.state.alarmTime).format("DD-MM-YYYY HH:mm:ss")) });
+      this.props.navigation.navigate('SetAlarm', { alarmDate: (this.state.alarmTime)  });
       console.log(this.state.alarmTime);
     }
 

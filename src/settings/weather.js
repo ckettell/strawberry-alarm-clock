@@ -32,7 +32,7 @@ constructor(props) {
   setWeatherForecast = (weather) => {
     this.props.updateWeatherForecast(weather);
   }
-
+  
   reportWeather = () => {
     return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${this.props.location.latitude}&lon=${this.props.location.longitude}&&APPID=${this.state.apiKey}`)
     .then( (response) => response.json() )
