@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Text, Button, Picker } from 'react-native';
+import { Text, Button, Picker, StyleSheet } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
 import { Dropdown } from 'react-native-material-dropdown';
 
@@ -38,7 +38,7 @@ export default class TravelMode extends Component {
     }];
 
     return(
-      <View>
+      <View style={{ position: 'relative', top: 50}}>
         <Dropdown
           label='Transport?'
           data={data}
@@ -46,5 +46,4 @@ export default class TravelMode extends Component {
       </View>
     )
   }
-
 }

@@ -75,7 +75,7 @@ constructor(props) {
     const { onLocationSelected } = this.props;
 
   return(
-  <View>
+  <View style={{ position: 'relative', top: -50}}>
     <Text>
        {this.state.locationA}
     </Text>
@@ -114,15 +114,14 @@ constructor(props) {
          enablePoweredByContainer={false}
          styles={{
          container: {
-           position: "absolute",
            top: Platform.select({ ios: 60, android: 40 }),
-           width: "100%"
+           width: "100%",
          },
          textInputContainer: {
            flex: 1,
            backgroundColor: "transparent",
-           height: 54,
-           marginHorizontal: 20,
+           height: 100,
+           marginHorizontal: 1,
            borderTopWidth: 0,
            borderBottomWidth: 0
          },

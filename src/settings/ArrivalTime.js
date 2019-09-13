@@ -74,15 +74,16 @@ export default class ArrivalTime extends Component {
 
 const arrivalTimeStyles = StyleSheet.create({
   button: {
-    backgroundColor: 'black',
-    borderColor: 'deepskyblue',
+    backgroundColor: 'white',
+    borderColor: 'black',
     borderWidth: 2,
     borderRadius: 6,
-    color: 'deepskyblue',
+    color: 'black',
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',
     padding: 5,
     textAlign:'center',
+    top: 80
   },
 })

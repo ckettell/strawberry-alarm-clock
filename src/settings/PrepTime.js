@@ -1,5 +1,9 @@
 import React, {Component} from "react";
-import { Text, Button, Picker, TextInput } from 'react-native';
+import { Text,
+  Button,
+  Picker,
+  TextInput,
+  StyleSheet } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
 
 export default class PrepTime extends Component {
@@ -37,6 +41,7 @@ export default class PrepTime extends Component {
     return(
       <View>
         <TextInput
+          style={{ position: 'relative', top: 50}}
           placeholder="How Long Do You Get Ready"
           keyboardType={'numeric'}
         />

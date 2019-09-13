@@ -196,13 +196,17 @@ export default class AlarmCalculator extends Component {
     }
 
     return (
+
        <View style={alarmCalcStyles.container}>
 
-        <Text style={alarmCalcStyles.text}>
-          SETTINGS:
-        </Text>
+       <SearchBox
+          location={currentLocation}
+          travelMode= {this.state.travelMode}
+          updateTravelTime={this.setTravelTime.bind(this)}
+       />
 
         <TravelMode
+          style={alarmCalcStyles.travelMode}
           updateTravelMode={this.setTravelMode.bind(this)}
         />
 
@@ -232,12 +236,6 @@ export default class AlarmCalculator extends Component {
           </Text>
         </TouchableOpacity>
 
-        <SearchBox
-          location={currentLocation}
-          travelMode= {this.state.travelMode}
-          updateTravelTime={this.setTravelTime.bind(this)}
-        />
-
       </View>
     );
   }
@@ -246,20 +244,22 @@ export default class AlarmCalculator extends Component {
   const alarmCalcStyles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: '#434343',
   },
   button: {
-    backgroundColor: 'black',
-    borderColor: 'deepskyblue',
+    backgroundColor: 'white',
+    borderColor: 'black',
     borderWidth: 2,
     borderRadius: 12,
-    color: 'deepskyblue',
+    color: 'black',
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',
     padding: 5,
     textAlign:'center',
     alignItems: 'center',
-    fontFamily: 'digital-7'
+    fontFamily: 'digital-7',
+    top: 80
   },
   text: {
     color: 'red',
