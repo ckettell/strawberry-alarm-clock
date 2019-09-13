@@ -17,5 +17,5 @@ Made over a two weeks, we hit numerous stumbling blocks on our first day. In a c
 When you think about it, an alarm is incredibly intrusive. It requires to work in the background and wants your full attention when its time has come.
 
 This meant getting our head around permissions and inspecting modules written in Android's native language, Java.
-
-## 
+ 
+##
