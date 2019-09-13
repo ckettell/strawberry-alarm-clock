@@ -339,9 +339,9 @@ export default class AlarmCalculator extends Component {
       </View>
 			<View style={{position: 'relative', top: 130, marginLeft: 30}}>
 			<Text style={{fontSize: 16}}>
-				Arrival Time: {this.state.arrivalTime} {"\n"}{"\n"}
+				Arrival Time: {moment(this.state.arrivalTime).format("DD-MM-YYYY HH:mm:ss")} {"\n"}{"\n"}
 				Estimated Alarm Time: {this.state.fireDate} {"\n"}{"\n"}
-				Estimated Journey Time: {this.state.travelTime} {"\n"}{"\n"}
+				Estimated Journey Time: {(this.state.travelTime)/60} mins {"\n"}{"\n"}
 				Weather Forecast: Clear Skies
 			</Text>
 			</View>
