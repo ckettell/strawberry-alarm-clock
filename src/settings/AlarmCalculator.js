@@ -55,6 +55,11 @@ export default class AlarmCalculator extends Component {
       prepTime: 0,
       arrivalTime: 'hi',
       alarmTime: '',
+			travelModeVisible: false,
+			prepTimeVisible: false,
+			estimateAlarmVisible: false,
+			setAlarmVisible: false,
+			goToClockVisible: false,
 			buttonsAreVisible: false,
       currentTime: new Date().toLocaleTimeString(),
 	 };
@@ -69,11 +74,13 @@ export default class AlarmCalculator extends Component {
 		console.log(`alarm set: ${fireDate}`);
 		this.setState({ update: `alarm set: ${fireDate}` });
 		ReactNativeAN.scheduleAlarm(details);
+		this.setState({goToClockVisible: true})
 	};
 
 	stopAlarm = () => {
 		this.setState({ update: '' });
 		ReactNativeAN.stopAlarm();
+		this.setState({goToCockVisible: true})
 	};
 	sendNotification = () => {
 		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" }, };
@@ -138,14 +145,15 @@ export default class AlarmCalculator extends Component {
 		this.setState({
 			travelTime: time
 		})
-		this.setState({buttonsAreVisible: true})
-		console.log(this.state.buttonsAreVisible);
+		this.setState({travelModeVisible: true})
 	}
 
 	setPrepTime = (time) => {
 		this.setState({
 			prepTime: time
 		})
+		this.setState({estimateAlarmVisible: true})
+
 	}
 
 	setArrivalTime = (time) => {
@@ -158,6 +166,7 @@ export default class AlarmCalculator extends Component {
 		this.setState({
 			travelMode: mode,
 		})
+		this.setState({prepTimeVisible: true})
 	}
 
 	setAlarmMusic = (forecast) => {
@@ -229,34 +238,71 @@ export default class AlarmCalculator extends Component {
 
       }
 
-		renderAlarmButtons(isValid){
+
+		renderTravelMode(isValid){
 			if(isValid){
 				return(
 					<View>
-					<Button
-	        title="Estimate alarm"
-	        onPress={this.calculateAlarm}
-	         />
-					<Button
-	         title="Set alarm"
-	         onPress={this.setAlarm}/>
-					 <Button
-	         title="Go to clock"
-	         onPress={() => this.props.navigation.navigate('Clock')}
-	       />
-	        <Button
-	         title="Check Alarm Weather"
-	         onPress={() => console.log(this.state.forecast)}
-	         />
-					 <Button
-	          title="Check Alarm Music"
-	          onPress={() => console.log(alarmNotifData.sound_name)}
-	          />
+					<TravelMode
+	        updateTravelMode={this.setTravelMode.bind(this)}
+	        />
 					</View>
 				);
 			}
 			return null;
 		}
+
+		renderPrepTime(isValid){
+			if(isValid){
+				return(
+					<View>
+					<PrepTime
+	        updatePrepTime={this.setPrepTime.bind(this)}
+	        />
+					</View>
+				)
+			}
+			return null;
+		}
+
+		renderEstimateAlarm(isValid){
+			if(isValid){
+				return(
+					<Button
+ 				 title="Estimate alarm"
+ 				 onPress={() => {
+					 {this.calculateAlarm()}
+					 {this.setState({setAlarmVisible: true})}
+				 }}
+ 					/>
+				)
+			}
+			return null;
+		}
+
+		renderSetAlarm(isValid){
+			if(isValid){
+				return(
+					<Button
+ 					title="Set alarm"
+ 					onPress={this.setAlarm}/>
+				)
+			}
+			return null;
+		}
+
+		renderGoToClock(isValid){
+			if(isValid){
+				return(
+					<Button
+					title="Go to clock"
+					onPress={() => this.props.navigation.navigate('Clock')}
+				/>
+				)
+			}
+			return null;
+		}
+
 
 
 
@@ -283,16 +329,11 @@ export default class AlarmCalculator extends Component {
          travelMode= {this.state.travelMode}
          updateTravelTime={this.setTravelTime.bind(this)}
          />
-
-
-        <TravelMode
-        updateTravelMode={this.setTravelMode.bind(this)}
-        />
-        <PrepTime
-        updatePrepTime={this.setPrepTime.bind(this)}
-        />
-        {this.renderAlarmButtons(this.state.buttonsAreVisible)}
-
+				{this.renderTravelMode(this.state.travelModeVisible)}
+ 				{this.renderPrepTime(this.state.prepTimeVisible)}
+				{this.renderEstimateAlarm(this.state.estimateAlarmVisible)}
+				{this.renderSetAlarm(this.state.setAlarmVisible)}
+				{this.renderGoToClock(this.state.goToClockVisible)}
       </View>
     );
   }

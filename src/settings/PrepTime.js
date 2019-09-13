@@ -35,15 +35,19 @@ logPrepTime = () => {
     return(
       <View>
       <Picker
-      title='Get Ready Time'
+      title='Prep Time (mins)'
+      placeholder='Prep Time (mins)'
       style={{height: 50, width: 100}}
       onValueChange={(itemValue, itemIndex) =>
         this.setGetReadyTime(itemValue)
       }>
-      <Picker.Item label="1" value='1' />
-      <Picker.Item label="2" value='2' />
-      <Picker.Item label="2" value='3' />
-      <Picker.Item label="4" value='4' />
+      <Picker.Item label="0" value='0' />
+      <Picker.Item label="10" value='10' />
+      <Picker.Item label="20" value='20' />
+      <Picker.Item label="30" value='30' />
+      <Picker.Item label="40" value='40' />
+      <Picker.Item label="50" value='50' />
+      <Picker.Item label="60" value='60' />
       </Picker>
 
 
