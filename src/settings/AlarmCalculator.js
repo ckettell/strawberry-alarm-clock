@@ -55,6 +55,7 @@ export default class AlarmCalculator extends Component {
       prepTime: 0,
       arrivalTime: 'hi',
       alarmTime: '',
+			buttonsAreVisible: false,
       currentTime: new Date().toLocaleTimeString(),
 	 };
 		this.setAlarm = this.setAlarm.bind(this);
@@ -137,6 +138,8 @@ export default class AlarmCalculator extends Component {
 		this.setState({
 			travelTime: time
 		})
+		this.setState({buttonsAreVisible: true})
+		console.log(this.state.buttonsAreVisible);
 	}
 
 	setPrepTime = (time) => {
@@ -226,6 +229,34 @@ export default class AlarmCalculator extends Component {
 
       }
 
+		renderAlarmButtons(isValid){
+			if(isValid){
+				return(
+					<View>
+					<Button
+	        title="Estimate alarm"
+	        onPress={this.calculateAlarm}
+	         />
+					<Button
+	         title="Set alarm"
+	         onPress={this.setAlarm}/>
+					 <Button
+	         title="Go to clock"
+	         onPress={() => this.props.navigation.navigate('Clock')}
+	       />
+	        <Button
+	         title="Check Alarm Weather"
+	         onPress={() => console.log(this.state.forecast)}
+	         />
+					 <Button
+	          title="Check Alarm Music"
+	          onPress={() => console.log(alarmNotifData.sound_name)}
+	          />
+					</View>
+				);
+			}
+			return null;
+		}
 
 
 
@@ -260,27 +291,7 @@ export default class AlarmCalculator extends Component {
         <PrepTime
         updatePrepTime={this.setPrepTime.bind(this)}
         />
-        <Button
-        title="Estimate alarm"
-        onPress={this.calculateAlarm}
-         />
-         <Button
-         title="Set alarm"
-         onPress={this.setAlarm}
-          />
-
-         <Button
-         title="Go to clock"
-         onPress={() => this.props.navigation.navigate('Clock')}
-       />
-        <Button
-         title="Check Alarm Weather"
-         onPress={() => console.log(this.state.forecast)}
-         />
-				 <Button
-          title="Check Alarm Music"
-          onPress={() => console.log(alarmNotifData.sound_name)}
-          />
+        {this.renderAlarmButtons(this.state.buttonsAreVisible)}
 
       </View>
     );
