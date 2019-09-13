@@ -22,7 +22,6 @@ export default class ArrivalTime extends Component {
     isDateTimePickerVisible: false,
   }
 
-
   setArrivalState(time){
     this.setState({
       arrivalTime: time
@@ -61,13 +60,13 @@ export default class ArrivalTime extends Component {
         <Text style={arrivalTimeStyles.button}>
           Set Arrival Time
         </Text>
-      </TouchableOpacity>
-      <DateTimePicker
-        mode={"time"}
-        isVisible={this.state.isDateTimePickerVisible}
-        onConfirm={this.handleDatePicked}
-        onCancel={this.hideDateTimePicker}
-      />
+        </TouchableOpacity>
+        <DateTimePicker
+          mode={"time"}
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this.handleDatePicked}
+          onCancel={this.hideDateTimePicker}
+        />
       </View>
     )
   }

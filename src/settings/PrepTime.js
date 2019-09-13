@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Text, Button, Picker } from 'react-native';
+import { Text, Button, Picker, TextInput } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
 
 export default class PrepTime extends Component {
@@ -7,48 +7,41 @@ export default class PrepTime extends Component {
     prepTime: 0,
   }
 
-
-setGetReadyTime(time){
-  this.setState({
-    prepTime: parseInt(time)
-  })
-  this.setPrepTime()
-}
-
-
-setPrepTime = () => {
+  setGetReadyTime(time){
+    this.setState({
+      prepTime: parseInt(time)
+    })
+    this.setPrepTime()
+  }
 
 
-  this.props.updatePrepTime(this.state.prepTime)
+  setPrepTime = () => {
+    this.props.updatePrepTime(this.state.prepTime)
+  }
+  logPrepTime = () => {
+    console.log(this.state.prepTime);
 
-
-
-}
-
-logPrepTime = () => {
-  console.log(this.state.prepTime);
-
-}
+  }
 
   render(){
+    let data = [{
+      value: '1',
+      }, {
+      value: '2',
+      }, {
+      value: '3',
+      }, {
+      value: '4',
+    }];
 
     return(
       <View>
-      <Picker
-      title='Get Ready Time'
-      style={{height: 50, width: 100}}
-      onValueChange={(itemValue, itemIndex) =>
-        this.setGetReadyTime(itemValue)
-      }>
-      <Picker.Item label="1" value='1' />
-      <Picker.Item label="2" value='2' />
-      <Picker.Item label="2" value='3' />
-      <Picker.Item label="4" value='4' />
-      </Picker>
-
+        <TextInput
+          placeholder="How Long Do You Get Ready"
+          keyboardType={'numeric'}
+        />
 
       </View>
     )
   }
-
 }

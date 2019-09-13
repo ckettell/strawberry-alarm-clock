@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import { Text, Button, Picker } from 'react-native';
 import { View, InputGroup, Input } from "native-base";
+import { Dropdown } from 'react-native-material-dropdown';
 
 export default class TravelMode extends Component {
   state = {
@@ -21,27 +22,27 @@ export default class TravelMode extends Component {
     this.props.updateTravelMode(this.state.travelMode)
   }
 
-
-
-
   render(){
+    let data = [{
+      label: 'Walking',
+      value: 'walking',
+      }, {
+      label: 'Bicycling',
+      value: 'bicycling',
+      }, {
+      label: 'Transit',
+      value: 'transit',
+      }, {
+      label: 'Driving',
+      value: 'driving',
+    }];
 
     return(
       <View>
-      <Picker
-        selectedValue={this.state.travelMode}
-        style={{height: 50, width: 100}}
-        onValueChange={(itemValue, itemIndex) =>
-
-          this.setTransportMode(itemValue)
-        }>
-        <Picker.Item label="Walking" value="walking" />
-        <Picker.Item label="Cycling" value="bicycling" />
-        <Picker.Item label="Public Transport" value="transit" />
-        <Picker.Item label="Driving" value="driving" />
-      </Picker>
-
-
+        <Dropdown
+          label='Transport?'
+          data={data}
+          onChangeText={(transportMode) => this.setTransportMode(transportMode)}/>
       </View>
     )
   }

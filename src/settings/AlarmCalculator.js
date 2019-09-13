@@ -197,16 +197,10 @@ export default class AlarmCalculator extends Component {
 
     return (
        <View style={alarmCalcStyles.container}>
-       <ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/LED_Strawberry_Floor_2000x.jpg')} style={alarmCalcStyles.imgBackground}>
+
         <Text style={alarmCalcStyles.text}>
           SETTINGS:
         </Text>
-
-        <SearchBox
-          location={currentLocation}
-          travelMode= {this.state.travelMode}
-          updateTravelTime={this.setTravelTime.bind(this)}
-        />
 
         <TravelMode
           updateTravelMode={this.setTravelMode.bind(this)}
@@ -237,7 +231,13 @@ export default class AlarmCalculator extends Component {
             GO TO STRAWBERRY CLOCK
           </Text>
         </TouchableOpacity>
-        </ImageBackground>
+
+        <SearchBox
+          location={currentLocation}
+          travelMode= {this.state.travelMode}
+          updateTravelTime={this.setTravelTime.bind(this)}
+        />
+
       </View>
     );
   }
@@ -246,7 +246,6 @@ export default class AlarmCalculator extends Component {
   const alarmCalcStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
   },
   button: {
     backgroundColor: 'black',
@@ -266,12 +265,6 @@ export default class AlarmCalculator extends Component {
     color: 'red',
     textAlign:'center',
     fontSize: 40,
-    borderColor: 'limegreen',
     borderWidth: 5,
   },
-  imgBackground: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center'
-  }
 })
