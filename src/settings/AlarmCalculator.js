@@ -6,6 +6,7 @@ import Geolocation from '@react-native-community/geolocation';
 import moment from "moment";
 import BackgroundTimer from 'react-native-background-timer';
 import ReactNativeAN from 'react-native-alarm-notification';
+import { Dropdown } from 'react-native-material-dropdown';
 import {
 	getRelevantForecast,
 	getWeather,
@@ -55,12 +56,12 @@ export default class AlarmCalculator extends Component {
       prepTime: 0,
       arrivalTime: 'hi',
       alarmTime: '',
-			travelModeVisible: false,
-			prepTimeVisible: false,
-			estimateAlarmVisible: false,
-			setAlarmVisible: false,
-			goToClockVisible: false,
-			buttonsAreVisible: false,
+			travelModeVisible: true,
+			prepTimeVisible: true,
+			estimateAlarmVisible: true,
+			setAlarmVisible: true,
+			goToClockVisible: true,
+			buttonsAreVisible: true,
       currentTime: new Date().toLocaleTimeString(),
 	 };
 		this.setAlarm = this.setAlarm.bind(this);
@@ -320,6 +321,7 @@ export default class AlarmCalculator extends Component {
 
 
     return (
+			<View>
       <View >
         <ArrivalTime
         updateArrivalTime={this.setArrivalTime.bind(this)}
@@ -329,12 +331,15 @@ export default class AlarmCalculator extends Component {
          travelMode= {this.state.travelMode}
          updateTravelTime={this.setTravelTime.bind(this)}
          />
+			</View>
+			<View style={{position: 'relative', top: 80}}>
 				{this.renderTravelMode(this.state.travelModeVisible)}
  				{this.renderPrepTime(this.state.prepTimeVisible)}
 				{this.renderEstimateAlarm(this.state.estimateAlarmVisible)}
 				{this.renderSetAlarm(this.state.setAlarmVisible)}
 				{this.renderGoToClock(this.state.goToClockVisible)}
       </View>
+			</View>
     );
   }
 }

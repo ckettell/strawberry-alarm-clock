@@ -1,3 +1,9 @@
+import {YellowBox} from 'react-native';
+
+YellowBox.ignoreWarnings(['Warning: ...']);
+
+console.disableYellowBox = true;
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
