@@ -14,7 +14,7 @@ export default class TravelMode extends Component {
     })
     console.log(this.state.travelMode);
 
-    setInterval(() => { this.setModeInCalc() }, 1000)
+    setTimeout(() => { this.setModeInCalc() }, 500)
   }
 
   setModeInCalc = () => {

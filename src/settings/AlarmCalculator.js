@@ -44,7 +44,7 @@ export default class AlarmCalculator extends Component {
     super(props);
     this.state = {
 			date: moment().format("LL"),
-			fireDate: 'hi',
+			fireDate: '',
 			update: '',
 			ready: false,
 			Latitude: 0,
@@ -54,14 +54,14 @@ export default class AlarmCalculator extends Component {
       travelMode: '',
       travelTime: '',
       prepTime: 0,
-      arrivalTime: 'hi',
+      arrivalTime: '',
       alarmTime: '',
-			travelModeVisible: true,
-			prepTimeVisible: true,
-			estimateAlarmVisible: true,
-			setAlarmVisible: true,
-			goToClockVisible: true,
-			buttonsAreVisible: true,
+			travelModeVisible: false,
+			prepTimeVisible: false,
+			estimateAlarmVisible: false,
+			setAlarmVisible: false,
+			goToClockVisible: false,
+			buttonsAreVisible: false,
       currentTime: new Date().toLocaleTimeString(),
 	 };
 		this.setAlarm = this.setAlarm.bind(this);
@@ -113,8 +113,6 @@ export default class AlarmCalculator extends Component {
 		this.setState({ready:false, error: null});
 
 		Geolocation.getCurrentPosition( this.geoSuccess, this.geofailure, geoOptions);
-
-		BackgroundTimer.setInterval(() => { this.setCurrentTime() }, 500)
 
 		BackgroundTimer.setInterval(() => { this.calculateAlarm() }, 30000)
 
@@ -174,7 +172,7 @@ export default class AlarmCalculator extends Component {
 		console.log('Here!')
 		var forecast_string = forecast.toString();
 		if (forecast_string === 'Clouds') {
-			alarmNotifData.sound_name = 'california_dreamin.m4a'
+			alarmNotifData.sound_name = 'mr_blue_sky.m4a'
 		} else if (forecast_string === 'Clear') {
 			alarmNotifData.sound_name = 'mr_blue_sky.m4a'
 		}
@@ -297,7 +295,7 @@ export default class AlarmCalculator extends Component {
 				return(
 					<Button color='#0753a9'
 					title="Go to clock"
-					onPress={() => this.props.navigation.navigate('Clock')}
+					onPress={() => this.props.navigation.navigate('Clock', { calcTravelTime: this.state.travelTime})}
 				/>
 				)
 			}
@@ -339,6 +337,14 @@ export default class AlarmCalculator extends Component {
 				{this.renderSetAlarm(this.state.setAlarmVisible)}
 				{this.renderGoToClock(this.state.goToClockVisible)}
       </View>
+			<View style={{position: 'relative', top: 130, marginLeft: 30}}>
+			<Text style={{fontSize: 16}}>
+				Arrival Time: {this.state.arrivalTime} {"\n"}{"\n"}
+				Estimated Alarm Time: {this.state.fireDate} {"\n"}{"\n"}
+				Estimated Journey Time: {this.state.travelTime} {"\n"}{"\n"}
+				Weather Forecast: Clear Skies
+			</Text>
+			</View>
 			</View>
     );
   }

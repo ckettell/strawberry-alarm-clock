@@ -57,6 +57,9 @@ export default class Clock extends Component {
 			<Text style={styles.timeText}>
 			{this.state.time}
 			</Text>
+			<Text>
+				{this.state.travelTime}
+			</Text>
 			<View>
 			<Button
 			onPress={this.stopAlarm}
