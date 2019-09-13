@@ -54,7 +54,6 @@ export default class Clock extends Component {
 			<StatusBar
 			style={{backgroundColor: 'transparent'}}
 			/>
-
 			<Text style={styles.timeText}>
 			{this.state.time}
 			</Text>

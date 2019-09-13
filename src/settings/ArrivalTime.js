@@ -49,7 +49,8 @@ handleDatePicked = date => {
 
     return(
       <View>
-      <Button title="Set Arrival Time" onPress={this.showDateTimePicker} />
+      <Button title="Set Arrival Time" color='#0c5600'
+      onPress={this.showDateTimePicker} />
       <DateTimePicker
       mode={"time"}
       isVisible={this.state.isDateTimePickerVisible}

@@ -269,7 +269,7 @@ export default class AlarmCalculator extends Component {
 		renderEstimateAlarm(isValid){
 			if(isValid){
 				return(
-					<Button
+					<Button color = '#0753a9'
  				 title="Estimate alarm"
  				 onPress={() => {
 					 {this.calculateAlarm()}
@@ -284,7 +284,7 @@ export default class AlarmCalculator extends Component {
 		renderSetAlarm(isValid){
 			if(isValid){
 				return(
-					<Button
+					<Button color='#0753a9'
  					title="Set alarm"
  					onPress={this.setAlarm}/>
 				)
@@ -295,7 +295,7 @@ export default class AlarmCalculator extends Component {
 		renderGoToClock(isValid){
 			if(isValid){
 				return(
-					<Button
+					<Button color='#0753a9'
 					title="Go to clock"
 					onPress={() => this.props.navigation.navigate('Clock')}
 				/>
