@@ -49,34 +49,33 @@ export default class Clock extends Component {
 		return (
 			<View style={styles.container}>
 
-			<ImageBackground source={require('/Users/student/Desktop/Projects/realfinalproject/strawberry-alarm-clock/assets/Strawberry.png')} style={{width: '100%', height: '100%', alignItems: 'center'}}>
-			<StatusBar style={{backgroundColor: 'transparent'}}/>
+			<Text style={styles.timeText}>
+			{this.state.currentTime}
+			</Text>
+			<Text style={styles.dateText}>
+			{this.state.date}
+			</Text>
+			<StatusBar
+			style={{backgroundColor: 'transparent'}}
+			/>
+			<Text style={styles.timeText}>
+			{this.state.time}
+			</Text>
+			<Text>
+				{this.state.travelTime}
+			</Text>
+			<View>
+			<Button
+			onPress={this.stopAlarm}
+			title="Stop Alarm"
+			color="#ff0400"
+			/>
+			</View>
+			<Button
+			title="Settings"
+			onPress={() => this.props.navigation.navigate('Home')}
+		/>
 
-				<Text style={styles.timeText}>
-					{this.state.currentTime}
-				</Text>
-
-				<Text style={styles.daysText}>
-					{this.state.date}
-				</Text>
-
-				<Text style={styles.timeText}>
-					{this.state.time}
-				</Text>
-
-				<TouchableOpacity onPress={this.stopAlarm}>
-					<Text style={styles.stopButton}>
-						Stop Alarm
-					</Text>
-				</TouchableOpacity>
-
-				<TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
-					<Text style={styles.button}>
-						Settings
-					</Text>
-				</TouchableOpacity>
-
-			</ImageBackground>
 			</View>
 		);
 	}

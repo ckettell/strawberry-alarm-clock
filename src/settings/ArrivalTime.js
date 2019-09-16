@@ -23,12 +23,20 @@ export default class ArrivalTime extends Component {
   }
 
 
-  setArrivalState(time){
-    this.setState({
-      arrivalTime: time
-    })
-    this.setArrivalTime()
-  }
+
+setArrivalState(time){
+  var formattedTime = moment(time).format("ddd, DD MMM YYYY HH:mm:ss ZZ")
+  this.setState({
+    arrivalTime: formattedTime
+  })
+  this.setArrivalTime()
+}
+
+
+setArrivalTime = () => {
+  this.props.updateArrivalTime(this.state.arrivalTime)
+  console.log(this.state.arrivalTime)
+}
 
 
   setArrivalTime = () => {
@@ -39,11 +47,15 @@ export default class ArrivalTime extends Component {
     this.setState({ isDateTimePickerVisible: true });
   };
 
-  hideDateTimePicker = () => {
-    this.setState({
-      isDateTimePickerVisible: false
-    });
-  };
+
+handleDatePicked = date => {
+  const dateObject = new Date(date)
+  this.setState({
+    arrivalTime: moment(dateObject).format("ddd, DD MMM YYYY HH:mm:ss ZZ")
+  })
+  this.setArrivalTime()
+};
+
 
   handleDatePicked = date => {
     const dateObject = new Date(date)
@@ -57,11 +69,10 @@ export default class ArrivalTime extends Component {
 
     return(
       <View>
-      <TouchableOpacity onPress={this.showDateTimePicker}>
-        <Text style={arrivalTimeStyles.button}>
-          Set Arrival Time
-        </Text>
-      </TouchableOpacity>
+
+      <Button title="Set Arrival Time" color='#0c5600'
+      onPress={this.showDateTimePicker} />
+
       <DateTimePicker
         mode={"time"}
         isVisible={this.state.isDateTimePickerVisible}
