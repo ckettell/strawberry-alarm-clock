@@ -37,6 +37,10 @@
 		86BDBD39A51F465E8D5794CA /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3811D1FDCC74D8181D1A46F /* Roboto.ttf */; };
 		CCAD49AE683743CC9B587AB5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF192B9F35504089A7177873 /* SimpleLineIcons.ttf */; };
 		2772A00304624FCF8DE31BCD /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21E2C059688844DDBA4A2BD5 /* Zocial.ttf */; };
+		635979BF3C634EDC9EFB8841 /* digital-7 (italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E2A923CECE74CDD9F9B787C /* digital-7 (italic).ttf */; };
+		2EC60CAD53114C2CAF6BE329 /* digital-7 (mono italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43705745CDBE4FB18DBA2014 /* digital-7 (mono italic).ttf */; };
+		3C9F8132BE934F52ADF54206 /* digital-7 (mono).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72D0447309B945C599E34428 /* digital-7 (mono).ttf */; };
+		B28E788154E44702B59FF314 /* digital-7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0AA16461C834C47B8505631 /* digital-7.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +106,10 @@
 		D3811D1FDCC74D8181D1A46F /* Roboto.ttf */ = {isa = PBXFileReference; name = "Roboto.ttf"; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		EF192B9F35504089A7177873 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		21E2C059688844DDBA4A2BD5 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6E2A923CECE74CDD9F9B787C /* digital-7 (italic).ttf */ = {isa = PBXFileReference; name = "digital-7 (italic).ttf"; path = "../assets/fonts/digital-7 (italic).ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		43705745CDBE4FB18DBA2014 /* digital-7 (mono italic).ttf */ = {isa = PBXFileReference; name = "digital-7 (mono italic).ttf"; path = "../assets/fonts/digital-7 (mono italic).ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		72D0447309B945C599E34428 /* digital-7 (mono).ttf */ = {isa = PBXFileReference; name = "digital-7 (mono).ttf"; path = "../assets/fonts/digital-7 (mono).ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C0AA16461C834C47B8505631 /* digital-7.ttf */ = {isa = PBXFileReference; name = "digital-7.ttf"; path = "../assets/fonts/digital-7.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +263,10 @@
 				D3811D1FDCC74D8181D1A46F /* Roboto.ttf */,
 				EF192B9F35504089A7177873 /* SimpleLineIcons.ttf */,
 				21E2C059688844DDBA4A2BD5 /* Zocial.ttf */,
+				6E2A923CECE74CDD9F9B787C /* digital-7 (italic).ttf */,
+				43705745CDBE4FB18DBA2014 /* digital-7 (mono italic).ttf */,
+				72D0447309B945C599E34428 /* digital-7 (mono).ttf */,
+				C0AA16461C834C47B8505631 /* digital-7.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -418,6 +430,10 @@
 				86BDBD39A51F465E8D5794CA /* Roboto.ttf in Resources */,
 				CCAD49AE683743CC9B587AB5 /* SimpleLineIcons.ttf in Resources */,
 				2772A00304624FCF8DE31BCD /* Zocial.ttf in Resources */,
+				635979BF3C634EDC9EFB8841 /* digital-7 (italic).ttf in Resources */,
+				2EC60CAD53114C2CAF6BE329 /* digital-7 (mono italic).ttf in Resources */,
+				3C9F8132BE934F52ADF54206 /* digital-7 (mono).ttf in Resources */,
+				B28E788154E44702B59FF314 /* digital-7.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

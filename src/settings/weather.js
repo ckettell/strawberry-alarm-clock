@@ -1,5 +1,6 @@
 import moment from "moment";
 
+
 export function getRelevantForecast(forecasts, alarmDate) {
   for (let forecast of forecasts) {
       var forecastDate = moment(forecast.dt_txt).format("ddd, DD MMM YYYY HH:mm:ss ZZ");
@@ -22,4 +23,5 @@ export function reportWeather(latitude, longitude, alarmDate) {
   .then( (threeHourlyForecasts) => getRelevantForecast(threeHourlyForecasts, alarmDate) )
   .then( (relevantForecast) => getWeather(relevantForecast))
   .then( (weather) => getWeatherForecast(weather))
+
 }

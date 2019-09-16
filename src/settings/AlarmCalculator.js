@@ -1,5 +1,13 @@
 import React, {Component} from "react";
-import { Text, Button, Picker, DeviceEventEmitter } from 'react-native';
+import {
+  Text,
+  Button,
+  Picker,
+  DeviceEventEmitter,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
+
 import { View, InputGroup, Input } from "native-base";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Geolocation from '@react-native-community/geolocation';
@@ -43,6 +51,7 @@ export default class AlarmCalculator extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
+
 			date: moment().format("LL"),
 			fireDate: '',
 			update: '',
@@ -63,6 +72,7 @@ export default class AlarmCalculator extends Component {
 			goToClockVisible: false,
 			buttonsAreVisible: false,
       currentTime: new Date().toLocaleTimeString(),
+
 	 };
 		this.setAlarm = this.setAlarm.bind(this);
 		this.stopAlarm = this.stopAlarm.bind(this);
@@ -84,10 +94,12 @@ export default class AlarmCalculator extends Component {
 		this.setState({goToCockVisible: true})
 	};
 	sendNotification = () => {
-		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" }, };
+		const details = { ...alarmNotifData, id: 45, data: { content: "my notification id is 45" },
+  };
 		console.log(details);
 		ReactNativeAN.sendNotification(details);
 	};
+
 
   setWeatherForecast = (weather) => {
       this.setState({
@@ -98,6 +110,7 @@ export default class AlarmCalculator extends Component {
 
 
 	componentDidMount(){
+
 
 		DeviceEventEmitter.addListener('OnNotificationDismissed', async function(e) {
 			const obj = JSON.parse(e);
@@ -219,24 +232,21 @@ export default class AlarmCalculator extends Component {
       this.calculateAlarm();
       this.navToTime();
 
-    }
-    showAlarm = () => {
-      console.log(this.state.alarmTime);
-    }
-
 
 		componentWillUnmount() {
 			DeviceEventEmitter.removeListener('OnNotificationDismissed');
 			DeviceEventEmitter.removeListener('OnNotificationOpened');
 		}
 
-    setCurrentTime() {
-        this.setState({
-          currentTime: new Date().toLocaleTimeString()
-        })
 
-      }
+    const wakeUpTimeObject = new Date(wakeUpTime)
 
+    this.setState({
+      fireDate:  moment(wakeUpTimeObject).format("DD-MM-YYYY HH:mm:ss")
+    })
+
+    setInterval(() => { console.log(this.state.fireDate) }, 2000)
+  }
 
 		renderTravelMode(isValid){
 			if(isValid){
@@ -305,29 +315,43 @@ export default class AlarmCalculator extends Component {
 
 
 
+  showAlarm = () => {
+    console.log(this.state.alarmTime);
+  }
 
+	componentWillUnmount() {
+		DeviceEventEmitter.removeListener('OnNotificationDismissed');
+		DeviceEventEmitter.removeListener('OnNotificationOpened');
+	}
+
+  setCurrentTime() {
+    this.setState({
+      currentTime: new Date().toLocaleTimeString()
+    })
+  }
 
   render() {
 
     const currentLocation = {
-        latitude: this.state.Latitude,
-        longitude: this.state.Longitude,
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.0121,
-        }
-
-
+      latitude: this.state.Latitude,
+      longitude: this.state.Longitude,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    }
 
     return (
+
 			<View>
       <View >
+
         <ArrivalTime
-        updateArrivalTime={this.setArrivalTime.bind(this)}
+         updateArrivalTime={this.setArrivalTime.bind(this)}
         />
         <SearchBox
          location={currentLocation}
          travelMode= {this.state.travelMode}
          updateTravelTime={this.setTravelTime.bind(this)}
+
          />
 			</View>
 			<View style={{position: 'relative', top: 80}}>
@@ -336,6 +360,7 @@ export default class AlarmCalculator extends Component {
 				{this.renderEstimateAlarm(this.state.estimateAlarmVisible)}
 				{this.renderSetAlarm(this.state.setAlarmVisible)}
 				{this.renderGoToClock(this.state.goToClockVisible)}
+
       </View>
 			<View style={{position: 'relative', top: 130, marginLeft: 30}}>
 			<Text style={{fontSize: 16}}>
@@ -349,3 +374,29 @@ export default class AlarmCalculator extends Component {
     );
   }
 }
+
+  const alarmCalcStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#383838',
+  },
+  button: {
+    backgroundColor: '#696969',
+    borderColor: '#ff7f50',
+    borderWidth: 2,
+    borderRadius: 12,
+    color: '#e59400',
+    fontSize: 24,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 5,
+    textAlign:'center',
+    alignItems: 'center',
+    fontFamily: 'digital-7'
+  },
+  forecast: {
+    color: '#ff7f50',
+    fontSize: 25,
+    fontFamily: 'AntDesign',
+  }
+})
